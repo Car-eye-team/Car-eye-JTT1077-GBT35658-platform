@@ -21,7 +21,7 @@ Car-eye-JTT808-1078-platform 开发的基于JTT808/1078协议的平台架构。�
 # 平台客户端运行展示
 
 
-![](https://github.com/Car-eye-team/Car-eye-Player-android/blob/master/%E5%A4%9A%E9%80%9A%E9%81%93%E6%92%AD%E6%94%BE%E5%99%A8.png)
+![](https://github.com/Car-eye-team/Car-eye-JTT808-1078-platform/blob/master/Car-eye.png)
 
 
 # 体验平台登录方式
