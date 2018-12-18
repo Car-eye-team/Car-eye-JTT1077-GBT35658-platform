@@ -6,8 +6,8 @@ Car-eye-JTT808-1078-platform 开发的基于JTT808/1078协议的平台架构。�
 1. 采用最新的layUI+mysql数据库构建web服务器。
 2. 采用最稳定的socket底层构建JT1078视频服务器，视频转发到RTMP服务器，支持http，RTMP,HLS各种输出。
 3. 基于http，MQ等多种通信方式。
-4. 多平台支持，支持linux和windos双操作系统。
-5. 设备端SDK支持linux，android，windwos等各种应用。
+4. 多平台支持，支持linux和windows双操作系统。
+5. 设备端SDK支持linux，android，windows等各种应用。
 6. 分布式架构web和视频服务器可以运行在不同硬件上。
 
 # 我们为什么要开发这个平台
