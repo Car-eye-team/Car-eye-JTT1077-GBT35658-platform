@@ -1,14 +1,15 @@
-# Car-eye-JTT808-1078-platform
+# Car-eye-JTT1077-796-platform
 
-Car-eye-JTT808-1078-platform 开发的基于JTT808/1078协议的平台架构。包括了基于Java和mysql的数据管理系统，也包含了通信平台，视频服务器，客户端程序。是一个功能完善的车辆管理平台
+Car-eye-JTT1077-796-platform 开发的基于JTT808/1078 JTT1077，JT/T796协议的平台架构，兼容JT/T905设备接入。包括了基于Java和mysql的数据管理系统，也包含了通信平台，视频服务器，客户端程序。是一个功能完善的车辆管理平台
 
 # 平台具有哪些优势
 1. 采用最新的layUI+mysql数据库构建web服务器。
 2. 采用最稳定的socket底层构建JT1078视频服务器，视频转发到RTMP服务器，支持http，RTMP,HLS各种输出。
 3. 基于http，MQ等多种通信方式。
 4. 多平台支持，支持linux和windows双操作系统。
-5. 设备端SDK支持linux，android，windows等各种应用。
-6. 分布式架构web和视频服务器可以运行在不同硬件上。
+5. 客户端SDK支持linux，android，windows等各种应用。
+6. 设备SDK支持多通道推流，支持推送文件，高版本的android系统支持Epoll数据传送方式。
+7. 分布式架构web和视频服务器可以运行在不同硬件上。
 
 # 我们为什么要开发这个平台
 
