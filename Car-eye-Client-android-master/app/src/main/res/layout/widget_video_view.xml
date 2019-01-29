@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_media_edge"
+    android:background="@color/color_no_select"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:background="#000"
+        android:layout_margin="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <org.careye.player.media.EyeVideoView
+            android:background="#000"
+            android:id="@+id/evv_media"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </org.careye.player.media.EyeVideoView>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
