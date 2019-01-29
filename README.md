@@ -7,12 +7,7 @@ Car-eye-Client android 版本是car-eye开源开源团队基于car-eye open API 
 4. 视频回放
 能满足基本的车辆监管需求。
 
-![](https://github.com/Car-eye-team/Car-eye-device/blob/master/picture/pusher.jpg)
-
-
-# 商业合作
-
-Car-eye-device 商业用户需要鉴权，具体请联系团队管理人员
+![](https://github.com/Car-eye-team/Car-eye-Client-android/blob/master/Car-eye-Client-android-master/device-2018-12-29-033254.png)
 
 
 # 扫描二维码下载       
