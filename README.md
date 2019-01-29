@@ -11,7 +11,7 @@ Car-eye-Client android 版本是car-eye开源开源团队基于car-eye open API 
 
 
 # 扫描二维码下载       
-![](https://github.com/Car-eye-team/Car-eye-device/blob/master/picture/android%20DVR%20%E4%BA%8C%E7%BB%B4%E7%A0%81.png)
+![](https://github.com/Car-eye-team/Car-eye-Client-android/blob/master/Car-eye-client.png)
 
 
 # 联系我们   
