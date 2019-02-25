@@ -145,7 +145,8 @@ public class MapFragment extends Fragment implements View.OnClickListener   ,OnG
                         prefBiz.putStringInfo(Constants.PREF_THIS_CURREN_CARID, carGpsInfo.getTerminal());
                         //已经来 获取的车辆最后位置 的 数据
                         tv_terminal.setText(carGpsInfo.getTerminal());
-                        tv_timeregps.setText(carGpsInfo.getGpstime());
+
+                        tv_timeregps.setText(DateUtil.dateFormatyyMMddHHmmssS(carGpsInfo.getGpstime()));
                         initCarStatus();//获取数据后 赋值
                     }else{
 //                       ToastUtil.showToast(CarLocation.this, "亲，没有数据哦！");
@@ -508,20 +509,12 @@ public class MapFragment extends Fragment implements View.OnClickListener   ,OnG
             case REQUEST_SELECT_DEVICE_CODE:
                 if (resultCode == Activity.RESULT_OK) {
                     departmentCar = data.getParcelableExtra("device");
-//                    departmentCar.
-                      List<String>  terminallist = departmentCar.getTerminalList();
-                    if(terminallist !=null && terminallist.size() != 0){
-                        String  terminallistS = "";
+                        String  terminallistS = departmentCar.getTerminal();
 
-                        for (int i = 0;i< terminallist.size();i++){
-                            if(!"".equals(terminallistS)){
-                                terminallistS+=";";
-                            }
-                            terminallistS +=terminallist.get(i);
-                        }
                         Log.i(TAG," 当前树结构设备号:"+terminallistS);
-                        getHttpCarInfoState(terminallistS);
-                    }
+                        if (terminallistS != null && terminallistS.length() > 0) {
+                            getHttpCarInfoState(terminallistS);
+                        }
                 }
 
 

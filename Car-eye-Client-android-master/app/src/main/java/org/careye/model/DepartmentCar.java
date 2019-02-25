@@ -45,6 +45,14 @@ public class DepartmentCar implements Parcelable {
      */
     private int longoffline;
     /**
+     * 终端号
+     */
+    private String terminal;
+    /**
+     * 摄像头个数
+     */
+    private int channeltotals;
+    /**
      * 是否是父节点  true代表有子节点，false代表无
      */
     private boolean parent;
@@ -60,10 +68,6 @@ public class DepartmentCar implements Parcelable {
      * 展示图标
      */
     private int imageResource;
-    /**
-     * 设备号
-     */
-    private List<String> terminalList;
 
     public String getNodeId() {
         return nodeId;
@@ -129,6 +133,22 @@ public class DepartmentCar implements Parcelable {
         this.longoffline = longoffline;
     }
 
+    public String getTerminal() {
+        return terminal;
+    }
+
+    public void setTerminal(String terminal) {
+        this.terminal = terminal;
+    }
+
+    public int getChanneltotals() {
+        return channeltotals;
+    }
+
+    public void setChanneltotals(int channeltotals) {
+        this.channeltotals = channeltotals;
+    }
+
     public boolean isParent() {
         return parent;
     }
@@ -151,14 +171,6 @@ public class DepartmentCar implements Parcelable {
 
     public int getDISPLAY_ORDER() {
         return DISPLAY_ORDER;
-    }
-
-    public void setTerminalList(List<String> terminalList) {
-        this.terminalList = terminalList;
-    }
-
-    public List<String> getTerminalList() {
-        return terminalList;
     }
 
     public int getImageResource(int carstatus) {
@@ -207,7 +219,8 @@ public class DepartmentCar implements Parcelable {
         dest.writeInt(total);
         dest.writeInt(caroffline);
         dest.writeInt(longoffline);
-        dest.writeList(terminalList);
+        dest.writeString(terminal);
+        dest.writeInt(channeltotals);
     }
 
     public static final Creator<DepartmentCar> CREATOR = new Creator<DepartmentCar>() {
@@ -228,8 +241,8 @@ public class DepartmentCar implements Parcelable {
             departmentCar.total = source.readInt();
             departmentCar.caroffline = source.readInt();
             departmentCar.longoffline = source.readInt();
-            departmentCar.terminalList = new ArrayList<>();
-            source.readList(departmentCar.terminalList, getClass().getClassLoader());
+            departmentCar.terminal = source.readString();
+            departmentCar.channeltotals = source.readInt();
             return departmentCar;
         }
     };

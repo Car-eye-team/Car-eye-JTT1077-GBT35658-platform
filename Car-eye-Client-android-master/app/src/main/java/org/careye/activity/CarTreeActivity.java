@@ -84,9 +84,6 @@ public class CarTreeActivity extends AppCompatActivity implements OnClickListene
     private void initData(List<DepartmentCar> list) {
         deptList.clear();
         if (list != null) {
-            for (DepartmentCar departmentCar : list) {
-                departmentCar.setExpand(false);
-            }
             deptList.addAll(list);
             updateData();
         }
@@ -102,16 +99,12 @@ public class CarTreeActivity extends AppCompatActivity implements OnClickListene
                 DepartmentCar deptCar = (DepartmentCar) adapter.getItem(position);
                 if (deptCar.getNodetype() == 2) {   //点击叶子节点
                     //处理回填
-                    getTerminalList(deptCar);
+                    Intent data = new Intent();
+                    data.putExtra("device", deptCar);
+                    setResult(RESULT_OK, data);
+                    CarTreeActivity.this.finish();
                 } else {  //如果点击的是父类
                     if (deptCar.isExpand()) {
-                        for (DepartmentCar tempPoint : deptList) {
-                            if (tempPoint.getParentId().equals(deptCar.getNodeId())) {
-                                if (deptCar.getNodetype() == 1) {
-                                    tempPoint.setExpand(false);
-                                }
-                            }
-                        }
                         deptCar.setExpand(false);
                     } else {
                         deptCar.setExpand(true);
@@ -139,9 +132,6 @@ public class CarTreeActivity extends AppCompatActivity implements OnClickListene
     }
 
     private void updateData() {
-        for (DepartmentCar departmentCar : deptList) {
-            deptMap.put(departmentCar.getNodeId(), departmentCar);
-        }
         Collections.sort(deptList, new Comparator<DepartmentCar>() {
             @Override
             public int compare(DepartmentCar lhs, DepartmentCar rhs) {
@@ -204,6 +194,8 @@ public class CarTreeActivity extends AppCompatActivity implements OnClickListene
                         departmentCar.setNodetype(object.get("nodetype").getAsInt());
                         if (departmentCar.getNodetype() == 2) {
                             departmentCar.setCarstatus(object.get("carstatus").getAsInt());
+                            departmentCar.setTerminal(object.get("terminal").getAsString());
+                            departmentCar.setChanneltotals(object.get("channeltotals").getAsInt());
                         }
                         if (departmentCar.getNodetype() == 1) {
                             departmentCar.setTotal(object.get("total").getAsInt());
@@ -212,53 +204,14 @@ public class CarTreeActivity extends AppCompatActivity implements OnClickListene
                         }
                         departmentCar.setParent(object.get("parent").getAsBoolean());
                         departmentCar.setDISPLAY_ORDER(i);
+                        departmentCar.setExpand(false);
+                        deptMap.put(departmentCar.getNodeId(), departmentCar);
                         allList.add(departmentCar);
                         if (departmentCar.getNodetype() == 1 || (departmentCar.getCarstatus() != 1 && departmentCar.getCarstatus() != 2 && departmentCar.getCarstatus() != 3)) {
                             onlineList.add(departmentCar);
                         }
                     }
                     initData(allList);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                String message = t.getMessage();
-            }
-        });
-    }
-
-    private void getTerminalList(final DepartmentCar departmentCar) {
-        Retrofit retrofit = BaseRequest.getInstance().getRetrofit();
-        CmsRequest.GetTerminalList request = retrofit.create(CmsRequest.GetTerminalList.class);
-        String tradeno = DateUtil.getTodayDate(DateUtil.df6);
-        String sign = MD5Util.MD5Encode("admin123456" + tradeno, "utf-8");
-        JsonObject body = new JsonObject();
-        body.addProperty("username", "admin");
-        body.addProperty("tradeno", tradeno);
-        body.addProperty("sign", sign);
-        body.addProperty("carnumber", departmentCar.getNodeName());
-
-        Call<JsonObject> call = request.getTerminalList(body);
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                JsonObject resultObj = response.body();
-                if (resultObj.has("errCode") && resultObj.get("errCode").getAsInt() == 0) {
-                    JsonArray array = resultObj.getAsJsonArray("resultData");
-                    List<String> terminalList = new ArrayList<>();
-                    JsonObject object;
-                    String terminal;
-                    for (int i = 0; i < array.size(); i++) {
-                        object = array.get(i).getAsJsonObject();
-                        terminal = object.get("terminal").getAsString();
-                        terminalList.add(terminal);
-                    }
-                    departmentCar.setTerminalList(terminalList);
-                    Intent data = new Intent();
-                    data.putExtra("device", departmentCar);
-                    setResult(RESULT_OK, data);
-                    CarTreeActivity.this.finish();
                 }
             }
 
@@ -280,6 +233,10 @@ public class CarTreeActivity extends AppCompatActivity implements OnClickListene
                 if (!btn_all.isSelected()) {
                     btn_all.setSelected(true);
                     btn_online.setSelected(false);
+                    for (DepartmentCar departmentCar : allList) {
+                        departmentCar.setExpand(false);
+                        deptMap.put(departmentCar.getNodeId(), departmentCar);
+                    }
                     initData(allList);
                 }
                 break;
@@ -287,6 +244,10 @@ public class CarTreeActivity extends AppCompatActivity implements OnClickListene
                 if (!btn_online.isSelected()) {
                     btn_all.setSelected(false);
                     btn_online.setSelected(true);
+                    for (DepartmentCar departmentCar : onlineList) {
+                        departmentCar.setExpand(false);
+                        deptMap.put(departmentCar.getNodeId(), departmentCar);
+                    }
                     initData(onlineList);
                 }
                 break;

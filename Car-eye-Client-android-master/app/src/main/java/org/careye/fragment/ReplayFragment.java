@@ -149,12 +149,11 @@ public class ReplayFragment extends Fragment implements View.OnClickListener, Ad
                     String endTime = data.getStringExtra("endTime");
                     fileList.clear();
                     if (channel == 0) {
-                        queryTerminalFileList(departmentCar.getTerminalList().get(0), 1 + "", startTime, endTime);
-                        queryTerminalFileList(departmentCar.getTerminalList().get(0), 2 + "", startTime, endTime);
-                        queryTerminalFileList(departmentCar.getTerminalList().get(0), 3 + "", startTime, endTime);
-                        queryTerminalFileList(departmentCar.getTerminalList().get(0), 4 + "", startTime, endTime);
+                        for (int i = 1; i < departmentCar.getChanneltotals() + 1; i++) {
+                            queryTerminalFileList(departmentCar.getTerminal(), String.valueOf(i), startTime, endTime);
+                        }
                     } else {
-                        queryTerminalFileList(departmentCar.getTerminalList().get(0), channel + "", startTime, endTime);
+                        queryTerminalFileList(departmentCar.getTerminal(), channel + "", startTime, endTime);
                     }
                 }
                 break;

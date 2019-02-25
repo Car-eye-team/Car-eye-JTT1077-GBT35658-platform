@@ -6,28 +6,64 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.careye.CarEyeClient.R;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
+import org.careye.adapter.TreeAdapter;
+import org.careye.bll.PrefBiz;
 import org.careye.model.DepartmentCar;
+import org.careye.request.BaseRequest;
+import org.careye.request.CmsRequest;
+import org.careye.utils.Constants;
 import org.careye.utils.DateUtil;
+import org.careye.utils.MD5Util;
+import org.careye.utils.TreeUtils;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 
-public class ReplaySearchActivity extends AppCompatActivity implements View.OnClickListener, DatePicker.OnDateChangedListener {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
-    public final static int REQUEST_SELECT_DEVICE_CODE = 0x10;
+/**
+ * 车辆树界面
+ */
+public class TrackSettingActivity extends AppCompatActivity implements OnClickListener , DatePicker.OnDateChangedListener{
+
+    public final static int REQUEST_SELECT_DEVICE_CODE = 0x11;
+
+    private PrefBiz prefBiz;
+
+    private ImageView iv_back;
+    private TextView tv_title;
+
 
     private Calendar mBegTime;
-    private int mChannel = -1;
+
     private Calendar mDate;
     private AlertDialog mDlgChannel;
     private AlertDialog mDlgLocation;
@@ -39,30 +75,34 @@ public class ReplaySearchActivity extends AppCompatActivity implements View.OnCl
     private LinearLayout mLayoutEndTime;
     private LinearLayout mLayoutLocation;
     private RelativeLayout mLayoutSearch;
-    private int mLocation = -1;
+
     private TextView mTvBegTime;
     private TextView mTvChannel;
     private TextView mTvDate;
     private TextView mTvDevice;
     private TextView mTvEndTime;
     private TextView mTvLocation;
-    private ImageView device_list_iv_back;
 
     private int year, month, day;
 
     private DepartmentCar departmentCar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.playback_search);
         initView();
-        initListener();
+        addListener();
+        prefBiz = new PrefBiz(this);
     }
 
     private void initView() {
+        iv_back = findViewById(R.id.device_list_iv_back);
+        tv_title = findViewById(R.id.tv_title);
+
         mLayoutDevice = findViewById(R.id.playback_layout_device);
-        device_list_iv_back = findViewById(R.id.device_list_iv_back);
+        tv_title.setText("轨迹搜索");
+
+
         mLayoutLocation = findViewById(R.id.playback_layout_location);
         mLayoutChannel = findViewById(R.id.playback_layout_channel);
         mLayoutDate = findViewById(R.id.playback_layout_date);
@@ -86,9 +126,15 @@ public class ReplaySearchActivity extends AppCompatActivity implements View.OnCl
         mEndTime.set(Calendar.MINUTE, 59);
         mEndTime.set(Calendar.SECOND, 59);
         mTvEndTime.setText(DateUtil.dateSwitchTimeString(mEndTime.getTime()));
+
+
+        mLayoutLocation.setVisibility(View.GONE);
+        mLayoutChannel.setVisibility(View.GONE);
     }
 
-    private void initListener() {
+
+    private void addListener(){
+
         mLayoutDevice.setOnClickListener(this);
         mLayoutLocation.setOnClickListener(this);
         mLayoutChannel.setOnClickListener(this);
@@ -96,50 +142,14 @@ public class ReplaySearchActivity extends AppCompatActivity implements View.OnCl
         mLayoutBegTime.setOnClickListener(this);
         mLayoutEndTime.setOnClickListener(this);
         mLayoutSearch.setOnClickListener(this);
-        device_list_iv_back.setOnClickListener(this);
+        iv_back.setOnClickListener(this);
+    }
+    private void updateData() {
+
     }
 
-    private void getLocation() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.playback_location);
-        int n = 0;
-        builder.setSingleChoiceItems((CharSequence[])new String[] { this.getString(R.string.playback_loc_device), this.getString(R.string.playback_loc_server) }, n, new DialogInterface.OnClickListener() {
-            public void onClick(final DialogInterface dialogInterface, final int n) {
-                if (n == 0) {
-                    mTvLocation.setText(R.string.playback_loc_device);
-                }
-                else {
-                    mTvLocation.setText(R.string.playback_loc_server);
-                }
-                mLocation = n;
-                mDlgLocation.dismiss();
-            }
-        });
-        mDlgLocation = builder.create();
-        mDlgLocation.show();
-    }
+    private void getDeptAndCar() {
 
-    protected void getChannel() {
-        if (departmentCar == null) {
-            Toast.makeText(this, R.string.select_terminal_tip, Toast.LENGTH_SHORT).show();
-            return;
-        }
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.playback_channel);
-        final String[] array = new String[departmentCar.getChanneltotals() + 1];
-        array[0] = "所有";
-        for (int i = 1 ; i < departmentCar.getChanneltotals() + 1; i++) {
-            array[i] = "CH" + i;
-        }
-        int n = 0;
-        builder.setSingleChoiceItems((CharSequence[])array, n, (DialogInterface.OnClickListener)new DialogInterface.OnClickListener() {
-            public void onClick(final DialogInterface dialogInterface, final int n) {
-                mChannel = n;
-                mTvChannel.setText(array[n]);
-                mDlgChannel.dismiss();
-            }
-        });
-        (this.mDlgChannel = builder.create()).show();
     }
 
     protected void getDate() {
@@ -223,50 +233,48 @@ public class ReplaySearchActivity extends AppCompatActivity implements View.OnCl
         dialog.setView(dialogView);
         dialog.show();
     }
-
     protected void searchTrack() {
         if (departmentCar == null) {
             Toast.makeText(this, R.string.select_terminal_tip, Toast.LENGTH_SHORT).show();
             return;
         }
-        if (mLocation == -1) {
-            Toast.makeText(this, "请选择文件位置", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (mChannel == -1) {
-            Toast.makeText(this, "请选择通道", Toast.LENGTH_SHORT).show();
-            return;
-        }
+
         if (this.mBegTime.getTimeInMillis() >= this.mEndTime.getTimeInMillis()) {
             Toast.makeText(this, R.string.select_time_tip, Toast.LENGTH_SHORT).show();
             return;
         }
-        Intent intent = new Intent();
-        intent.putExtra("departmentCar", departmentCar);
-        intent.putExtra("location", mLocation);
-        intent.putExtra("channel", mChannel);
-        intent.putExtra("begTime", mTvDate.getText().toString() + " " + mTvBegTime.getText().toString());
-        intent.putExtra("endTime", mTvDate.getText().toString() + " " + mTvEndTime.getText().toString());
-        setResult(RESULT_OK, intent);
-        finish();
+
+
+        String  terminal="";//	设备号	String  //13700000007
+        String carnumber="粤B12345";//	车牌号	String
+         carnumber=departmentCar.getNodeName();//	车牌号	String
+
+        String  startTime="2019-01-27 08:49:51";//	开始时间	String
+        startTime=mTvDate.getText().toString()+" "+mTvBegTime.getText().toString();//	开始时间	String
+
+        String  endTime=mTvDate.getText().toString()+" 16:49:51";//	结束时间	String
+        endTime=mTvDate.getText().toString()+" "+mTvEndTime.getText().toString();//	结束时间	String
+
+        Intent data = new Intent();
+        data.putExtra("extra_trackcar", new String[]{terminal,carnumber,startTime,endTime});
+        setResult(RESULT_OK, data);
+        TrackSettingActivity.this.finish();
     }
+
 
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        switch (id){
-            case R.id.device_list_iv_back:
-                finish();
-                break;
+        switch (id) {
             case R.id.playback_layout_device:
                 Intent intent = new Intent(this, CarTreeActivity.class);
                 startActivityForResult(intent, REQUEST_SELECT_DEVICE_CODE);
                 break;
             case R.id.playback_layout_location:
-                getLocation();
+
                 break;
             case R.id.playback_layout_channel:
-                getChannel();
+
                 break;
             case R.id.playback_layout_date:
                 getDate();
@@ -277,11 +285,15 @@ public class ReplaySearchActivity extends AppCompatActivity implements View.OnCl
             case R.id.playback_layout_end_time:
                 getEndTime();
                 break;
-            case R.id.playback_lySearch:
-                searchTrack();
+            case R.id.device_list_iv_back:
+                finish();
                 break;
-            default:
+             case R.id.playback_lySearch:
+                 searchTrack();
+
+
                 break;
+
         }
     }
 
@@ -291,7 +303,6 @@ public class ReplaySearchActivity extends AppCompatActivity implements View.OnCl
         this.month = i1;
         this.day = i2;
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -306,5 +317,4 @@ public class ReplaySearchActivity extends AppCompatActivity implements View.OnCl
                 break;
         }
     }
-
 }

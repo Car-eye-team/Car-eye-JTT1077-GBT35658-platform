@@ -79,7 +79,7 @@ public class PlayFullScreenActivity extends AppCompatActivity implements View.On
         body.addProperty("startTime", file.getStartTime());
         body.addProperty("sign", sign);
         body.addProperty("streamType", 0);
-        body.addProperty("terminal", departmentCar.getTerminalList().get(0));
+        body.addProperty("terminal", departmentCar.getTerminal());
         body.addProperty("tradeno", tradeno);
         body.addProperty("username", prefBiz.getStringInfo(Constants.PREF_LOGIN_NAME, ""));
         body.addProperty("vedioType", 0);

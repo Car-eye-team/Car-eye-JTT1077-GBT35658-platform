@@ -160,13 +160,14 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                <Button
+                    android:id="@+id/btn_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center|right"
                     android:layout_marginRight="5dp"
-                    android:src="@drawable/ri_jiantou"
-                    android:visibility="gone" />
+                    android:text="版本更新"
+                    android:visibility="visible" />
             </FrameLayout>
             <!-- 000 -->
 

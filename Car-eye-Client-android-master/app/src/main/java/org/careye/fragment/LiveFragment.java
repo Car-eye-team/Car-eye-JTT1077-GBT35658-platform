@@ -211,17 +211,24 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         switch (requestCode) {
             case REQUEST_SELECT_DEVICE_CODE:
                 if (resultCode == Activity.RESULT_OK) {
+                    mMvPlayer1.play("");
+                    mMvPlayer2.play("");
+                    mMvPlayer3.play("");
+                    mMvPlayer4.play("");
+                    mMvPlayer1.stop();
+                    mMvPlayer2.stop();
+                    mMvPlayer3.stop();
+                    mMvPlayer4.stop();
                     departmentCar = data.getParcelableExtra("device");
-                    prefBiz.putStringInfo(Constants.PREF_THIS_CURREN_CARID, departmentCar.getTerminalList().get(0));
+                    prefBiz.putStringInfo(Constants.PREF_THIS_CURREN_CARID, departmentCar.getTerminal());
                     prefBiz.putStringInfo(Constants.PREF_THIS_CURREN_CARNUM, departmentCar.getNodeName());
                     mTvTitle.setText(departmentCar.getNodeName());
                     if (departmentCar.getCarstatus() == 1 || departmentCar.getCarstatus() == 2) {
                         Toast.makeText(getActivity(), "当前车辆不在线", Toast.LENGTH_SHORT).show();
                     } else {
-                        playOrStopSend(departmentCar.getTerminalList().get(0), "0", "1");
-                        playOrStopSend(departmentCar.getTerminalList().get(0), "0", "2");
-                        playOrStopSend(departmentCar.getTerminalList().get(0), "0", "3");
-                        playOrStopSend(departmentCar.getTerminalList().get(0), "0", "4");
+                        for (int i = 1; i < (departmentCar.getChanneltotals() > 4 ? 4 : departmentCar.getChanneltotals()) + 1; i++) {
+                            playOrStopSend(departmentCar.getTerminal(), "0", String.valueOf(i));
+                        }
                     }
                 }
                 break;
@@ -332,10 +339,9 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         mMvPlayer3.stop();
         mMvPlayer4.stop();
         if (departmentCar != null) {
-            playOrStopSend(departmentCar.getTerminalList().get(0), "1", "1");
-            playOrStopSend(departmentCar.getTerminalList().get(0), "1", "2");
-            playOrStopSend(departmentCar.getTerminalList().get(0), "1", "3");
-            playOrStopSend(departmentCar.getTerminalList().get(0), "1", "4");
+            for (int i = 1; i < (departmentCar.getChanneltotals() > 4 ? 4 : departmentCar.getChanneltotals()) + 1; i++) {
+                playOrStopSend(departmentCar.getTerminal(), "1", String.valueOf(i));
+            }
         }
     }
 

@@ -16,11 +16,7 @@ public class BaseRequest {
 
 
     private BaseRequest() {
-        PrefBiz prefBiz = new PrefBiz(DemoApplication.getContext());
-        retrofit = new Retrofit.Builder()
-                .baseUrl("http://" + prefBiz.getStringInfo(Constants.PREF_LOGIN_IP, "www.liveoss.com") + ":8088/cmsapi/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+
     }
 
     public static synchronized BaseRequest getInstance() {
@@ -36,6 +32,13 @@ public class BaseRequest {
      * @return
      */
     public synchronized Retrofit getRetrofit() {
+        if (retrofit == null) {
+            PrefBiz prefBiz = new PrefBiz(DemoApplication.getContext());
+            retrofit = new Retrofit.Builder()
+                    .baseUrl("http://" + prefBiz.getStringInfo(Constants.PREF_LOGIN_IP, "www.liveoss.com") + ":8088/cmsapi/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
         return retrofit;
     }
 
@@ -45,7 +48,7 @@ public class BaseRequest {
      * @return
      */
     public synchronized Retrofit getRetrofit(String ip) {
-        Retrofit retrofit = new Retrofit.Builder()
+        retrofit = new Retrofit.Builder()
                 .baseUrl("http://" + ip + ":8088/cmsapi/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffffff"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <ImageView
+            android:id="@+id/device_list_iv_back"
+            android:layout_width="28.0dip"
+            android:layout_height="28.0dip"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@android:string/ok"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_back_selector" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="45.0dip"
+            android:layout_gravity="center"
+            android:gravity="center|center"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="轨迹搜索"
+                android:textColor="@color/colorwite"
+                android:textSize="20dp"
+
+                />
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.Toolbar>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorlinehuicc"
+        android:visibility="visible" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+
+        >
+            <FrameLayout
+                android:id="@+id/fl_checkcar"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:id="@+id/tv_checkcar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:text="选择"
+                    android:textColor="@color/color_text33"
+                    android:textSize="18sp" />
+
+                 <ImageView
+                 android:layout_width="20dp"
+                 android:layout_height="20dp"
+                  android:layout_gravity="center|right"
+                 android:src="@drawable/ri_jiantou" />
+            </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorlinehuicc"
+            android:visibility="visible" />
+
+        <FrameLayout
+            android:id="@+id/fl_checkdata"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_checkdata"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|left"
+                android:text="选择日期"
+                android:textColor="@color/color_text33"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|right"
+                android:text="2019-01-03"
+                android:textColor="@color/color_text33"
+                android:textSize="18sp" />
+        </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorlinehuicc"
+            android:visibility="visible" />
+        <FrameLayout
+            android:id="@+id/fl_starttime"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_starttime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|left"
+                android:text="开始时间"
+                android:textColor="@color/color_text33"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|right"
+                android:text="08:28:30"
+                android:textColor="@color/color_text33"
+                android:textSize="18sp" />
+        </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorlinehuicc"
+            android:visibility="visible" />
+
+        <FrameLayout
+            android:id="@+id/fl_endtime"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_endtime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|left"
+                android:text="结束时间"
+                android:textColor="@color/color_text33"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|right"
+                android:text="08:28:30"
+                android:textColor="@color/color_text33"
+                android:textSize="18sp" />
+        </FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorlinehuicc"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_line_huidan"
+            android:layout_marginTop="80dp"
+            />
+
+            <Button
+                android:id="@+id/btn_serach"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="搜索" />
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

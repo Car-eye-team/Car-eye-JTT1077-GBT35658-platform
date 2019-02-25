@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.careye.CarEyeClient.R;
+import com.tencent.bugly.Bugly;
+import com.tencent.bugly.beta.Beta;
 
 import org.careye.activity.Login;
 import org.careye.bll.PrefBiz;
@@ -24,7 +26,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
     private OnFragmentInteractionListener mListener;
     EditText et_pleace_inputinfor;
-    Button btn_taguser;
+    Button btn_taguser,btn_version;
     TextView tv_carsettings_carnumber,tv_carsettings_version;
     public SettingFragment() {
     }
@@ -48,10 +50,12 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         View view  = inflater.inflate(R.layout.fragment_setting, container, false);
         et_pleace_inputinfor = (EditText) view.findViewById(R.id.et_pleace_inputinfor);
         btn_taguser = (Button) view.findViewById(R.id.btn_taguser);
+        btn_version = (Button) view.findViewById(R.id.btn_version);
         tv_carsettings_carnumber = (TextView) view.findViewById(R.id.tv_carsettings_carnumber);
         tv_carsettings_version = (TextView) view.findViewById(R.id.tv_carsettings_version);
         et_pleace_inputinfor.setInputType(InputType.TYPE_CLASS_PHONE);
         btn_taguser.setOnClickListener(this);
+        btn_version.setOnClickListener(this);
         String usename = new PrefBiz(getActivity()).getStringInfo(Constants.PREF_LOGIN_NAME, "--");
         tv_carsettings_carnumber.setText(usename);
         tv_carsettings_version.setText("v"+NetworkUtil.packageName(getActivity()));
@@ -85,6 +89,9 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 Intent intent = new Intent(getActivity(), Login.class);
                 startActivity(intent);
                 getActivity().finish();
+                break;
+    case R.id.btn_version:
+        Beta.checkUpgrade();
                 break;
 
             default:
