@@ -13,7 +13,7 @@ Car-eye-JTT1077-796-platform 开发的基于JTT808/1078 JTT1077，JT/T796协议�
 
 # 体系架构
 
-https://github.com/Car-eye-team/Car-eye-JTT1077-JT796-platform/blob/master/%E5%B9%B3%E5%8F%B0%E6%9E%B6%E6%9E%84.png
+![](https://github.com/Car-eye-team/Car-eye-JTT1077-JT796-platform/blob/master/%E5%B9%B3%E5%8F%B0%E6%9E%B6%E6%9E%84.png）
 
 # 我们为什么要开发这个平台
 
