@@ -11,6 +11,10 @@ Car-eye-JTT1077-796-platform 开发的基于JTT808/1078 JTT1077，JT/T796协议�
 6. 设备SDK支持多通道推流，支持推送文件，高版本的android系统支持Epoll数据传送方式。
 7. 分布式架构web和视频服务器可以运行在不同硬件上。
 
+# 体系架构
+
+
+
 # 我们为什么要开发这个平台
 
 不同的设备厂家，使用相同的平台架构，既符合了国家交通部的要求，又具备更好的兼容性
@@ -23,6 +27,8 @@ Car-eye-JTT1077-796-platform 开发的基于JTT808/1078 JTT1077，JT/T796协议�
 
 
 ![](https://github.com/Car-eye-team/Car-eye-JTT808-1078-platform/blob/master/Car-eye.png)
+
+
 
 
 # 体验平台登录方式
