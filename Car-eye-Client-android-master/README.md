@@ -29,7 +29,7 @@ https://fir.im/wmdr
 
 ![](https://github.com/Car-eye-team/Car-eye-Player-android/blob/master/Car-eye-player-android.png)
 
-# 联系我们  
+# 联系我们 eye-Player-android 
 www.car-eye.cn       
 
 www.liveoss.com    
@@ -37,3 +37,5 @@ www.liveoss.com
 support@car-eye.cn    
 
 ![](https://github.com/Car-eye-team/Car-eye-server/blob/master/car-server/doc/QQ.jpg)  
+
+
