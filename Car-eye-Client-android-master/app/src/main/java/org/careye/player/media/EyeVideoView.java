@@ -197,6 +197,7 @@ public class EyeVideoView extends FrameLayout implements MediaController.MediaPl
                 Gravity.CENTER);
         renderUIView.setLayoutParams(lp);
         addView(renderUIView);
+
         mRenderView.addRenderCallback(mSHCallback);
         mRenderView.setVideoRotation(mVideoRotationDegree);
     }

@@ -162,10 +162,22 @@ public class TreeAdapter extends BaseAdapter {
         if (keyword != null && !"".equals(keyword) && deptCar.getNodeName().contains(keyword)) {
             int index = deptCar.getNodeName().indexOf(keyword);
             int len = keyword.length();
-            Spanned temp = Html.fromHtml(deptCar.getNodeName().substring(0, index)
+            String temp = "";
+            String strTemp = deptCar.getNodeName().substring(0, index)
                     + "<font color=#FF0000>"
                     + deptCar.getNodeName().substring(index, index + len) + "</font>"
-                    + deptCar.getNodeName().substring(index + len, deptCar.getNodeName().length()));
+                    + deptCar.getNodeName().substring(index + len, deptCar.getNodeName().length());
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                temp =  Html.fromHtml(""+strTemp, Html.FROM_HTML_MODE_LEGACY).toString();
+            } else {
+                temp =  Html.fromHtml(""+strTemp).toString();
+            }
+
+
+//            Spanned tempS = Html.fromHtml(deptCar.getNodeName().substring(0, index)
+//                    + "<font color=#FF0000>"
+//                    + deptCar.getNodeName().substring(index, index + len) + "</font>"
+//                    + deptCar.getNodeName().substring(index + len, deptCar.getNodeName().length()));
 
             holder.text.setText(temp);
         } else {

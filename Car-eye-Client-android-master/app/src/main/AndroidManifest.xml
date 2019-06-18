@@ -41,12 +41,7 @@
     <uses-permission android:name="android.permission.READ_LOGS" >    </uses-permission>
     <uses-permission android:name="android.permission.VIBRATE" />
 
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_LOGS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
 
     <application
         android:name="org.careye.DemoApplication"
@@ -57,8 +52,8 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="acLw5MusKAazSBnvzvMKpzaMvDpQqb1M" />
-
+            android:value="GcBaGoS18NHbmsq8F6XO05CGI6cO1lkH" />
+     <!--   GcBaGoS18NHbmsq8F6XO05CGI6cO1lkH  acLw5MusKAazSBnvzvMKpzaMvDpQqb1M-->
         <activity
             android:name="org.careye.activity.Welcome"
             android:configChanges="keyboardHidden|orientation|screenSize"
