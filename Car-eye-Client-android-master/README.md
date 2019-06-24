@@ -25,7 +25,7 @@ https://github.com/Car-eye-team/Car-eye-player-IOS
 
 https://fir.im/wmdr
 
-# 扫描二维码下载  
+# 扫描二维码下载 如下链接
 
 ![](https://github.com/Car-eye-team/Car-eye-Player-android/blob/master/Car-eye-player-android.png)
 
