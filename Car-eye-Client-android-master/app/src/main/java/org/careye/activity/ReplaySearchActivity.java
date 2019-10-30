@@ -22,13 +22,19 @@ import org.careye.utils.DateUtil;
 
 import java.util.Calendar;
 
+/**
+ * 录像查找
+ * */
 public class ReplaySearchActivity extends AppCompatActivity implements View.OnClickListener, DatePicker.OnDateChangedListener {
 
     public final static int REQUEST_SELECT_DEVICE_CODE = 0x10;
 
-    private Calendar mBegTime;
     private int mChannel = -1;
+    private int mLocation = -1;
+
+    private Calendar mBegTime;
     private Calendar mDate;
+
     private AlertDialog mDlgChannel;
     private AlertDialog mDlgLocation;
     private Calendar mEndTime;
@@ -39,7 +45,7 @@ public class ReplaySearchActivity extends AppCompatActivity implements View.OnCl
     private LinearLayout mLayoutEndTime;
     private LinearLayout mLayoutLocation;
     private RelativeLayout mLayoutSearch;
-    private int mLocation = -1;
+
     private TextView mTvBegTime;
     private TextView mTvChannel;
     private TextView mTvDate;
@@ -55,7 +61,8 @@ public class ReplaySearchActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.playback_search);
+        setContentView(R.layout.activity_replay_search);
+
         initView();
         initListener();
     }
@@ -76,12 +83,16 @@ public class ReplaySearchActivity extends AppCompatActivity implements View.OnCl
         mTvDate = findViewById(R.id.playback_date_value);
         mTvBegTime = findViewById(R.id.playback_begin_time_value);
         mTvEndTime = findViewById(R.id.playback_end_time_value);
+
         mDate = Calendar.getInstance();
         mTvDate.setText(DateUtil.dateSwitchDateString(mDate.getTime()));
+
         (mBegTime = Calendar.getInstance()).set(Calendar.HOUR_OF_DAY, 0);
         mBegTime.set(Calendar.MINUTE, 0);
         mBegTime.set(Calendar.SECOND, 0);
+
         mTvBegTime.setText(DateUtil.dateSwitchTimeString(mBegTime.getTime()));
+
         (mEndTime = Calendar.getInstance()).set(Calendar.HOUR_OF_DAY, 23);
         mEndTime.set(Calendar.MINUTE, 59);
         mEndTime.set(Calendar.SECOND, 59);
@@ -107,14 +118,15 @@ public class ReplaySearchActivity extends AppCompatActivity implements View.OnCl
             public void onClick(final DialogInterface dialogInterface, final int n) {
                 if (n == 0) {
                     mTvLocation.setText(R.string.playback_loc_device);
-                }
-                else {
+                } else {
                     mTvLocation.setText(R.string.playback_loc_server);
                 }
+
                 mLocation = n;
                 mDlgLocation.dismiss();
             }
         });
+
         mDlgLocation = builder.create();
         mDlgLocation.show();
     }
@@ -124,13 +136,16 @@ public class ReplaySearchActivity extends AppCompatActivity implements View.OnCl
             Toast.makeText(this, R.string.select_terminal_tip, Toast.LENGTH_SHORT).show();
             return;
         }
+
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.playback_channel);
         final String[] array = new String[departmentCar.getChanneltotals() + 1];
         array[0] = "所有";
+
         for (int i = 1 ; i < departmentCar.getChanneltotals() + 1; i++) {
             array[i] = "CH" + i;
         }
+
         int n = 0;
         builder.setSingleChoiceItems((CharSequence[])array, n, (DialogInterface.OnClickListener)new DialogInterface.OnClickListener() {
             public void onClick(final DialogInterface dialogInterface, final int n) {
@@ -229,18 +244,22 @@ public class ReplaySearchActivity extends AppCompatActivity implements View.OnCl
             Toast.makeText(this, R.string.select_terminal_tip, Toast.LENGTH_SHORT).show();
             return;
         }
+
         if (mLocation == -1) {
             Toast.makeText(this, "请选择文件位置", Toast.LENGTH_SHORT).show();
             return;
         }
+
         if (mChannel == -1) {
             Toast.makeText(this, "请选择通道", Toast.LENGTH_SHORT).show();
             return;
         }
+
         if (this.mBegTime.getTimeInMillis() >= this.mEndTime.getTimeInMillis()) {
             Toast.makeText(this, R.string.select_time_tip, Toast.LENGTH_SHORT).show();
             return;
         }
+
         Intent intent = new Intent();
         intent.putExtra("departmentCar", departmentCar);
         intent.putExtra("location", mLocation);
@@ -248,13 +267,14 @@ public class ReplaySearchActivity extends AppCompatActivity implements View.OnCl
         intent.putExtra("begTime", mTvDate.getText().toString() + " " + mTvBegTime.getText().toString());
         intent.putExtra("endTime", mTvDate.getText().toString() + " " + mTvEndTime.getText().toString());
         setResult(RESULT_OK, intent);
+
         finish();
     }
 
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        switch (id){
+        switch (id) {
             case R.id.device_list_iv_back:
                 finish();
                 break;
@@ -301,6 +321,7 @@ public class ReplaySearchActivity extends AppCompatActivity implements View.OnCl
                     departmentCar = data.getParcelableExtra("device");
                     mTvDevice.setText(departmentCar.getNodeName());
                 }
+
                 break;
             default:
                 break;

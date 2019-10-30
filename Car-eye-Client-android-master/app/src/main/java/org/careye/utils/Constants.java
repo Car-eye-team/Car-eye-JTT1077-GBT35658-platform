@@ -3,17 +3,12 @@ package org.careye.utils;
 public class Constants {
 
     /** 用户名*/
-    public static final String PREF_LOGIN_NAME = "pref_login_name"; 	// 用户名
-    public static final String PREF_LOGIN_PW = "pref_login_pw"; 	// 用户名
-    public static final String PREF_LOGIN_IP = "pref_login_ip"; 	// ip
-    /**登录 URL*/
-    public static final String HTTP_URL = "http://www.liveoss.com:8088/cmsapi/"; 	// 用户名
-
+    public static final String PREF_LOGIN_NAME = "pref_login_name";     // 用户名
+    public static final String PREF_LOGIN_PW = "pref_login_pw"; 	    // 密码
+    public static final String PREF_LOGIN_IP = "pref_login_ip"; 	    // ip
 
     /**登录*/
     public static final String ACTION_LOGIN ="userLogin"; 	// 用户名
-
-
 
     /** Handler msg.what 特殊消息相关*/
     public static final int WHAT_CONNECTED_TIMEOUT_B = 1041;	// http网络连接超时  特殊

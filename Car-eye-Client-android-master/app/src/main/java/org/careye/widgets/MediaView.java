@@ -6,7 +6,6 @@
 package org.careye.widgets;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
@@ -14,7 +13,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.careye.CarEyeClient.R;
@@ -65,9 +63,12 @@ public class MediaView extends RelativeLayout implements View.OnClickListener {
         mEvvMedia = findViewById(R.id.evv_media);
     }
 
+    public void toggleAspectRatio() {
+        mEvvMedia.toggleAspectRatio();
+    }
+
     @Override
     public void onClick(View v) {
-
         int id = v.getId();
     }
 

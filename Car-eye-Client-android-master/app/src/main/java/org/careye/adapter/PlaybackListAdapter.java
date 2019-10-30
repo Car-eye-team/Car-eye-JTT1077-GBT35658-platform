@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.careye.CarEyeClient.R;
@@ -42,15 +41,15 @@ public class PlaybackListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
-        if(convertView == null)
-        {
+
+        if(convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.playback_list_item, null);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
-        }else
-        {
+        } else {
             holder = (ViewHolder)convertView.getTag();
         }
+
         TerminalFile terminalFile = terminalFileList.get(position);
         holder.tvStartTime.setText(terminalFile.getStartTime());
         holder.tvEndTime.setText(terminalFile.getEndTime());
@@ -66,5 +65,4 @@ public class PlaybackListAdapter extends BaseAdapter {
             tvEndTime = view.findViewById(R.id.lyPlaybackItem_tvType);
         }
     }
-
 }

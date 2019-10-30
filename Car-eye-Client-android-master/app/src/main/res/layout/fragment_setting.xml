@@ -23,22 +23,16 @@
     </android.support.v7.widget.Toolbar>
 
     <ScrollView
-
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:scrollbars="vertical"
         android:fadingEdge="vertical">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-
-
-            >
-
-
+            android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1px"
@@ -50,8 +44,7 @@
                 android:layout_height="40dp"
                 android:background="@drawable/btn_grid_selector"
                 android:visibility="visible"
-                android:layout_marginTop="20dp"
-                >
+                android:layout_marginTop="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -60,7 +53,6 @@
                     android:layout_marginLeft="20dp"
                     android:text="用户名"
                     android:textColor="@color/black"
-
                     android:textSize="15sp" />
 
                 <LinearLayout
@@ -88,12 +80,6 @@
                             android:text="--"
                             android:textColor="@color/main_texthui"
                             android:textSize="12sp" />
-
-                        <!-- <ImageView -->
-                        <!-- android:layout_width="15dp" -->
-                        <!-- android:layout_height="15dp" -->
-                        <!-- android:layout_marginLeft="4dp" -->
-                        <!-- android:src="@drawable/ri_jiantou" /> -->
                     </LinearLayout>
                 </LinearLayout>
 
@@ -105,20 +91,20 @@
                     android:src="@drawable/ri_jiantou"
                     android:visibility="gone" />
             </FrameLayout>
+
             <!-- 000 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:background="@color/colorlinehuicc" />
+
             <!-- version -->
             <FrameLayout
-
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@drawable/btn_grid_selector"
                 android:visibility="visible"
-                android:layout_marginTop="20dp"
-                >
+                android:layout_marginTop="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -127,7 +113,6 @@
                     android:layout_marginLeft="20dp"
                     android:text="版本号"
                     android:textColor="@color/black"
-
                     android:textSize="15sp" />
 
                 <LinearLayout
@@ -150,13 +135,10 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:ellipsize="end"
-
                             android:singleLine="true"
                             android:text="--"
                             android:textColor="@color/main_texthui"
                             android:textSize="12sp" />
-
-
                     </LinearLayout>
                 </LinearLayout>
 
@@ -169,10 +151,8 @@
                     android:text="版本更新"
                     android:visibility="visible" />
             </FrameLayout>
+
             <!-- 000 -->
-
-
-
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
@@ -196,9 +176,6 @@
                 android:background="@color/colorlinehuicc"
                 android:visibility="gone" />
 
-
-            <!-- 000 -->
-
             <LinearLayout
                 android:id="@+id/MenuSez_ll_one_addfour"
                 android:layout_width="match_parent"
@@ -206,8 +183,7 @@
                 android:background="@drawable/btn_grid_selector"
                 android:paddingLeft="20dp"
                 android:paddingRight="10dp"
-                android:visibility="gone"
-                >
+                android:visibility="gone">
 
                 <EditText
                     android:id="@+id/et_pleace_inputinfor"
@@ -220,46 +196,41 @@
                     android:textColorHint="@color/color_line_hui"
                     android:background="@color/coloralf"
                     android:textSize="15sp" />
+
                 <LinearLayout
                     android:id="@+id/ll_ivsearch_delalltext"
                     android:layout_width="30dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center|right"
-                    android:gravity="center"
-                    >
+                    android:gravity="center">
 
                     <ImageView
                         android:id="@+id/iv_ivsearch_delalltext"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:src="@drawable/ri_jiantou"
-                        android:visibility="invisible"
-                        />
-
-
+                        android:visibility="invisible" />
                 </LinearLayout>
             </LinearLayout>
+
             <!-- 000 -->
             <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1px"-->
-                <!--android:background="@color/colorlinehuicc" />-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1px"-->
+            <!--android:background="@color/colorlinehuicc" />-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="1px"
                 android:background="@color/color_line_huidan"
-                android:layout_marginTop="80dp"
-                />
+                android:layout_marginTop="80dp" />
 
             <Button
                 android:id="@+id/btn_taguser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-android:layout_margin="20dp"
+                android:layout_margin="20dp"
                 android:text="切换账号" />
 
         </LinearLayout>
     </ScrollView>
-
-
-    </LinearLayout>
+</LinearLayout>

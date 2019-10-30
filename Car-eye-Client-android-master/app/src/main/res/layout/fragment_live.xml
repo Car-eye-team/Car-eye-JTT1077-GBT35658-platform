@@ -19,24 +19,34 @@
             android:text="@string/video_preview"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
-        
+
+        <ImageView
+            android:id="@+id/iv_setting"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:scaleType="center"
+            android:src="@drawable/icon_setting"/>
+
         <ImageView
             android:id="@+id/iv_search"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginRight="10dp"
-            android:layout_gravity="center|right"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:scaleType="center"
             android:src="@drawable/ic_search_selector"/>
 
     </android.support.v7.widget.Toolbar>
     
     <LinearLayout
+        android:id="@+id/mv_player_ll"
         android:layout_weight="1"
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="0dp">
 
         <LinearLayout
+            android:id="@+id/mv_player_ll1"
             android:layout_weight="1"
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -57,6 +67,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/mv_player_ll2"
             android:layout_weight="1"
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -88,7 +99,7 @@
         android:background="#ffffff"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="44dp">
 
         <ImageView
             android:id="@+id/iv_play"
@@ -120,11 +131,16 @@
             android:padding="8dp"
             android:layout_weight="1"
             android:layout_width="0dp"
+            android:visibility="gone"
             android:layout_height="match_parent" />
 
-
+        <ImageView
+            android:id="@+id/iv_full_screen"
+            android:src="@drawable/quanping"
+            android:padding="12dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
 
     </LinearLayout>
-
-
 </LinearLayout>

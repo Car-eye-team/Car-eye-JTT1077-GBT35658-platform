@@ -12,7 +12,7 @@ public class CmsRequest {
     /**
      * 用户登录接口
      */
-    public interface UserLogin{
+    public interface UserLogin {
         @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
         @POST("userLogin")
         Call<JsonObject> userLogin(@Body JsonObject body);
@@ -21,7 +21,7 @@ public class CmsRequest {
     /**
      * 获取用户机构车辆树接口
      */
-    public interface DeptTree{
+    public interface DeptTree {
         @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
         @POST("deptTree")
         Call<JsonObject> deptTree(@Body JsonObject body);
@@ -30,32 +30,34 @@ public class CmsRequest {
     /**
      * 播放和停止视频
      */
-    public interface PlayOrStopSend{
+    public interface PlayOrStopSend {
         @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
-        @POST("playOrStopSend")
+        @POST("playSend")
         Call<JsonObject> playOrStopSend(@Body JsonObject body);
     }
 
     /**
      * 根据车辆获取设备信息列表
      */
-    public interface GetTerminalList{
+    public interface GetTerminalList {
         @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
         @POST("getTerminalList")
         Call<JsonObject> getTerminalList(@Body JsonObject body);
     }
+
     /**
      * 跟据设备号获取设备GPS状态
      */
-    public interface GetTerminalGpsStatus{
+    public interface GetTerminalGpsStatus {
         @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
         @POST("getTerminalGpsStatus")
         Call<JsonObject> getTerminalGpsStatus(@Body JsonObject body);
     }
-  /**
+
+    /**
      * 获取设备历史轨迹数据
      */
-    public interface GetHistoryTrack{
+    public interface GetHistoryTrack {
         @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
         @POST("getHistoryTrack")
         Call<JsonObject> getHistoryTrack(@Body JsonObject body);
@@ -64,7 +66,7 @@ public class CmsRequest {
     /**
      * 获取设备在线状态。
      */
-    public interface GetCarStatus{
+    public interface GetCarStatus {
         @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
         @POST("getCarStatus")
         Call<JsonObject> getCarStatus(@Body JsonObject body);
@@ -73,7 +75,7 @@ public class CmsRequest {
     /**
      * 查询设备历史录像列表。
      */
-    public interface QueryTerminalFileList{
+    public interface QueryTerminalFileList {
         @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
         @POST("queryTerminalFileList")
         Call<JsonObject> queryTerminalFileList(@Body JsonObject body);
@@ -82,7 +84,7 @@ public class CmsRequest {
     /**
      * 远程录像回放。
      */
-    public interface PlaybackAppoint{
+    public interface PlaybackAppoint {
         @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
         @POST("playbackAppoint")
         Call<JsonObject> playbackAppoint(@Body JsonObject body);

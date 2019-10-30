@@ -72,14 +72,12 @@
     <string name="VideoView_player_IjkMediaPlayer">Player: IjkMediaPlayer</string>
     <string name="VideoView_player_IjkExoMediaPlayer">Player: IjkExoMediaPlayer</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
     <string name="map_monitor">地图监控</string>
     <string name="video_preview">视频预览</string>
     <string name="track_playback">轨迹回放</string>
     <string name="replay">录像回放</string>
     <string name="setting">设置</string>
+    <string name="warn">报警</string>
     <string name="devlist_all">所有</string>
     <string name="devlist_online">在线</string>
 
@@ -476,5 +474,8 @@
     <string name="alarm_info_route_lowSpeed_platform">线路低速报警(平台产生)</string>
     <string name="alarm_info_road_grade_overSpeed_platform">道路等级超速报警(平台产生)</string>
     <string name="alarm_info_gps_abnormal_platform">定位异常(平台产生)</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

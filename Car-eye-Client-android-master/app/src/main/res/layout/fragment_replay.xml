@@ -20,12 +20,20 @@
             android:textSize="18sp" />
 
         <ImageView
+            android:id="@+id/iv_setting"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:scaleType="center"
+            android:src="@drawable/icon_setting"/>
+
+        <ImageView
             android:id="@+id/iv_search"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_gravity="center|right"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_search_selector" />
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:scaleType="center"
+            android:src="@drawable/ic_search_selector"/>
 
     </android.support.v7.widget.Toolbar>
 

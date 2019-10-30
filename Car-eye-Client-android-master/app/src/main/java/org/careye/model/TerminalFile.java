@@ -5,9 +5,6 @@ import android.os.Parcelable;
 
 import org.careye.utils.DateUtil;
 
-import java.util.ArrayList;
-import java.util.Date;
-
 public class TerminalFile implements Parcelable {
 
     /**
@@ -48,6 +45,23 @@ public class TerminalFile implements Parcelable {
     }
 
     public String getStartTime() {
+        if (startTime == null) {
+            return "";
+        }
+
+        if (startTime.length() == 12) {
+            StringBuffer sb = new StringBuffer(startTime);
+
+            String year = sb.substring(0, 2);
+            String month = sb.substring(2, 4);
+            String day = sb.substring(4, 6);
+            String hour = sb.substring(6, 8);
+            String minute = sb.substring(8, 10);
+            String second = sb.substring(10, 12);
+
+            return "20" + year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+        }
+
         return startTime;
     }
 
@@ -60,6 +74,23 @@ public class TerminalFile implements Parcelable {
     }
 
     public String getEndTime() {
+        if (endTime == null) {
+            return "";
+        }
+
+        if (endTime.length() == 12) {
+            StringBuffer sb = new StringBuffer(endTime);
+
+            String year = sb.substring(0, 2);
+            String month = sb.substring(2, 4);
+            String day = sb.substring(4, 6);
+            String hour = sb.substring(6, 8);
+            String minute = sb.substring(8, 10);
+            String second = sb.substring(10, 12);
+
+            return "20" + year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+        }
+
         return endTime;
     }
 
@@ -120,7 +151,6 @@ public class TerminalFile implements Parcelable {
     }
 
     public static final Creator<TerminalFile> CREATOR = new Creator<TerminalFile>() {
-
         @Override
         public TerminalFile[] newArray(int size) {
             return new TerminalFile[size];
@@ -136,8 +166,8 @@ public class TerminalFile implements Parcelable {
             terminalFile.mediaType = source.readInt();
             terminalFile.streamType = source.readInt();
             terminalFile.memoryType = source.readInt();
+
             return terminalFile;
         }
     };
-
 }

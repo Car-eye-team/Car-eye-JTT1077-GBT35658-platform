@@ -11,15 +11,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.os.Environment;
 import android.os.SystemClock;
-import android.text.TextUtils;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +26,7 @@ import com.careye.CarEyeClient.R;
 import com.google.gson.JsonObject;
 
 import org.careye.activity.CarTreeActivity;
+import org.careye.activity.SettingActivity;
 import org.careye.bll.PrefBiz;
 import org.careye.model.DepartmentCar;
 import org.careye.request.BaseRequest;
@@ -34,6 +34,7 @@ import org.careye.request.CmsRequest;
 import org.careye.utils.Constants;
 import org.careye.utils.DateUtil;
 import org.careye.utils.MD5Util;
+import org.careye.utils.PicUtils;
 import org.careye.widgets.MediaView;
 
 import retrofit2.Call;
@@ -43,14 +44,17 @@ import retrofit2.Retrofit;
 
 import static android.widget.Toast.LENGTH_LONG;
 
+/**
+ * 视频tab
+ * */
 public class LiveFragment extends Fragment implements View.OnClickListener {
-
-    private final String TAG = "LiveFragment";
+    private final String TAG = LiveFragment.class.getSimpleName();
 
     public final static int REQUEST_SELECT_DEVICE_CODE = 0x10;
 
     private TextView mTvTitle;
     private ImageView mIvSearch;
+    private ImageView iv_setting;
     private View mRoot;
 
     private MediaView mCurrPlayer;
@@ -58,24 +62,32 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private MediaView mMvPlayer2;
     private MediaView mMvPlayer3;
     private MediaView mMvPlayer4;
+    private LinearLayout mv_player_ll;
+    private LinearLayout mv_player_ll1;
+    private LinearLayout mv_player_ll2;
+    private Toolbar toolbar;
 
     private ImageView mIvPlay;
     private ImageView mIvVoice;
     private ImageView mIvVideo;
     private ImageView mIvRec;
+    private ImageView iv_full_screen;
 
     private String URL1;
     private String URL2;
     private String URL3;
     private String URL4;
-    //    private String URL = "rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov";
-//    private String URL = "rtmp://www.car-eye.cn:10077/live/15922222222&channel=4";
+    private String URL = "rtmp://202.69.69.180:443/webcast/bshdlive-pc";
+
     private DepartmentCar departmentCar;
+    private String terminalCurr;
 
     private PrefBiz prefBiz;
 
     private OnFragmentInteractionListener mListener;
+
     public LiveFragment() {
+
     }
 
     public static LiveFragment newInstance() {
@@ -96,37 +108,45 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private void initView() {
         mTvTitle = mRoot.findViewById(R.id.tv_title);
         mIvSearch = mRoot.findViewById(R.id.iv_search);
-
+        iv_setting = mRoot.findViewById(R.id.iv_setting);
         mIvPlay = mRoot.findViewById(R.id.iv_play);
         mIvVoice = mRoot.findViewById(R.id.iv_voice);
         mIvVideo = mRoot.findViewById(R.id.iv_video);
         mIvRec = mRoot.findViewById(R.id.iv_rec);
+        iv_full_screen = mRoot.findViewById(R.id.iv_full_screen);
 
         mMvPlayer1 = mRoot.findViewById(R.id.mv_player_1);
         mMvPlayer2 = mRoot.findViewById(R.id.mv_player_2);
         mMvPlayer3 = mRoot.findViewById(R.id.mv_player_3);
         mMvPlayer4 = mRoot.findViewById(R.id.mv_player_4);
+        mv_player_ll = mRoot.findViewById(R.id.mv_player_ll);
+        mv_player_ll1 = mRoot.findViewById(R.id.mv_player_ll1);
+        mv_player_ll2 = mRoot.findViewById(R.id.mv_player_ll2);
+        toolbar = mRoot.findViewById(R.id.toolbar);
 
         mMvPlayer1.setSelect(true);
         mCurrPlayer = mMvPlayer1;
 
         prefBiz = new PrefBiz(getActivity());
         mTvTitle.setText(prefBiz.getStringInfo(Constants.PREF_THIS_CURREN_CARNUM, getResources().getString(R.string.video_preview)));
-        String terminalCurr = prefBiz.getStringInfo(Constants.PREF_THIS_CURREN_CARID, "");
+
+        terminalCurr = prefBiz.getStringInfo(Constants.PREF_THIS_CURREN_CARID, "");
         playOrStopSend(terminalCurr, "0", "1");
         playOrStopSend(terminalCurr, "0", "2");
         playOrStopSend(terminalCurr, "0", "3");
         playOrStopSend(terminalCurr, "0", "4");
+
+//        play(mMvPlayer1, URL);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mRoot = inflater.inflate(R.layout.fragment_live, container, false);
 
         initView();
         initListener();
+
         return mRoot;
     }
 
@@ -137,11 +157,12 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
 
     private void initListener() {
         mIvSearch.setOnClickListener(this);
-
+        iv_setting.setOnClickListener(this);
         mIvPlay.setOnClickListener(this);
         mIvVoice.setOnClickListener(this);
         mIvVideo.setOnClickListener(this);
         mIvRec.setOnClickListener(this);
+        iv_full_screen.setOnClickListener(this);
 
         mMvPlayer1.setOnClickListener(this);
         mMvPlayer2.setOnClickListener(this);
@@ -155,15 +176,14 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+            throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
         }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d(TAG, "onDetach");
+
         mListener = null;
         release();
     }
@@ -172,9 +192,10 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-            case R.id.iv_search:
+            case R.id.iv_search: {
                 Intent intent = new Intent(getActivity(), CarTreeActivity.class);
                 startActivityForResult(intent, REQUEST_SELECT_DEVICE_CODE);
+            }
                 break;
             case R.id.mv_player_1:
                 switchSelect(mMvPlayer1);
@@ -200,8 +221,25 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
             case R.id.iv_rec:
                 setRecEnable(mCurrPlayer);
                 break;
+            case R.id.iv_full_screen: {
+                this.mListener.onFullscreen();
+            }
+                break;
+            case R.id.iv_setting: {
+                Intent intent = new Intent(getActivity(), SettingActivity.class);
+                startActivity(intent);
+            }
+            break;
             default:
                 break;
+        }
+    }
+
+    public void showToolBar(boolean v) {
+        if (v) {
+            toolbar.setVisibility(View.VISIBLE);
+        } else {
+            toolbar.setVisibility(View.GONE);
         }
     }
 
@@ -215,19 +253,24 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
                     mMvPlayer2.play("");
                     mMvPlayer3.play("");
                     mMvPlayer4.play("");
+
                     mMvPlayer1.stop();
                     mMvPlayer2.stop();
                     mMvPlayer3.stop();
                     mMvPlayer4.stop();
+
                     departmentCar = data.getParcelableExtra("device");
-                    prefBiz.putStringInfo(Constants.PREF_THIS_CURREN_CARID, departmentCar.getTerminal());
+                    terminalCurr = departmentCar.getTerminal();
+                    prefBiz.putStringInfo(Constants.PREF_THIS_CURREN_CARID, terminalCurr);
                     prefBiz.putStringInfo(Constants.PREF_THIS_CURREN_CARNUM, departmentCar.getNodeName());
+
                     mTvTitle.setText(departmentCar.getNodeName());
+
                     if (departmentCar.getCarstatus() == 1 || departmentCar.getCarstatus() == 2) {
                         Toast.makeText(getActivity(), "当前车辆不在线", Toast.LENGTH_SHORT).show();
                     } else {
                         for (int i = 1; i < (departmentCar.getChanneltotals() > 4 ? 4 : departmentCar.getChanneltotals()) + 1; i++) {
-                            playOrStopSend(departmentCar.getTerminal(), "0", String.valueOf(i));
+                            playOrStopSend(terminalCurr, "0", String.valueOf(i));
                         }
                     }
                 }
@@ -240,24 +283,31 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private void playOrStopSend(String terminal, final String type, final String id) {
         Retrofit retrofit = BaseRequest.getInstance().getRetrofit();
         CmsRequest.PlayOrStopSend request = retrofit.create(CmsRequest.PlayOrStopSend.class);
+
         String tradeno = DateUtil.getTodayDate(DateUtil.df6);
-        String sign = MD5Util.MD5Encode(prefBiz.getStringInfo(Constants.PREF_LOGIN_NAME, "") + prefBiz.getStringInfo(Constants.PREF_LOGIN_PW, "") + tradeno, "utf-8");
+        String name = prefBiz.getStringInfo(Constants.PREF_LOGIN_NAME, "");
+        String pwd = prefBiz.getStringInfo(Constants.PREF_LOGIN_PW, "");
+        String sign = MD5Util.MD5Encode(name + pwd + tradeno, "utf-8");
+
         JsonObject body = new JsonObject();
-        body.addProperty("username", prefBiz.getStringInfo(Constants.PREF_LOGIN_NAME, ""));
+        body.addProperty("username", name);
         body.addProperty("tradeno", tradeno);
         body.addProperty("sign", sign);
-        body.addProperty("terminal", terminal);
         body.addProperty("type", type);
-        body.addProperty("id", id);
-        body.addProperty("protocol", "1");
-        body.addProperty("vedioType", 0);
-        body.addProperty("streamType", 1);
+        body.addProperty("terminal", terminal);     // 设备号
+        body.addProperty("id", id);                 // 通道号 1至32
+        body.addProperty("protocol", "1");  // 0：RTSP 1: RTMP 2:RTP 3： 其他
+        body.addProperty("vedioType", 0);   // 0：音视频 1视频 2 双向对讲 3 监听 4 中心广播5 透传
+        body.addProperty("streamType", 1);  // 0:主码流 1：子码流
+
         Call<JsonObject> call = request.playOrStopSend(body);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 JsonObject resultObj = response.body();
-                if (resultObj.has("errCode") && resultObj.get("errCode").getAsInt() == 0) {
+                Log.e(TAG, ">>>> " + resultObj.toString());
+
+                if (resultObj != null && resultObj.has("errCode") && resultObj.get("errCode").getAsInt() == 0) {
                     JsonObject dataObj = resultObj.getAsJsonObject("resultData");
                     if (type.equals("0")) {
                         switch (id) {
@@ -286,26 +336,27 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                String message = t.getMessage();
+                Log.i(TAG, t.getMessage());
             }
         });
     }
 
     /**
      * 设置Rec使能
-     * @param mCurrPlayer   当前活动窗口
+     * @param mCurrPlayer 当前活动窗口
      */
     private void setRecEnable(MediaView mCurrPlayer) {
         boolean isRec = mCurrPlayer.getRecState();
+
         if (isRec) {
             mCurrPlayer.enableRec(false, "", "");
             Toast.makeText(getActivity(), "录制停止！", LENGTH_LONG).show();
         } else {
-            String filePath= Environment.getExternalStorageDirectory().getAbsolutePath() + "/careye/video/";
             String fileName =  SystemClock.uptimeMillis() + ".mp4";
-            mCurrPlayer.enableRec(true, filePath, fileName);
+            mCurrPlayer.enableRec(true, PicUtils.getVideoPath(terminalCurr), fileName);
             Toast.makeText(getActivity(), "录制开始！", LENGTH_LONG).show();
         }
+
         updateRecView(!isRec);
     }
 
@@ -334,25 +385,48 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         mMvPlayer2.play("");
         mMvPlayer3.play("");
         mMvPlayer4.play("");
+
         mMvPlayer1.stop();
         mMvPlayer2.stop();
         mMvPlayer3.stop();
         mMvPlayer4.stop();
+
+        if (mMvPlayer1.getRecState()) {
+            mMvPlayer1.enableRec(false, "", "");
+        }
+        if (mMvPlayer2.getRecState()) {
+            mMvPlayer2.enableRec(false, "", "");
+        }
+        if (mMvPlayer3.getRecState()) {
+            mMvPlayer3.enableRec(false, "", "");
+        }
+        if (mMvPlayer4.getRecState()) {
+            mMvPlayer4.enableRec(false, "", "");
+        }
+
         if (departmentCar != null) {
             for (int i = 1; i < (departmentCar.getChanneltotals() > 4 ? 4 : departmentCar.getChanneltotals()) + 1; i++) {
-                playOrStopSend(departmentCar.getTerminal(), "1", String.valueOf(i));
+                playOrStopSend(terminalCurr, "1", String.valueOf(i));
             }
         }
     }
 
     private void play(MediaView player, String url) {
         boolean isPlaying = player.isPlaying();
+
         if (isPlaying) {
             player.stop();
         } else {
+//            // TODO
+//            url = URL;
+
             player.stop();
             player.play(url);
+
+            // 默认关闭声音
+            player.enableVolume(true);
         }
+
         updatePlayView(!isPlaying);
 
         //音量状态
@@ -363,22 +437,55 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         updateRecView(player.getRecState());
     }
 
-    /**
-     * 切换播放窗口对应的功能区状态
-     * @param mMvPlayer     切换窗口
-     */
+    /*
+    * 切换播放窗口对应的功能区状态
+    * */
     private void switchSelect(MediaView mMvPlayer) {
+        if (mMvPlayer == mMvPlayer1) {
+            if (mv_player_ll2.getVisibility() == View.VISIBLE) {
+                mv_player_ll2.setVisibility(View.GONE);
+                mMvPlayer2.setVisibility(View.GONE);
+            } else {
+                mv_player_ll2.setVisibility(View.VISIBLE);
+                mMvPlayer2.setVisibility(View.VISIBLE);
+            }
+        } else if (mMvPlayer == mMvPlayer2) {
+            if (mv_player_ll2.getVisibility() == View.VISIBLE) {
+                mv_player_ll2.setVisibility(View.GONE);
+                mMvPlayer1.setVisibility(View.GONE);
+            } else {
+                mv_player_ll2.setVisibility(View.VISIBLE);
+                mMvPlayer1.setVisibility(View.VISIBLE);
+            }
+        } else if (mMvPlayer == mMvPlayer3) {
+            if (mv_player_ll1.getVisibility() == View.VISIBLE) {
+                mv_player_ll1.setVisibility(View.GONE);
+                mMvPlayer4.setVisibility(View.GONE);
+            } else {
+                mv_player_ll1.setVisibility(View.VISIBLE);
+                mMvPlayer4.setVisibility(View.VISIBLE);
+            }
+        } else {
+            if (mv_player_ll1.getVisibility() == View.VISIBLE) {
+                mv_player_ll1.setVisibility(View.GONE);
+                mMvPlayer3.setVisibility(View.GONE);
+            } else {
+                mv_player_ll1.setVisibility(View.VISIBLE);
+                mMvPlayer3.setVisibility(View.VISIBLE);
+            }
+        }
+
         mCurrPlayer.setSelect(false);
         mCurrPlayer = mMvPlayer;
         mCurrPlayer.setSelect(true);
 
-        //播放状态
+        // 播放状态
         updatePlayView(mCurrPlayer.isPlaying());
-        //音量状态
+        // 音量状态
         updateMuteView(mCurrPlayer.getMuteState());
-        //视频显示状态
+        // 视频显示状态
         updateVideoView(mCurrPlayer.getShowVideoState());
-        //更新录制状态
+        // 更新录制状态
         updateRecView(mCurrPlayer.getRecState());
     }
 
@@ -416,5 +523,10 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+        void onFullscreen();
+    }
+
+    public void setmListener(OnFragmentInteractionListener mListener) {
+        this.mListener = mListener;
     }
 }

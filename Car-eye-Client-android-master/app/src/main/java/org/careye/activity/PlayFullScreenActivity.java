@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.careye.CarEyeClient.R;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import org.careye.bll.PrefBiz;
@@ -38,6 +37,7 @@ public class PlayFullScreenActivity extends AppCompatActivity implements View.On
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.play_full_screen);
+
         initView();
         initData();
         initListener();
@@ -70,8 +70,12 @@ public class PlayFullScreenActivity extends AppCompatActivity implements View.On
     private void playbackAppoint(DepartmentCar departmentCar, TerminalFile file) {
         Retrofit retrofit = BaseRequest.getInstance().getRetrofit();
         CmsRequest.PlaybackAppoint request = retrofit.create(CmsRequest.PlaybackAppoint.class);
+
         String tradeno = DateUtil.getTodayDate(DateUtil.df6);
-        String sign = MD5Util.MD5Encode(prefBiz.getStringInfo(Constants.PREF_LOGIN_NAME, "") + prefBiz.getStringInfo(Constants.PREF_LOGIN_PW, "") + tradeno, "utf-8");
+        String name = prefBiz.getStringInfo(Constants.PREF_LOGIN_NAME, "");
+        String pwd = prefBiz.getStringInfo(Constants.PREF_LOGIN_PW, "");
+        String sign = MD5Util.MD5Encode(name + pwd + tradeno, "utf-8");
+
         JsonObject body = new JsonObject();
         body.addProperty("endTime", file.getEndTime());
         body.addProperty("id", file.getLogicChannel());
@@ -79,19 +83,25 @@ public class PlayFullScreenActivity extends AppCompatActivity implements View.On
         body.addProperty("startTime", file.getStartTime());
         body.addProperty("sign", sign);
         body.addProperty("streamType", 0);
-        body.addProperty("terminal", departmentCar.getTerminal());
+        body.addProperty("terminal", departmentCar.getTerminal());  // 设备号
         body.addProperty("tradeno", tradeno);
-        body.addProperty("username", prefBiz.getStringInfo(Constants.PREF_LOGIN_NAME, ""));
+        body.addProperty("username", name);
         body.addProperty("vedioType", 0);
         Call<JsonObject> call = request.playbackAppoint(body);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 JsonObject resultObj = response.body();
-                if (resultObj.has("errCode") && resultObj.get("errCode").getAsInt() == 0) {
+                if (resultObj != null && resultObj.has("errCode") && resultObj.get("errCode").getAsInt() == 0) {
                     JsonObject object = resultObj.getAsJsonObject("resultData");
                     String url = object.get("url").getAsString();
                     mMvPlayer.play(url);
+
+                    // 切换画面的显示模式
+                    mMvPlayer.toggleAspectRatio();
+                    mMvPlayer.toggleAspectRatio();
+                    mMvPlayer.toggleAspectRatio();
+//                    mMvPlayer.toggleAspectRatio();
                 }
             }
 

@@ -5,7 +5,6 @@ import android.content.Context;
 /**
  * Created by xulc on 2018/8/7.
  */
-
 public class DensityUtil {
 
     public static int dip2px(Context context, float dpValue) {

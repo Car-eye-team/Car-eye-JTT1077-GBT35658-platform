@@ -13,7 +13,6 @@
     <color name="normalcolor">#ff333333</color>
     <color name="line_color">#dadada</color>
 
-
     <color name="blue">#FF07F707</color>
 
     <drawable name="setting_btn_press">#58cc42</drawable>

@@ -4,107 +4,103 @@ import java.io.Serializable;
 
 public class CarInfoGPS implements Serializable {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
-    private String  terminal;//	设备号
-    private String   carnumber;//产品号
-    private  String  carstatus;//车辆状态
-    private  String  devicetype;//	设备类型
-    private String   typename;//	设备类型名称
-    private String   disktype;//	硬盘类型
-    private  String  audioCodec;//	音频编码
-    private  String  leftRotation	;//
-    private  String  stopStatus;//	刹车状态
-    private  String   foreward;//	正转状态
-    private String    overturn	;//	反转状态
-    private String   antenna;//	gps 线状态
-    private String   disk	;//	硬盘状态
-    private  String  network	;//	3g/4g模块状态
-    private   String  staticStatus	;//	静止状态
-    private  String  replenish	;//	补传状态
-    private String    nightStatus	;//	夜间状态
-    private String    overload	;//	超载状态
-    private String    aacGps	;//	停车acc状态
-    private  String   areaAlarm	;//	出区域报警（终端产生
-    private  String  overRoute	;//	出线路报警（终端产生）
-    private  String  areaAlarmStatus	;//	区域报警状态
-    private  String   flowAlarm	;//	流量使用报警
-    private  String   backupBattery	;//	主机掉电由后备电池供电
-    private  String   carDefences;//		车辆设防
-    private  String   leaveArea	;//	出区域报警（终端产生）
-    private String    vollower	;//	电池电压过低
-    private String    motor	;//	发动机
-    private  String   loaded	;//	车载状态
-    private String   working	;//	作业状态
-    private String   operation;//		运营状态
-    private  String   oilway	;//	油路正常
-    private   String  circuit	;//	电路正常
-    private String   doorlock;//		门解锁
-    private  String   overspeedAlarm	;//	区域超速报警(平台产生)
-    private  String   overtimeAlarm ;//		时间段超速报警(平台产生)
-    private  String   lowerspeedAlarm	;//	时间段低速报警(平台产生)
-    private String   tiredAlarm;//	疲劳驾驶(平台产生)
-    private String    channel1;//		通道1视频丢失
+    private String terminal;        // 设备号
+    private String carnumber;       // 产品号
+    private String carstatus;       // 车辆状态
+    private String devicetype;      // 设备类型
+    private String typename;        // 设备类型名称
+    private String disktype;        // 硬盘类型
 
-    private  String   channel2;//		通道2视频丢失
-    private  String   channel3	;//	通道3视频丢失
-    private String   channel4 ;//	 通道4视频丢失
+    private String audioCodec;      // 音频编码
+    private String leftRotation;    //
 
-    private   String    channe5 ;//	通道5视频丢失
+    private String stopStatus;      // 刹车状态
+    private String foreward;        // 正转状态
+    private String overturn;        // 反转状态
+    private String antenna;         // gps 线状态
+    private String disk;            // 硬盘状态
+    private String network;         // 3g/4g模块状态
+    private String staticStatus;    // 静止状态
+    private String replenish;       // 补传状态
+    private String nightStatus;     // 夜间状态
+    private String overload;        // 超载状态
+    private String aacGps;          // 停车acc状态
+    private String areaAlarm;       // 出区域报警（终端产生
+    private String overRoute;       // 出线路报警（终端产生）
+    private String areaAlarmStatus; // 区域报警状态
+    private String flowAlarm;       // 流量使用报警
+    private String backupBattery;   // 主机掉电由后备电池供电
+    private String carDefences;     // 车辆设防
+    private String leaveArea;       // 出区域报警（终端产生）
+    private String vollower;        // 电池电压过低
+    private String motor;           // 发动机
+    private String loaded;          // 车载状态
+    private String working;         // 作业状态
+    private String operation;       // 运营状态
+    private String oilway;          // 油路正常
+    private String circuit;         // 电路正常
+    private String doorlock;        // 门解锁
+    private String overspeedAlarm;  // 区域超速报警(平台产生)
+    private String overtimeAlarm;   // 时间段超速报警(平台产生)
+    private String lowerspeedAlarm; // 时间段低速报警(平台产生)
+    private String tiredAlarm;      // 疲劳驾驶(平台产生)
 
-    private  String  channel6	;//	通道6视频丢失
-    private  String   channel7;//		通道7视频丢失
-    private  String   channel8	;//	通道8视频丢失
-    private  String   urgentAlarm	;//	紧急报警
-    private  String   gnssFault	;//	gnss模块故障
-    private  String   gnssDisconnected	;//gnss;//	天线未接或者剪断
-    private  String  lcdFault	;//	终端lcd或者显示器故障)
-    private String   channel1Fault	;//	摄像头通道1故障
-    private  String   channel2Fault	;//	摄像头通道2故障
-    private String   channel3Fault	;//	摄像头通道3故障
-    private String    channel4Fault	;//	摄像头通道4故障
-    private String    channel5Fault	;//	摄像头通道5故障
-    private String   channel6Fault	;//	摄像头通道6故障
-    private String   channel7Fault	;//	摄像头通道7故障
+    private String channel1;        // 通道1视频丢失
+    private String channel2;        // 通道2视频丢失
+    private String channel3;        // 通道3视频丢失
+    private String channel4;        // 通道4视频丢失
+    private String channe5;         // 通道5视频丢失
+    private String channel6;        // 通道6视频丢失
+    private String channel7;        // 通道7视频丢失
+    private String channel8;        // 通道8视频丢失
 
-    private String  channel8Fault;//		摄像头通道8故障
-    private String   deviate;//		路线偏离报警
-    private String   driveOvertime	;//	当天累计驾驶超时
-    private String   stolen
-            ;//	 车辆被盗
-    private String    ignition;//		车辆非法点火
-    private String    oilAbnormal	;//	车辆油量异常
-    private   String    bump	;//	碰撞侧翻报警
-    private String   unusualDrive1;//		异常行驶状态
-    private String    unusualDrive2	;//	异常行驶状态
-    private String    enterErea	;//	进区域
-    private String    enterRoute	;//	进路线
-    private String    ptz;//
-    private String   lng	;//	经度
-    private String   lat	;//	纬度
-    private String   blng	;//	百度经度
-    private String   blat	;//	百度纬度
-    private String   glng	;//	高德经度
+    private String urgentAlarm;     // 紧急报警
+    private String gnssFault;       // gnss模块故障
+    private String gnssDisconnected;// gnss;//	天线未接或者剪断
+    private String lcdFault;        // 终端lcd或者显示器故障)
+
+    private String channel1Fault;   // 摄像头通道1故障
+    private String channel2Fault;   // 摄像头通道2故障
+    private String channel3Fault;   // 摄像头通道3故障
+    private String channel4Fault;   // 摄像头通道4故障
+    private String channel5Fault;   // 摄像头通道5故障
+    private String channel6Fault;   // 摄像头通道6故障
+    private String channel7Fault;   // 摄像头通道7故障
+    private String channel8Fault;   // 摄像头通道8故障
+
+    private String deviate;         // 路线偏离报警
+    private String driveOvertime;   // 当天累计驾驶超时
+    private String stolen;          // 车辆被盗
+    private String ignition;        // 车辆非法点火
+    private String oilAbnormal;     // 车辆油量异常
+    private String bump;            // 碰撞侧翻报警
+    private String unusualDrive1;   // 异常行驶状态
+    private String unusualDrive2;   // 异常行驶状态
+    private String enterErea;       // 进区域
+    private String enterRoute;      // 进路线
+    private String ptz;             //
+
+    private String lng;             // 经度
+    private String lat;             // 纬度
+    private String blng;            // 百度经度
+    private String blat;            // 百度纬度
+    private String glng;            // 高德经度
+    private String glat;            // 高德纬度
+    private String gaddress;        // 高德地址
+    private String altitude;        // 高度
+    private String speed;           // 速度
+    private String direction;       // 方向
+    private String address;         // 地址
+    private String mileage;         // 里程
+    private String summileage;      // 总里程
+    private String gpstime;         // gps时间
+    private String gpsflag;         // gps是否有效
+    private String acc;             // acc状态
 
     public CarInfoGPS() {
         super();
     }
-
-    private String   glat	;//	高德纬度
-    private String    gaddress	;//	高德地址
-    private String    altitude	;//	高度
-    private String   speed	;//	速度
-    private String    direction	;//	方向
-    private String    address	;//	地址
-    private String   mileage  ;//	里程
-
-    private String    summileage ;// 总里程
-
-    private String  gpstime;//	gps时间
-    private String   gpsflag;//	gps是否有效
-    private String   acc;//	acc状态
 
     public String getTerminal() {
         return terminal;
@@ -121,10 +117,12 @@ public class CarInfoGPS implements Serializable {
     public void setCarnumber(String carnumber) {
         this.carnumber = carnumber;
     }
-/**车辆状态 1：长时间离线 2：离线 3：熄火 4：停车 5：行驶 6：报警 7：在线 8：未定位*/
+
+    /**车辆状态 1：长时间离线 2：离线 3：熄火 4：停车 5：行驶 6：报警 7：在线 8：未定位*/
     public String getCarstatus() {
         return carstatus;
     }
+
     /**车辆状态 1：长时间离线 2：离线 3：熄火 4：停车 5：行驶 6：报警 7：在线 8：未定位*/
     public void setCarstatus(String carstatus) {
         this.carstatus = carstatus;

@@ -7,6 +7,7 @@ package org.careye.utils;
 
 import android.graphics.Bitmap;
 import android.os.Environment;
+import android.os.SystemClock;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,15 +21,19 @@ public class PicUtils {
      */
     public static String saveImage(Bitmap bmp, String fileName) {
         File appDir = new File(Environment.getExternalStorageDirectory(), "careye");
+
         if (!appDir.exists()) {
             appDir.mkdir();
         }
+
         File file = new File(appDir, fileName);
+
         try {
             FileOutputStream fos = new FileOutputStream(file);
             bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
             fos.flush();
             fos.close();
+
             return appDir + "/" + fileName;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -36,5 +41,10 @@ public class PicUtils {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public static String getVideoPath(String terminal) {
+        String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/careye/video/" + terminal + "/";
+        return filePath;
     }
 }

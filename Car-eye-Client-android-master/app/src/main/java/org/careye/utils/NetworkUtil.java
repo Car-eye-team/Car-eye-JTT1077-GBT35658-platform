@@ -28,8 +28,8 @@ public class NetworkUtil {
 	 */
 	public int getNetWorkType(Context context) {
 		int netType = -1;
-		ConnectivityManager connMgr = (ConnectivityManager) context
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+		ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
 		if (networkInfo == null) {
@@ -46,6 +46,7 @@ public class NetworkUtil {
 		} else if (nType == ConnectivityManager.TYPE_WIFI) {
 			netType = 1;
 		}
+
 		return netType;
 	} 
 	
@@ -56,6 +57,7 @@ public class NetworkUtil {
 	 */
 	public boolean isConnect(Context context) {
 		boolean flag = false;
+
 		try {
 			ConnectivityManager connectivity = (ConnectivityManager) context
 					.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -70,14 +72,20 @@ public class NetworkUtil {
 		} catch (Exception e) {
 			Log.v("error", e.toString());
 		}
+
 		return flag;
 	}
+
 	public static String packageName(Context context) { PackageManager manager = context.getPackageManager();
 		String name = null;
-		try { PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
-			name = info.versionName;
-		} catch (PackageManager.NameNotFoundException e) { e.printStackTrace();
-		} return name;
-	}
 
+		try {
+			PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+			name = info.versionName;
+		} catch (PackageManager.NameNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		return name;
+	}
 }

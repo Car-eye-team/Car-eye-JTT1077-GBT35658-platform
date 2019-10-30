@@ -5,8 +5,7 @@ import android.os.Parcelable;
 
 import com.careye.CarEyeClient.R;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.careye.utils.Tools;
 
 /**
  * 用户机构车辆
@@ -23,7 +22,7 @@ public class DepartmentCar implements Parcelable {
     /**
      * 车牌号/机构名称
      */
-    private  String nodeName;
+    private String nodeName;
     /**
      * 节点类型 1组织机构 2 车辆
      */
@@ -70,6 +69,10 @@ public class DepartmentCar implements Parcelable {
     private int imageResource;
 
     public String getNodeId() {
+        if (Tools.isNull(nodeId)) {
+            return "";
+        }
+
         return nodeId;
     }
 
@@ -78,7 +81,11 @@ public class DepartmentCar implements Parcelable {
     }
 
     public String getParentId() {
-        return parentId;
+        if (Tools.isNull(parentId)) {
+            return "";
+        } else {
+            return parentId;
+        }
     }
 
     public void setParentId(String parentId) {
@@ -201,6 +208,7 @@ public class DepartmentCar implements Parcelable {
                 imageResource = R.drawable.device_online;
                 break;
         }
+
         return imageResource;
     }
 
@@ -224,7 +232,6 @@ public class DepartmentCar implements Parcelable {
     }
 
     public static final Creator<DepartmentCar> CREATOR = new Creator<DepartmentCar>() {
-
         @Override
         public DepartmentCar[] newArray(int size) {
             return new DepartmentCar[size];
@@ -243,8 +250,8 @@ public class DepartmentCar implements Parcelable {
             departmentCar.longoffline = source.readInt();
             departmentCar.terminal = source.readString();
             departmentCar.channeltotals = source.readInt();
+
             return departmentCar;
         }
     };
-
 }

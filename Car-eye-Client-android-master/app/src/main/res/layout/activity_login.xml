@@ -3,23 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
-    >
+    android:background="@color/white">
 
-   <!-- <include layout="@layout/layout_title_login" />-->
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|center"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="50dp"
-        android:src="@drawable/car_eyelog"/>
+        android:src="@drawable/car_eye_logo"/>
+
     <LinearLayout
         android:id="@+id/rlMain"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-      >
+        android:layout_weight="1">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -46,8 +44,6 @@
                         android:orientation="horizontal"
                         android:paddingLeft="20dp" >
 
-                        <!-- fenge_login -->
-
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -61,11 +57,6 @@
                                 android:layout_width="19dp"
                                 android:layout_height="24dp"
                                 android:background="@drawable/user_icon" />
-
-<!--                             <ImageView -->
-<!--                                 android:layout_width="wrap_content" -->
-<!--                                 android:layout_height="wrap_content" -->
-<!--                                 android:background="@drawable/fenge_login" /> -->
                         </LinearLayout>
 
                         <EditText
@@ -100,8 +91,6 @@
                         android:orientation="horizontal"
                         android:paddingLeft="20dp" >
 
-                        <!-- fenge_login -->
-
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -116,10 +105,6 @@
                                 android:layout_height="24dp"
                                 android:background="@drawable/pwd_icon" />
 
-<!--                             <ImageView -->
-<!--                                 android:layout_width="wrap_content" -->
-<!--                                 android:layout_height="wrap_content" -->
-<!--                                 android:background="@drawable/fenge_login" /> -->
                         </LinearLayout>
 
                         <EditText
@@ -136,7 +121,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal" >
@@ -148,8 +132,6 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:paddingLeft="20dp" >
-
-                        <!-- ip -->
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -164,13 +146,7 @@
                                 android:layout_width="19dp"
                                 android:layout_height="24dp"
                                 android:background="@drawable/pwd_icon"
-                                android:visibility="invisible"
-                                />
-
-                            <!--                             <ImageView -->
-                            <!--                                 android:layout_width="wrap_content" -->
-                            <!--                                 android:layout_height="wrap_content" -->
-                            <!--                                 android:background="@drawable/fenge_login" /> -->
+                                android:visibility="invisible" />
                         </LinearLayout>
 
                         <EditText
@@ -184,7 +160,6 @@
                             android:textSize="14sp" />
                     </LinearLayout>
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -210,8 +185,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="45dp"
                     android:layout_marginRight="45dp"
-                      android:layout_marginTop="20dp"
-                     >
+                    android:layout_marginTop="20dp">
 
                     <TextView
                         android:id="@+id/tv_find_register"

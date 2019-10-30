@@ -18,12 +18,11 @@
 
         <ImageView
             android:id="@id/lyPlayFullScreenkVod_ivBack"
-            android:layout_width="48.0dip"
-            android:layout_height="48.0dip"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
             android:contentDescription="@android:string/ok"
-            android:scaleType="fitXY"
+            android:scaleType="center"
             android:src="@drawable/ic_back_selector" />
 
         <TextView

@@ -1,6 +1,6 @@
 package org.careye.request;
 
-import org.careye.DemoApplication;
+import org.careye.CarApplication;
 import org.careye.bll.PrefBiz;
 import org.careye.utils.Constants;
 
@@ -13,7 +13,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class BaseRequest {
     private static BaseRequest instance;
     private static Retrofit retrofit;
-
 
     private BaseRequest() {
 
@@ -33,8 +32,9 @@ public class BaseRequest {
      */
     public synchronized Retrofit getRetrofit() {
         if (retrofit == null) {
-            PrefBiz prefBiz = new PrefBiz(DemoApplication.getContext());
+            PrefBiz prefBiz = new PrefBiz(CarApplication.getContext());
             retrofit = new Retrofit.Builder()
+//                    .baseUrl("http://" + prefBiz.getStringInfo(Constants.PREF_LOGIN_IP, "www.liveoss.com") + ":8902/cmsapi/")
                     .baseUrl("http://" + prefBiz.getStringInfo(Constants.PREF_LOGIN_IP, "www.liveoss.com") + ":8088/cmsapi/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
@@ -49,6 +49,7 @@ public class BaseRequest {
      */
     public synchronized Retrofit getRetrofit(String ip) {
         retrofit = new Retrofit.Builder()
+//                .baseUrl("http://" + ip + ":8902/cmsapi/")
                 .baseUrl("http://" + ip + ":8088/cmsapi/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

@@ -16,11 +16,9 @@ import java.util.Date;
  */
 @SuppressLint("SimpleDateFormat")
 public class DateUtil {
-	public static int dip2px(Context context, float dpValue) {  
-        final float scale = context.getResources().getDisplayMetrics().density;  
-        return (int) (dpValue * scale + 0.5f);  
-    }
+
 	private static final String TAG = "DateUtil.";
+
 	@SuppressLint("SimpleDateFormat")
 	public static SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 	public static SimpleDateFormat dfC = new SimpleDateFormat("yyyy年MM月dd日");
@@ -34,6 +32,7 @@ public class DateUtil {
 	public static SimpleDateFormat df8 = new SimpleDateFormat("yyMMddHHmmss");
 	public static SimpleDateFormat df9 = new SimpleDateFormat("yyyy-MM");
 	static SimpleDateFormat df10 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
 	/**
 	 * 格式化日期
 	 * @param format
@@ -46,14 +45,15 @@ public class DateUtil {
 		
 		Date date = null;
 		String str = null;
+
 		try {
 			date = new SimpleDateFormat("yyyy-M-dd").parse(format);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			str = sdf.format(date);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		return str;
 	}
 	
@@ -69,16 +69,17 @@ public class DateUtil {
 		
 		Date date = null;
 		String str = null;
+
 		try {
 			date = new SimpleDateFormat("yyyy-M-dd HH:mm:ss").parse(format);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			str = sdf.format(date);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return str;
 	}
+
 	/**
 	 * 格式化日期 日期
 	 * @param format
@@ -87,17 +88,18 @@ public class DateUtil {
 	public static String dateFormatYearM(String format) {
 		Date date = null;
 		String str = null;
+
 		try {
 			date = new SimpleDateFormat("yyyy-MM-d").parse(format);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			str = sdf.format(date);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			
 			e.printStackTrace();
 		}
+
 		return str;
 	}
+
 	/**
 	 * 格式化日期 时分秒
 	 * @param format
@@ -106,45 +108,44 @@ public class DateUtil {
 	public static String dateFormatM(String format) {
 		Date date = null;
 		String str = null;
+
 		try {
 			date = new SimpleDateFormat("H:m").parse(format);
 			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 			str = sdf.format(date);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			
 			e.printStackTrace();
 		}
+
 		return str;
 	}
-
-	
 
 	/**
 	 * 通过时间获取毫秒值
 	 * @param timeStr	yyyy-MM-dd HH:mm:ss
 	 * @return	millis	135465556545
 	 */
-	public static long getTimeMillis(String timeStr){
+	public static long getTimeMillis(String timeStr) {
 		long millis = 0;
+
 		try {
 			Date date = df1.parse(timeStr);
 			millis = date.getTime();
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
+
 		return millis;
 	}
 
-	public static String getTime(String time){
+	public static String getTime(String time) {
 		try {
 			Date date = df8.parse(time);
 			time = df1.format(date);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		return time;
 	}
 
@@ -164,7 +165,6 @@ public class DateUtil {
 	public static String getTodayDate() {
 		return df.format(new Date());
 	}
-
 
 	/**
 	 * 获取当前时间
@@ -188,7 +188,6 @@ public class DateUtil {
 	 * 获取前第七天
 	 */
 	public static String getLastSevenDay() {
-
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, -15);
 
@@ -201,13 +200,16 @@ public class DateUtil {
 	public static String getMinusDate(String date) {
 		try {
 			Date tempDate = df.parse(date);
+
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(tempDate);
 			cal.add(Calendar.DATE, -1);
+
 			return df.format(cal.getTime());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return null;
 	}
 	
@@ -217,30 +219,35 @@ public class DateUtil {
 	public static String getMonthDate(String date) {
 		try {
 			Date tempDate = df9.parse(date);
+
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(tempDate);
 			cal.add(Calendar.MONTH, -1);
+
 			return df9.format(cal.getTime());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return null;
 	}
-	
-	
+
 	/**
 	 * 获取当前日期的上n天
 	 */
 	public static String getMinusDateN(String date,int n) {
 		try {
 			Date tempDate = df.parse(date);
+
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(tempDate);
 			cal.add(Calendar.DATE, -n);
+
 			return df.format(cal.getTime());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return null;
 	}
 
@@ -250,30 +257,38 @@ public class DateUtil {
 	public static String getPlusDate(String date) {
 		try {
 			Date tempDate = df.parse(date);
+
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(tempDate);
 			cal.add(Calendar.DATE, +1);
+
 			return df1.format(cal.getTime());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return null;
 	}
+
 	/**
 	 * 获取当前日期的下n天
 	 */
 	public static String getPlusDateN(String date ,int n) {
 		try {
 			Date tempDate = df.parse(date);
+
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(tempDate);
 			cal.add(Calendar.DATE, +n);
+
 			return df.format(cal.getTime());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return null;
 	}
+
 	/**
 	 * 格式化日期
 	 * @param format
@@ -282,34 +297,34 @@ public class DateUtil {
 	public static String dateFormatCarLife(String format) {
 		Date date = null;
 		String str = null;
+
 		try {
 			date = new SimpleDateFormat("H:m:s").parse(format);
 			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 			str = sdf.format(date);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		return str;
 	}
-	/**
-	 * 格式化日期
-	 * @param format   yyMMddHHmmss
-	 * @returnS
-	 */
-	public static String dateFormatyyMMddHHmmssS(String format) {
-		Date date = null;
+
+	public static String dateFromTimeStamp(String time) {
 		String str = null;
+
 		try {
-			date = new SimpleDateFormat("yyMMddHHmmss").parse(format);
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			str = sdf.format(date);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTimeInMillis(Long.parseLong(time));
+
+			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			str = sf.format(calendar.getTime());
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return str;
 	}
+
 	/**
 	 * 格式化日期
 	 * @param format
@@ -318,16 +333,18 @@ public class DateUtil {
 	public static String dateFormat(String format) {
 		Date date = null;
 		String str = null;
+
 		try {
 			date = new SimpleDateFormat("yyyy-MM-d H:m:s").parse(format);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			str = sdf.format(date);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		return str;
 	}
+
 	/**
 	 * 格式化日期yyyy-MM-dd ---- yyyy年MM月dd日
 	 * @param format
@@ -336,17 +353,18 @@ public class DateUtil {
 	public static String dateFormatC(String format) {
 		Date date = null;
 		String str = null;
+
 		try {
 			date = new SimpleDateFormat("yyyy-MM-dd").parse(format);
 //			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			str = dfC.format(date);
-		
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		return str;
 	}
+
 	/**
 	 * 格式化日期
 	 * @param format
@@ -355,16 +373,18 @@ public class DateUtil {
 	public static String dateFormatClearyear(String format) {
 		Date date = null;
 		String str = null;
+
 		try {
 			date = new SimpleDateFormat("yyyy-MM-dd").parse(format);
 			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd");
 			str = sdf.format(date);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		return str;
 	}
+
 	/**
 	 * 格式化日期
 	 * @param format
@@ -377,6 +397,7 @@ public class DateUtil {
 		
 		Date date = null;
 		String str = null;
+
 		try {
 			date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(format);
 			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
@@ -385,11 +406,9 @@ public class DateUtil {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		return str;
 	}
-
-
-
 
 	/**
 	 * 日期比较
@@ -401,6 +420,7 @@ public class DateUtil {
 		try {
 			Date dt1 = df1.parse(DATE1);
 			Date dt2 = df1.parse(DATE2);
+
 			if (dt1.getTime() > dt2.getTime()) {
 				return 1;
 			} else if (dt1.getTime() < dt2.getTime()) {
@@ -411,8 +431,10 @@ public class DateUtil {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return 0;
 	}
+
 	/**
 	 * 判断date是否处于date1和date2之间
 	 * @param date1
@@ -426,33 +448,33 @@ public class DateUtil {
 			Date dt2 = df1.parse(date2);
 
 			//当date1小于date2的时候
-			if(dt1.getTime()<dt2.getTime()){
-				if(date.getTime()>dt1.getTime()&&date.getTime()<dt2.getTime()){
+			if (dt1.getTime()<dt2.getTime()) {
+				if (date.getTime()>dt1.getTime()&&date.getTime()<dt2.getTime()) {
 					return true;
-				}else{
+				} else {
 					return false;
 				}
 				//当date1大于date2的时候
-			}else if(dt1.getTime()>dt2.getTime()){
-				if(date.getTime()>dt2.getTime()&&date.getTime()<dt1.getTime()){
+			} else if(dt1.getTime()>dt2.getTime()) {
+				if (date.getTime()>dt2.getTime()&&date.getTime()<dt1.getTime()) {
 					return true;
-				}else{
+				} else {
 					return false;
 				}
-			}else{
+			} else {
 				//当date1等于date2的时候
-				if(date.getTime()==dt1.getTime()){
+				if (date.getTime() == dt1.getTime()) {
 					return true;
-				}else{
+				} else {
 					return false;
 				}
 			}
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
 	}
+
 	/**
 	 * 截取时间
 	 * @param  0.5秒
@@ -468,26 +490,32 @@ public class DateUtil {
 	public static String dateSwitchDateString(final Date date) {
 		final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		String format = "";
+
 		if (date != null) {
 			format = simpleDateFormat.format(date);
 		}
+
 		return format;
 	}
 
 	public static String dateSwitchTimeString(final Date date) {
 		final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
 		String format = "";
+
 		if (date != null) {
 			format = simpleDateFormat.format(date);
 		}
+
 		return format;
 	}
 
 	public static String dateSwitchDateAndTimeString(final Date date) {
 		String format = "";
+
 		if (date != null) {
 			format = df1.format(date);
 		}
+
 		return format;
 	}
 }

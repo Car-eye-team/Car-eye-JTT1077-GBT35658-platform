@@ -10,8 +10,6 @@
         <item>password=##</item>
     </string-array>
 
-
-
     <!-- 网络请求返回值 -->
     <string-array name="network_result_code_select">
         <item>-1</item>
@@ -25,6 +23,7 @@
         <item>406</item>
         <item>407</item>
     </string-array>
+
     <!-- 网络请求对应字符说明 -->
     <string-array name="network_result_explain_select">
         <item>没有数据</item>

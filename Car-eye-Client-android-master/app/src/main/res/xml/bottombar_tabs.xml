@@ -16,7 +16,7 @@
         icon="@drawable/ic_replay"
         title="回放" />
     <tab
-        id="@+id/tab_setting"
-        icon="@drawable/ic_setting"
-        title="更多" />
+        id="@+id/tab_warn"
+        icon="@drawable/ic_warn"
+        title="报警" />
 </tabs>

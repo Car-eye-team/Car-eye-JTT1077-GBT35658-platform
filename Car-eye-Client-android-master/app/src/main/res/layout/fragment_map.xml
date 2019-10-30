@@ -21,84 +21,82 @@
             android:textSize="18sp" />
 
         <ImageView
+            android:id="@+id/iv_setting"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:scaleType="center"
+            android:src="@drawable/icon_setting"/>
+
+        <ImageView
             android:id="@+id/iv_search"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginRight="10dp"
-            android:layout_gravity="center|right"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:scaleType="center"
             android:src="@drawable/ic_search_selector"/>
 
     </android.support.v7.widget.Toolbar>
 
-
-
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:background="#f79733"
-        android:paddingTop="2dp"
-        android:paddingBottom="2dp"
-        android:paddingRight="5dp"
-        android:paddingLeft="5dp"
-        >
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center|left"
-            android:orientation="horizontal">
+        android:layout_height="30dp"
+        android:background="#f79733">
 
         <TextView
             android:id="@+id/tv_terminal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="000000000000"
+            android:layout_height="match_parent"
+            android:text="-"
+            android:layout_marginLeft="4dp"
+            android:gravity="center"
             android:textColor="#ffffff"
-            android:textSize="14sp"
-            />
+            android:textSize="14sp" />
+
         <TextView
             android:id="@+id/tv_timeregps"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2018-10-25 10:19:10"
+            android:layout_height="match_parent"
+            android:text="-"
+            android:layout_centerInParent="true"
+            android:gravity="center"
             android:textColor="#ffffff"
             android:textSize="14sp"
-            android:layout_marginLeft="10dp"
-            />
-        </LinearLayout>
+            android:layout_marginLeft="10dp" />
 
         <LinearLayout
             android:id="@+id/ll_refresh"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="center|right"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
             android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_timerefresh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="22秒"
-            android:textColor="#ffffff"
-            android:textSize="14sp"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="后刷新"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            />
+            <TextView
+                android:id="@+id/tv_timerefresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10秒"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
 
-        <ImageView
-            android:id="@+id/iv_refresh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|center"
-            android:src="@android:drawable/arrow_down_float" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="后刷新"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/iv_refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|center"
+                android:src="@android:drawable/arrow_down_float" />
 
         </LinearLayout>
-    </FrameLayout>
+    </RelativeLayout>
+
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dip"
@@ -107,8 +105,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        >
+        android:layout_weight="1">
+
         <com.baidu.mapapi.map.MapView
             android:id="@+id/his_bmapView"
             android:layout_width="match_parent"
@@ -119,22 +117,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
-            android:layout_marginBottom="20dp"
-            >
+            android:layout_marginBottom="20dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@android:drawable/ic_media_previous"
-                />
+                android:src="@android:drawable/ic_media_previous" />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@android:drawable/ic_media_next"
-                android:layout_marginLeft="20dp"
-                />
+                android:layout_marginLeft="20dp" />
         </LinearLayout>
 
     </FrameLayout>
-
-    </LinearLayout>
+</LinearLayout>

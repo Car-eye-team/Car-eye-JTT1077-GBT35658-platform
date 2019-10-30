@@ -1,27 +1,24 @@
 package org.careye.bll;
 
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 /**
- * SharedPreferences操作�?
- * @author wlh
+ * SharedPreferences操作
  *
+ * @author wlh
  */
 public class PrefBiz {
 
 	private SharedPreferences pref;
 
-
 	public PrefBiz(Context context) {
-		pref = PreferenceManager.getDefaultSharedPreferences(
-				context.getApplicationContext());
+		pref = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
 	}
 
 	/** String 类型*/
-	public String getStringInfo(String key,String defStr) {
+	public String getStringInfo(String key, String defStr) {
 		return pref.getString(key, defStr);
 	}
 
