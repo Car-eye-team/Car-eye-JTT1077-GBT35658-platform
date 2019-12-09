@@ -5,10 +5,10 @@ android {
     buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.careye.CarEyeClient"
-        minSdkVersion 17
+        minSdkVersion 22
         targetSdkVersion 26
-        versionCode 110
-        versionName "1.1.0"
+        versionCode 112
+        versionName "1.1.2"
         ndk {
             abiFilters "armeabi-v7a"
         }
@@ -38,6 +38,7 @@ android {
         }
         debug {
             minifyEnabled false
+            debuggable true
             signingConfig signingConfigs.config
         }
     }

@@ -2,7 +2,6 @@ package org.careye.fragment;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -11,6 +10,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +45,12 @@ import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
+import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.geocode.GeoCodeResult;
+import com.baidu.mapapi.search.geocode.GeoCoder;
+import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.baidu.mapapi.search.route.BikingRouteResult;
 import com.baidu.mapapi.search.route.DrivingRouteResult;
 import com.baidu.mapapi.search.route.IndoorRouteResult;
@@ -142,7 +149,7 @@ public class TrackFragment extends Fragment implements View.OnClickListener, OnG
     private MyLocationConfiguration.LocationMode mCurrentMode;
     BitmapDescriptor mCurrentMarker;
 
-    private ArrayList<CarInfoGPS> posList;	// 历史轨迹点
+//    private ArrayList<CarInfoGPS> posList;	// 历史轨迹点
     ArrayList<CarInfoGPS> trackEntityList;	// 历史轨迹点  新 ui
     ArrayList<CarInfoGPS> arrayLGPSInfoList = null;
     CarInfoGPS carGpsInfo = null;
@@ -219,17 +226,20 @@ public class TrackFragment extends Fragment implements View.OnClickListener, OnG
                         Log.e(TAG, "-WHAT_UPDATE_DATA_T_e:"+e);//-WHAT_UPDATE_DATA_T_e:java.lang.IndexOutOfBoundsException: Invalid index 392, size is 392
                     }
                 } else if(what == Constants.WHAT_GET_CAR_LAST_TRACK) {
-                    if (posList != null) {
-                        posList.clear();
-                    }
+//                    if (posList != null) {
+//                        posList.clear();
+//                    }
                     if (trackEntityList != null) {
                         trackEntityList.clear();
                     }
 
-                    posList =( ArrayList<CarInfoGPS>) msg.obj;
+//                    posList = ( ArrayList<CarInfoGPS>) msg.obj;
                     trackEntityList = (ArrayList<CarInfoGPS>) msg.obj;
 
-                    if (posList != null && posList.size()>0) {
+                    currentIndex = 0;
+                    startSearch();
+
+//                    if (posList != null && posList.size()>0) {
                         if (trackEntityList != null || trackEntityList.size()>0) {
                             if (2 <= trackEntityList.size()) {//&& trackEntityList.size() < 10000
 //								ToastUtil.showToast(CarLocation.this, "开始画图size:"+trackEntityList.size());
@@ -249,7 +259,7 @@ public class TrackFragment extends Fragment implements View.OnClickListener, OnG
                                 ToastUtil.showToast(getActivity(), "设备异常");
 //								pointLo();
                             }
-                        }
+//                        }
 //						doPlay(posList);
                     } else {
                         ToastUtil.showToast(getActivity(), "历史轨迹为空");
@@ -285,6 +295,7 @@ public class TrackFragment extends Fragment implements View.OnClickListener, OnG
         iv_setting.setOnClickListener(this);
 
         initMap(view);
+        initGeoCoder();
 
         prefBiz = new PrefBiz(getActivity());
         terminalCurr = prefBiz.getStringInfo(Constants.PREF_THIS_CURREN_CARID, "");
@@ -662,7 +673,7 @@ public class TrackFragment extends Fragment implements View.OnClickListener, OnG
 
         }
 
-        LatLngBounds bounds = new LatLngBounds.Builder().include( latLngS.get(latLngS.size()-1) ).include(latLngS.get(0)).build();
+        LatLngBounds bounds = new LatLngBounds.Builder().include(latLngS.get(latLngS.size()-1)).include(latLngS.get(0)).build();
         MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory.newLatLngBounds(bounds);
         mBaiduMap.animateMapStatus(mapStatusUpdate,1000);
         this.mMapView.invalidate();
@@ -735,9 +746,9 @@ public class TrackFragment extends Fragment implements View.OnClickListener, OnG
             trackEntityList.clear();
         }
 
-        if (posList != null) {
-            posList.clear();
-        }
+//        if (posList != null) {
+//            posList.clear();
+//        }
 
         isCanMove = false;
         timeNew= 0;
@@ -833,7 +844,7 @@ public class TrackFragment extends Fragment implements View.OnClickListener, OnG
         latLng = new LatLng(getStrToDouble(carGpsInfo.getBlat()), getStrToDouble(carGpsInfo.getBlng()));  // 一进来 car的最后位置
         endLatitudew = getStrToDouble(carGpsInfo.getBlat());
         endLongitudej = getStrToDouble(carGpsInfo.getBlng());
-        endadress = carGpsInfo.getAddress();
+//        endadress = carGpsInfo.getBaiduAddress();
 
         // 图标节点是车辆才有值
         // 车辆状态 1：长时间离线 2：离线 3：熄火 4：停车 5：行驶 6：报警 7：在线 8：未定位
@@ -901,8 +912,9 @@ public class TrackFragment extends Fragment implements View.OnClickListener, OnG
                 "方向：" + CarStatusUtil.parseDirection(direc) + "\n" +
                 "速度：" + carGpsInfo.getSpeed() + " 千米/小时\n" +
                 // "里程："+ carGpsInfo.getSummileage().replace("null","")+" 公里\n"+
-                "地址：" + carGpsInfo.getAddress() + "\n" +
-                "更新时间：" + DateUtil.dateFromTimeStamp(carGpsInfo.getGpstime());
+                "地址：" + carGpsInfo.getBaiduAddress() + "\n" +
+//                "更新时间：" + carGpsInfo.getCreatetime();
+                "更新时间：" + carGpsInfo.gpstimeDesc();
 
         carInfo.setText(info);
 
@@ -1248,21 +1260,21 @@ public class TrackFragment extends Fragment implements View.OnClickListener, OnG
     }
 
     void setTextVlue(CarInfoGPS carGpsInfo) {
-//        this.tv_car_num_map = ((TextView)this.popView.findViewById(R.id.tv_car_num_map));
-//
-//        ((LinearLayout.LayoutParams)this.tv_car_num_map.getLayoutParams()).width = (Constants.screenWidth / 2);
-//
-//        this.tv_sys_time_map = ((TextView)this.popView.findViewById(R.id.tv_sys_time_map));
-//        this.tv_location_time_map = ((TextView)this.popView.findViewById(R.id.tv_location_time));
-//        this.tv_car_state_map = ((TextView)this.popView.findViewById(R.id.tv_car_state_map));
-//        this.tv_distance_map = ((TextView)this.popView.findViewById(R.id.tv_distance_map));
-        this.tv_sys_time_map.setVisibility(View.VISIBLE);
-//        this.tv_distance_map.setVisibility(View.GONE);
-        int  status =getStrToInt(carGpsInfo.getCarstatus()) ;
-        this.tv_car_num_map.setText(""+carGpsInfo.getCarnumber());
-        this.tv_sys_time_map.setText("时间:"+carGpsInfo.getGpstime());
-        this.tv_car_state_map.setText("状态:"+CarStatusUtil.getDrawableIdStr(status));
-        this.tv_location_time_map.setText("定位:"+carGpsInfo.getAddress());
+////        this.tv_car_num_map = ((TextView)this.popView.findViewById(R.id.tv_car_num_map));
+////
+////        ((LinearLayout.LayoutParams)this.tv_car_num_map.getLayoutParams()).width = (Constants.screenWidth / 2);
+////
+////        this.tv_sys_time_map = ((TextView)this.popView.findViewById(R.id.tv_sys_time_map));
+////        this.tv_location_time_map = ((TextView)this.popView.findViewById(R.id.tv_location_time));
+////        this.tv_car_state_map = ((TextView)this.popView.findViewById(R.id.tv_car_state_map));
+////        this.tv_distance_map = ((TextView)this.popView.findViewById(R.id.tv_distance_map));
+//        this.tv_sys_time_map.setVisibility(View.VISIBLE);
+////        this.tv_distance_map.setVisibility(View.GONE);
+//        int  status =getStrToInt(carGpsInfo.getCarstatus()) ;
+//        this.tv_car_num_map.setText(""+carGpsInfo.getCarnumber());
+//        this.tv_sys_time_map.setText("时间:"+carGpsInfo.getGpstime());
+//        this.tv_car_state_map.setText("状态:"+CarStatusUtil.getDrawableIdStr(status));
+//        this.tv_location_time_map.setText("定位:"+carGpsInfo.getBaiduAddress());
     }
 
     private void addMarker(LatLng paramLatLng, CarInfoGPS carGpsInfoS) {
@@ -1296,5 +1308,64 @@ public class TrackFragment extends Fragment implements View.OnClickListener, OnG
     public int Dp2Px(Context context, float dp) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dp * scale + 0.5f);
+    }
+
+    private int currentIndex = 0;
+
+    private void startSearch() {
+        if (currentIndex >= trackEntityList.size()) {
+            return;
+        }
+
+        CarInfoGPS gps = trackEntityList.get(currentIndex);
+
+        LatLng latLng = new LatLng(getStrToDouble(gps.getBlat()), getStrToDouble(gps.getBlng()));
+        Log.i(TAG, currentIndex + " >>>> " + gps.getBlat() + gps.getBlng());
+        search(latLng);
+    }
+
+    /**
+     * 检索经纬度所在地址
+     * @param latLng 经纬度信息
+     */
+    private void search(LatLng latLng) {
+        geoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(latLng));
+    }
+
+    private GeoCoder geoCoder;
+
+    private void initGeoCoder() {
+        if (geoCoder != null) {
+            return;
+        }
+
+        geoCoder = GeoCoder.newInstance();
+        geoCoder.setOnGetGeoCodeResultListener(new OnGetGeoCoderResultListener() {
+            @Override
+            public void onGetGeoCodeResult(GeoCodeResult geoCodeResult) {
+
+            }
+
+            @Override
+            public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
+                if (reverseGeoCodeResult == null || reverseGeoCodeResult.error != SearchResult.ERRORNO.NO_ERROR) {
+                    // 没有检测到结果
+//                    return;
+                }
+//                ReverseGeoCodeResult.AddressComponent addressDetail = reverseGeoCodeResult.getAddressDetail();
+
+                String address = reverseGeoCodeResult.getAddress();
+                if (TextUtils.isEmpty(address)) {
+                    address = "";
+                }
+                Log.i(TAG, address);
+
+                CarInfoGPS gps = trackEntityList.get(currentIndex);
+                gps.setBaiduAddress(address);
+
+                currentIndex++;
+                startSearch();
+            }
+        });
     }
 }

@@ -2,10 +2,10 @@ package org.careye.utils;
 
 public class Constants {
 
-    /** 用户名*/
     public static final String PREF_LOGIN_NAME = "pref_login_name";     // 用户名
     public static final String PREF_LOGIN_PW = "pref_login_pw"; 	    // 密码
     public static final String PREF_LOGIN_IP = "pref_login_ip"; 	    // ip
+    public static final String PREF_LOGIN_PORT = "pref_login_port";     // port
 
     /**登录*/
     public static final String ACTION_LOGIN ="userLogin"; 	// 用户名

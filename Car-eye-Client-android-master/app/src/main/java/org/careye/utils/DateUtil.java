@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * 时间帮助类
@@ -317,6 +318,7 @@ public class DateUtil {
 			calendar.setTimeInMillis(Long.parseLong(time));
 
 			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			sf.setTimeZone(TimeZone.getTimeZone("UTC"));
 			str = sf.format(calendar.getTime());
 		} catch (Exception e) {
 			e.printStackTrace();

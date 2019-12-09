@@ -5,13 +5,12 @@
  */
 package org.careye.activity;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -26,6 +25,7 @@ import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
 import org.careye.CarApplication;
+import org.careye.adapter.FragmentIndexAdapter;
 import org.careye.bll.PrefBiz;
 import org.careye.fragment.LiveFragment;
 import org.careye.fragment.MapFragment;
@@ -39,6 +39,7 @@ import org.careye.utils.Constants;
 import org.careye.utils.DateUtil;
 import org.careye.utils.GsonUtil;
 import org.careye.utils.MD5Util;
+import org.careye.view.MyViewPager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,6 +64,10 @@ public class MainActivity extends AppCompatActivity
 
     private BottomBar mBomMainBar;
 
+    private List<Fragment> mFragments;
+    private FragmentIndexAdapter mFragmentIndexAdapter;
+
+    private MyViewPager index_vp_fragment_list_top;
     private MapFragment mMapFragment;
     private LiveFragment mLiveFragment;
     private TrackFragment mTrackFragment;
@@ -74,11 +79,26 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mMapFragment = MapFragment.newInstance();
-        mLiveFragment = LiveFragment.newInstance();
-        mTrackFragment = TrackFragment.newInstance();
-        mReplayFragment = ReplayFragment.newInstance();
-        mWarnFragment = WarnFragment.newInstance();
+        mMapFragment = new MapFragment();
+        mLiveFragment = new LiveFragment();
+        mTrackFragment = new TrackFragment();
+        mReplayFragment = new ReplayFragment();
+        mWarnFragment = new WarnFragment();
+
+        mFragments = new ArrayList<>();
+        mFragments.add(mMapFragment);
+        mFragments.add(mLiveFragment);
+        mFragments.add(mTrackFragment);
+        mFragments.add(mReplayFragment);
+        mFragments.add(mWarnFragment);
+
+        mFragmentIndexAdapter = new FragmentIndexAdapter(this.getSupportFragmentManager(), mFragments);
+
+        index_vp_fragment_list_top = (MyViewPager) findViewById(R.id.index_vp_fragment_list_top);
+        index_vp_fragment_list_top.setAdapter(mFragmentIndexAdapter);
+        index_vp_fragment_list_top.setCurrentItem(0);
+        index_vp_fragment_list_top.setOffscreenPageLimit(5);
+        index_vp_fragment_list_top.addOnPageChangeListener(new TabOnPageChangeListener());
 
         mLiveFragment.setmListener(this);
 
@@ -97,17 +117,49 @@ public class MainActivity extends AppCompatActivity
         mBomMainBar.selectTabAtPosition(0);
     }
 
-    private void switchFragment(Fragment targetFragment) {
-        try {
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fl_view, targetFragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public class TabOnPageChangeListener implements ViewPager.OnPageChangeListener {
+
+        //当滑动状态改变时调用
+        public void onPageScrollStateChanged(int state) {
+        }
+
+        //当前页面被滑动时调用
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        }
+
+        //当新的页面被选中时调用
+        public void onPageSelected(int position) {
+            switch (position) {
+                case 0:
+//                    index_bottom_bar_home.setSelected(true);
+                    break;
+                case 1:
+//                    index_bottom_bar_school.setSelected(true);
+                    break;
+                case 2:
+//                    index_bottom_bar_notice.setSelected(true);
+                    break;
+                case 3:
+//                    index_bottom_bar_me.setSelected(true);
+                    break;
+                case 4:
+//                    index_vp_fragment_list_top.setCurrentItem(4);
+                    break;
+            }
         }
     }
+
+//    private void switchFragment(Fragment targetFragment) {
+//        try {
+//            FragmentManager fragmentManager = getFragmentManager();
+//            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//            fragmentTransaction.replace(R.id.fl_view, targetFragment);
+//            fragmentTransaction.addToBackStack(null);
+//            fragmentTransaction.commit();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     @Override
     public void onBackPressed() {
@@ -118,19 +170,44 @@ public class MainActivity extends AppCompatActivity
     public void onTabSelected(int tabId) {
         switch (tabId) {
             case R.id.tab_map:
-                switchFragment(mMapFragment);
+//                switchFragment(mMapFragment);
+                index_vp_fragment_list_top.setCurrentItem(0);
+
+                if (mLiveFragment != null) {
+                    mLiveFragment.closeVolume();
+                }
                 break;
             case R.id.tab_live:
-                switchFragment(mLiveFragment);
+//                switchFragment(mLiveFragment);
+                index_vp_fragment_list_top.setCurrentItem(1);
+
+                if (mLiveFragment != null) {
+                    mLiveFragment.firstPlay();
+                }
                 break;
             case R.id.tab_track:
-                switchFragment(mTrackFragment);
+//                switchFragment(mTrackFragment);
+                index_vp_fragment_list_top.setCurrentItem(2);
+
+                if (mLiveFragment != null) {
+                    mLiveFragment.closeVolume();
+                }
                 break;
             case R.id.tab_replay:
-                switchFragment(mReplayFragment);
+//                switchFragment(mReplayFragment);
+                index_vp_fragment_list_top.setCurrentItem(3);
+
+                if (mLiveFragment != null) {
+                    mLiveFragment.closeVolume();
+                }
                 break;
             case R.id.tab_warn:
-                switchFragment(mWarnFragment);
+//                switchFragment(mWarnFragment);
+                index_vp_fragment_list_top.setCurrentItem(4);
+
+                if (mLiveFragment != null) {
+                    mLiveFragment.closeVolume();
+                }
                 break;
             default:
                 break;
@@ -144,12 +221,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK) {
-
-            if (isLandscape()) {
-                mLiveFragment.showToolBar(true);
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//竖屏
-                return true;
-            }
+//            if (isLandscape()) {
+//                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//竖屏
+//                mLiveFragment.showToolBar(true);
+//                return true;
+//            }
 
             // 判断菜单是否关闭
             if (is_closed) {
@@ -176,11 +252,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onFullscreen() {
         if (isLandscape()) {
-            mLiveFragment.showToolBar(true);
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//竖屏
+//            mLiveFragment.showToolBar(true);
         } else {
-            mLiveFragment.showToolBar(false);
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);//横屏
+//            mLiveFragment.showToolBar(false);
         }
     }
 

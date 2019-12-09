@@ -28,6 +28,20 @@
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:scaleType="center"
+            android:src="@drawable/ic_search_selector"/>
+
     </android.support.v7.widget.Toolbar>
+
+    <ListView
+        android:id="@+id/lv_replay_file_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:listSelector="@android:color/transparent"/>
 
 </LinearLayout>

@@ -29,7 +29,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="org.careye.activity.SettingActivity"></activity>
+        <activity android:name="org.careye.activity.WarnActivity"></activity>
+        <activity android:name="org.careye.activity.SettingActivity" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
@@ -51,28 +52,28 @@
         <activity android:name="org.careye.activity.LoginActivity" />
         <activity
             android:name="org.careye.activity.CarTreeActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
+            android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
             android:name="org.careye.activity.ReplaySearchActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
+            android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
             android:name="org.careye.activity.PlayFullScreenActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name="org.careye.activity.TrackSettingActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
+            android:configChanges="keyboardHidden|orientation|screenSize" />
 
         <service
             android:name="org.careye.player.media.source.MediaPlayerService"
             android:enabled="false"
             android:exported="false"
             android:icon="@drawable/ic_launcher"
-            android:label="@string/app_name"></service>
+            android:label="@string/app_name" />
         <service
             android:name="com.baidu.location.f"
             android:enabled="true">
             <intent-filter>
-                <action android:name="com.baidu.location.service_v2.2"></action>
+                <action android:name="com.baidu.location.service_v2.2" />
             </intent-filter>
         </service>
     </application>

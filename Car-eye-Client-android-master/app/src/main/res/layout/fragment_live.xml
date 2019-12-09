@@ -7,7 +7,7 @@
     tools:context="org.careye.fragment.LiveFragment">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/live_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
 

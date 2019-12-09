@@ -48,10 +48,10 @@ public class CmsRequest {
     /**
      * 跟据设备号获取设备GPS状态
      */
-    public interface GetTerminalGpsStatus {
+    public interface GetGpsStatus {
         @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
-        @POST("getTerminalGpsStatus")
-        Call<JsonObject> getTerminalGpsStatus(@Body JsonObject body);
+        @POST("getGpsStatus")
+        Call<JsonObject> getGpsStatus(@Body JsonObject body);
     }
 
     /**
@@ -79,6 +79,15 @@ public class CmsRequest {
         @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
         @POST("queryTerminalFileList")
         Call<JsonObject> queryTerminalFileList(@Body JsonObject body);
+    }
+
+    /**
+     * 获取设备报警分页列表
+     */
+    public interface QueryAlarmList {
+        @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
+        @POST("queryAlarmList")
+        Call<JsonObject> queryAlarmList(@Body JsonObject body);
     }
 
     /**

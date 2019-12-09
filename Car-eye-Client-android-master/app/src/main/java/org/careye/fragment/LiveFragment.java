@@ -10,8 +10,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.os.SystemClock;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -85,6 +85,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private PrefBiz prefBiz;
 
     private OnFragmentInteractionListener mListener;
+    private boolean isLandscape = false;
 
     public LiveFragment() {
 
@@ -98,6 +99,29 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    public void firstPlay() {
+        if (terminalCurr == null) {
+            terminalCurr = prefBiz.getStringInfo(Constants.PREF_THIS_CURREN_CARID, "");
+            playOrStopSend(terminalCurr, "0", "1");
+            playOrStopSend(terminalCurr, "0", "2");
+            playOrStopSend(terminalCurr, "0", "3");
+            playOrStopSend(terminalCurr, "0", "4");
+
+//        play(mMvPlayer1, URL);
+        }
+    }
+
+    public void closeVolume() {
+        if (mMvPlayer1 != null) {
+            mMvPlayer1.enableVolume(true);
+            mMvPlayer2.enableVolume(true);
+            mMvPlayer3.enableVolume(true);
+            mMvPlayer4.enableVolume(true);
+
+            updateMuteView(mCurrPlayer.getMuteState());
+        }
     }
 
     @Override
@@ -122,21 +146,13 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         mv_player_ll = mRoot.findViewById(R.id.mv_player_ll);
         mv_player_ll1 = mRoot.findViewById(R.id.mv_player_ll1);
         mv_player_ll2 = mRoot.findViewById(R.id.mv_player_ll2);
-        toolbar = mRoot.findViewById(R.id.toolbar);
+        toolbar = mRoot.findViewById(R.id.live_toolbar);
 
         mMvPlayer1.setSelect(true);
         mCurrPlayer = mMvPlayer1;
 
         prefBiz = new PrefBiz(getActivity());
         mTvTitle.setText(prefBiz.getStringInfo(Constants.PREF_THIS_CURREN_CARNUM, getResources().getString(R.string.video_preview)));
-
-        terminalCurr = prefBiz.getStringInfo(Constants.PREF_THIS_CURREN_CARID, "");
-        playOrStopSend(terminalCurr, "0", "1");
-        playOrStopSend(terminalCurr, "0", "2");
-        playOrStopSend(terminalCurr, "0", "3");
-        playOrStopSend(terminalCurr, "0", "4");
-
-//        play(mMvPlayer1, URL);
     }
 
     @Override
@@ -222,6 +238,13 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
                 setRecEnable(mCurrPlayer);
                 break;
             case R.id.iv_full_screen: {
+                isLandscape = !isLandscape;
+                if (isLandscape) {
+                    showToolBar(false);
+                } else {
+                    showToolBar(true);
+                }
+
                 this.mListener.onFullscreen();
             }
                 break;
@@ -236,6 +259,10 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     }
 
     public void showToolBar(boolean v) {
+        if (toolbar == null) {
+            return;
+        }
+
         if (v) {
             toolbar.setVisibility(View.VISIBLE);
         } else {
@@ -476,8 +503,10 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         }
 
         mCurrPlayer.setSelect(false);
+        mCurrPlayer.enableVolume(true);
         mCurrPlayer = mMvPlayer;
         mCurrPlayer.setSelect(true);
+        mCurrPlayer.enableVolume(false);
 
         // 播放状态
         updatePlayView(mCurrPlayer.isPlaying());

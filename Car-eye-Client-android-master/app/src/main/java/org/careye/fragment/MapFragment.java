@@ -1,17 +1,21 @@
 package org.careye.fragment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +44,12 @@ import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.geocode.GeoCodeResult;
+import com.baidu.mapapi.search.geocode.GeoCoder;
+import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.baidu.mapapi.search.route.BikingRouteResult;
 import com.baidu.mapapi.search.route.DrivingRouteResult;
 import com.baidu.mapapi.search.route.IndoorRouteResult;
@@ -153,10 +163,12 @@ public class MapFragment extends Fragment implements View.OnClickListener, OnGet
 
                         // 已经来 获取的车辆最后位置 的 数据
 //                        tv_terminal.setText(carGpsInfo.getTerminal());
-                        tv_timeregps.setText(DateUtil.dateFromTimeStamp(carGpsInfo.getGpstime()));
+                        tv_timeregps.setText(carGpsInfo.gpstimeDesc());
 
                         // 获取数据后 赋值
-                        initCarStatus();
+                        // 位置
+                        latLng = new LatLng(getStrToDouble(carGpsInfo.getBlat()), getStrToDouble(carGpsInfo.getBlng()));  // 一进来 car的最后位置
+                        search(latLng);
                     } else {
 //                       ToastUtil.showToast(CarLocation.this, "亲，没有数据哦！");
 //                        if (llCurr != null) {
@@ -188,6 +200,15 @@ public class MapFragment extends Fragment implements View.OnClickListener, OnGet
         ll_refresh.setOnClickListener(this);
 
         initMap(view);
+        initGeoCoder();
+
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {//未开启定位权限
+            //开启定位权限,200是标识码
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},200);
+        } else {
+            Log.i("ACCESS_FINE_LOCATION", "已开启定位权限");
+        }
 
         prefBiz = new PrefBiz(getActivity());
         terminalCurr = prefBiz.getStringInfo(Constants.PREF_THIS_CURREN_CARID, "");
@@ -244,6 +265,22 @@ public class MapFragment extends Fragment implements View.OnClickListener, OnGet
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case 200://刚才的识别码
+                if(grantResults[0] == PackageManager.PERMISSION_GRANTED){//用户同意权限,执行我们的操作
+                    Log.i("ACCESS_FINE_LOCATION", "已开启定位权限");
+                } else {
+                    Toast.makeText(getActivity(), "未开启定位权限,请手动到设置去开启权限", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default:break;
         }
     }
 
@@ -357,11 +394,9 @@ public class MapFragment extends Fragment implements View.OnClickListener, OnGet
         Marker marker;
         int status, drawableId;
 
-        // 位置
-        latLng = new LatLng(getStrToDouble(carGpsInfo.getBlat()), getStrToDouble(carGpsInfo.getBlng()));  // 一进来 car的最后位置
         endLatitudew = getStrToDouble(carGpsInfo.getBlat());
         endLongitudej = getStrToDouble(carGpsInfo.getBlng());
-        endadress = carGpsInfo.getAddress();
+//        endadress = carGpsInfo.getAddress();
 
         // 图标节点是车辆才有值
         // 车辆状态 1：长时间离线 2：离线 3：熄火 4：停车 5：行驶 6：报警 7：在线 8：未定位
@@ -415,10 +450,11 @@ public class MapFragment extends Fragment implements View.OnClickListener, OnGet
 //        tv_carcurrlocation_l.setText(car.getOils());
     }
 
+    TextView carInfo;
     public InfoWindow addInfoWindow(LatLng ll, CarInfoGPS carGpsInfo) {
         Log.i(TAG, "-addInfoWindow():"+ll);
 
-        TextView carInfo = new TextView(getActivity().getApplicationContext());
+        carInfo = new TextView(getActivity().getApplicationContext());
         carInfo.setWidth(400);
         carInfo.setBackgroundResource(R.drawable.popup);
         carInfo.setPadding(25, 20, 25, 70);
@@ -436,8 +472,8 @@ public class MapFragment extends Fragment implements View.OnClickListener, OnGet
                 "经度：" + carGpsInfo.getBlng() + " 纬度：" + carGpsInfo.getBlat() + "\n" +
                 "方向：" + CarStatusUtil.parseDirection(direc) + "\n" +
                 "速度：" + carGpsInfo.getSpeed() + " 千米/小时\n" +
-                "地址：" + carGpsInfo.getAddress() + "\n" +
-                "更新时间：" + DateUtil.dateFromTimeStamp(carGpsInfo.getGpstime());
+                "地址：" + carGpsInfo.getBaiduAddress() + "\n" +
+                "更新时间：" + carGpsInfo.gpstimeDesc();
         carInfo.setText(info);
 
         // 将marker所在的经纬度的信息转化成屏幕上的坐标
@@ -574,7 +610,7 @@ public class MapFragment extends Fragment implements View.OnClickListener, OnGet
         }
 
         Retrofit retrofit = BaseRequest.getInstance().getRetrofit();
-        CmsRequest.GetTerminalGpsStatus request = retrofit.create(CmsRequest.GetTerminalGpsStatus.class);
+        CmsRequest.GetGpsStatus request = retrofit.create(CmsRequest.GetGpsStatus.class);
 
         String tradeno = DateUtil.getTodayDate(DateUtil.df6);
         String name = prefBiz.getStringInfo(Constants.PREF_LOGIN_NAME, "");
@@ -587,7 +623,7 @@ public class MapFragment extends Fragment implements View.OnClickListener, OnGet
         body.addProperty("sign", sign);
         body.addProperty("terminal", terminal);
 
-        Call<JsonObject> call = request.getTerminalGpsStatus(body);
+        Call<JsonObject> call = request.getGpsStatus(body);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -630,7 +666,7 @@ public class MapFragment extends Fragment implements View.OnClickListener, OnGet
 
     private double endLatitudew = 0.0;
     private double endLongitudej = 0.0;
-    private String endadress = "";
+//    private String endadress = "";
 
     /**定位当到前位置*/
     LatLng llCurr;
@@ -782,5 +818,43 @@ public class MapFragment extends Fragment implements View.OnClickListener, OnGet
                 }
             }
         }
+    }
+
+    /**
+     * 检索经纬度所在地址
+     * @param latLng 经纬度信息
+     */
+    private void search(LatLng latLng) {
+        geoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(latLng));
+    }
+
+    private GeoCoder geoCoder;
+
+    private void initGeoCoder() {
+        if (geoCoder != null) {
+            return;
+        }
+
+        geoCoder = GeoCoder.newInstance();
+        geoCoder.setOnGetGeoCodeResultListener(new OnGetGeoCoderResultListener() {
+            @Override
+            public void onGetGeoCodeResult(GeoCodeResult geoCodeResult) {
+
+            }
+
+            @Override
+            public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
+                if (reverseGeoCodeResult == null || reverseGeoCodeResult.error != SearchResult.ERRORNO.NO_ERROR) {
+                    // 没有检测到结果
+                    return;
+                }
+//                ReverseGeoCodeResult.AddressComponent addressDetail = reverseGeoCodeResult.getAddressDetail();
+
+                carGpsInfo.setBaiduAddress(reverseGeoCodeResult.getAddress() + reverseGeoCodeResult.getSematicDescription());
+//                carGpsInfo.setBaiduAddress(reverseGeoCodeResult.getAddress());
+
+                initCarStatus();
+            }
+        });
     }
 }

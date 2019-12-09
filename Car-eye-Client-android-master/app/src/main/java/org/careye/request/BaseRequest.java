@@ -33,12 +33,15 @@ public class BaseRequest {
     public synchronized Retrofit getRetrofit() {
         if (retrofit == null) {
             PrefBiz prefBiz = new PrefBiz(CarApplication.getContext());
+            String ip = prefBiz.getStringInfo(Constants.PREF_LOGIN_IP, "www.liveoss.com");
+            String port = prefBiz.getStringInfo(Constants.PREF_LOGIN_PORT, "8088");// 8902
+
             retrofit = new Retrofit.Builder()
-//                    .baseUrl("http://" + prefBiz.getStringInfo(Constants.PREF_LOGIN_IP, "www.liveoss.com") + ":8902/cmsapi/")
-                    .baseUrl("http://" + prefBiz.getStringInfo(Constants.PREF_LOGIN_IP, "www.liveoss.com") + ":8088/cmsapi/")
+                    .baseUrl("http://" + ip + ":" + port + "/cmsapi/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
+
         return retrofit;
     }
 
@@ -47,10 +50,9 @@ public class BaseRequest {
      *
      * @return
      */
-    public synchronized Retrofit getRetrofit(String ip) {
+    public synchronized Retrofit getRetrofit(String ip, String port) {
         retrofit = new Retrofit.Builder()
-//                .baseUrl("http://" + ip + ":8902/cmsapi/")
-                .baseUrl("http://" + ip + ":8088/cmsapi/")
+                .baseUrl("http://" + ip + ":" + port + "/cmsapi/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         return retrofit;

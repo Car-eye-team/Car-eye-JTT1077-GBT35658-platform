@@ -1,5 +1,9 @@
 package org.careye.model;
 
+import android.text.TextUtils;
+
+import org.careye.utils.PositionTransducer;
+
 import java.io.Serializable;
 
 public class CarInfoGPS implements Serializable {
@@ -83,20 +87,22 @@ public class CarInfoGPS implements Serializable {
 
     private String lng;             // 经度
     private String lat;             // 纬度
-    private String blng;            // 百度经度
-    private String blat;            // 百度纬度
-    private String glng;            // 高德经度
-    private String glat;            // 高德纬度
-    private String gaddress;        // 高德地址
+//    private String blng;            // 百度经度
+//    private String blat;            // 百度纬度
+//    private String glng;            // 高德经度
+//    private String glat;            // 高德纬度
+//    private String gaddress;        // 高德地址
     private String altitude;        // 高度
     private String speed;           // 速度
     private String direction;       // 方向
-    private String address;         // 地址
+//    private String address;         // 地址
+    private String baiduAddress;         // 地址
     private String mileage;         // 里程
     private String summileage;      // 总里程
     private String gpstime;         // gps时间
     private String gpsflag;         // gps是否有效
     private String acc;             // acc状态
+    private String createtime;
 
     public CarInfoGPS() {
         super();
@@ -673,44 +679,50 @@ public class CarInfoGPS implements Serializable {
     }
 
     public String getBlng() {
-        return blng;
-    }
+        double[] gcj2bd = PositionTransducer.gps2bd(Double.parseDouble(lat), Double.parseDouble(lng));
+        return String.format("%.6f", gcj2bd[1]);
 
-    public void setBlng(String blng) {
-        this.blng = blng;
+//        return blng;
     }
-
+//
+//    public void setBlng(String blng) {
+//        this.blng = blng;
+//    }
+//
     public String getBlat() {
-        return blat;
-    }
+        double[] gcj2bd = PositionTransducer.gps2bd(Double.parseDouble(lat), Double.parseDouble(lng));
+        return String.format("%.6f", gcj2bd[0]);
 
-    public void setBlat(String blat) {
-        this.blat = blat;
+//        return blat;
     }
+//
+//    public void setBlat(String blat) {
+//        this.blat = blat;
+//    }
+//
+//    public String getGlng() {
+//        return glng;
+//    }
+//
+//    public void setGlng(String glng) {
+//        this.glng = glng;
+//    }
+//
+//    public String getGlat() {
+//        return glat;
+//    }
+//
+//    public void setGlat(String glat) {
+//        this.glat = glat;
+//    }
 
-    public String getGlng() {
-        return glng;
-    }
+//    public String getGaddress() {
+//        return gaddress;
+//    }
 
-    public void setGlng(String glng) {
-        this.glng = glng;
-    }
-
-    public String getGlat() {
-        return glat;
-    }
-
-    public void setGlat(String glat) {
-        this.glat = glat;
-    }
-
-    public String getGaddress() {
-        return gaddress;
-    }
-
-    public void setGaddress(String gaddress) {
-        this.gaddress = gaddress;
-    }
+//    public void setGaddress(String gaddress) {
+//        this.gaddress = gaddress;
+//    }
 
     public String getAltitude() {
         return altitude;
@@ -736,12 +748,24 @@ public class CarInfoGPS implements Serializable {
         this.direction = direction;
     }
 
-    public String getAddress() {
-        return address;
+//    public String getAddress() {
+//        return address;
+//    }
+//
+//    public void setAddress(String address) {
+//        this.address = address;
+//    }
+
+
+    public void setBaiduAddress(String baiduAddress) {
+        this.baiduAddress = baiduAddress;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public String getBaiduAddress() {
+        if (TextUtils.isEmpty(baiduAddress)) {
+            return "";
+        }
+        return baiduAddress;
     }
 
     public String getMileage() {
@@ -782,5 +806,28 @@ public class CarInfoGPS implements Serializable {
 
     public void setAcc(String acc) {
         this.acc = acc;
+    }
+
+    public String getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(String createtime) {
+        this.createtime = createtime;
+    }
+
+    public String gpstimeDesc() {
+        if (gpstime == null || gpstime.length() != 12) {
+            return "";
+        }
+
+        String year = gpstime.substring(0, 2);
+        String month = gpstime.substring(2, 4);
+        String day = gpstime.substring(4, 6);
+        String hour = gpstime.substring(6, 8);
+        String minute = gpstime.substring(8, 10);
+        String second = gpstime.substring(10, 12);
+
+        return "20" + year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
     }
 }
