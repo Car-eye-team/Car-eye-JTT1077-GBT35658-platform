@@ -149,7 +149,7 @@ public class TrackFragment extends Fragment implements View.OnClickListener, OnG
     private MyLocationConfiguration.LocationMode mCurrentMode;
     BitmapDescriptor mCurrentMarker;
 
-//    private ArrayList<CarInfoGPS> posList;	// 历史轨迹点
+    private ArrayList<CarInfoGPS> posList;	// 历史轨迹点
     ArrayList<CarInfoGPS> trackEntityList;	// 历史轨迹点  新 ui
     ArrayList<CarInfoGPS> arrayLGPSInfoList = null;
     CarInfoGPS carGpsInfo = null;
@@ -226,20 +226,20 @@ public class TrackFragment extends Fragment implements View.OnClickListener, OnG
                         Log.e(TAG, "-WHAT_UPDATE_DATA_T_e:"+e);//-WHAT_UPDATE_DATA_T_e:java.lang.IndexOutOfBoundsException: Invalid index 392, size is 392
                     }
                 } else if(what == Constants.WHAT_GET_CAR_LAST_TRACK) {
-//                    if (posList != null) {
-//                        posList.clear();
-//                    }
+                    if (posList != null) {
+                        posList.clear();
+                    }
                     if (trackEntityList != null) {
                         trackEntityList.clear();
                     }
 
-//                    posList = ( ArrayList<CarInfoGPS>) msg.obj;
+                    posList = ( ArrayList<CarInfoGPS>) msg.obj;
                     trackEntityList = (ArrayList<CarInfoGPS>) msg.obj;
 
                     currentIndex = 0;
                     startSearch();
 
-//                    if (posList != null && posList.size()>0) {
+                    if (posList != null && posList.size()>0) {
                         if (trackEntityList != null || trackEntityList.size()>0) {
                             if (2 <= trackEntityList.size()) {//&& trackEntityList.size() < 10000
 //								ToastUtil.showToast(CarLocation.this, "开始画图size:"+trackEntityList.size());
@@ -259,7 +259,7 @@ public class TrackFragment extends Fragment implements View.OnClickListener, OnG
                                 ToastUtil.showToast(getActivity(), "设备异常");
 //								pointLo();
                             }
-//                        }
+                        }
 //						doPlay(posList);
                     } else {
                         ToastUtil.showToast(getActivity(), "历史轨迹为空");
@@ -746,9 +746,9 @@ public class TrackFragment extends Fragment implements View.OnClickListener, OnG
             trackEntityList.clear();
         }
 
-//        if (posList != null) {
-//            posList.clear();
-//        }
+        if (posList != null) {
+            posList.clear();
+        }
 
         isCanMove = false;
         timeNew= 0;
