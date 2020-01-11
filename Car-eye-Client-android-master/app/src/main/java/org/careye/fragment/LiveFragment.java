@@ -77,7 +77,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private String URL2;
     private String URL3;
     private String URL4;
-    private String URL = "rtmp://202.69.69.180:443/webcast/bshdlive-pc";
+    private String currentURL;// = "rtmp://202.69.69.180:443/webcast/bshdlive-pc";
 
     private DepartmentCar departmentCar;
     private String terminalCurr;
@@ -109,7 +109,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
             playOrStopSend(terminalCurr, "0", "3");
             playOrStopSend(terminalCurr, "0", "4");
 
-//        play(mMvPlayer1, URL);
+//        play(mMvPlayer1, currentURL);
         }
     }
 
@@ -226,7 +226,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
                 switchSelect(mMvPlayer4);
                 break;
             case R.id.iv_play:
-                play(mCurrPlayer, URL1);
+                play(mCurrPlayer, currentURL);
                 break;
             case R.id.iv_voice:
                 setMuteEnable(mCurrPlayer);
@@ -332,7 +332,6 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 JsonObject resultObj = response.body();
-                Log.e(TAG, ">>>> " + resultObj.toString());
 
                 if (resultObj != null && resultObj.has("errCode") && resultObj.get("errCode").getAsInt() == 0) {
                     JsonObject dataObj = resultObj.getAsJsonObject("resultData");
@@ -341,6 +340,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
                             case "1":
                                 URL1 = dataObj.get("url").getAsString();
                                 play(mMvPlayer1, URL1);
+                                currentURL = URL1;
                                 break;
                             case "2":
                                 URL2 = dataObj.get("url").getAsString();
@@ -445,7 +445,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
             player.stop();
         } else {
 //            // TODO
-//            url = URL;
+//            url = currentURL;
 
             player.stop();
             player.play(url);
@@ -476,6 +476,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
                 mv_player_ll2.setVisibility(View.VISIBLE);
                 mMvPlayer2.setVisibility(View.VISIBLE);
             }
+            currentURL = URL1;
         } else if (mMvPlayer == mMvPlayer2) {
             if (mv_player_ll2.getVisibility() == View.VISIBLE) {
                 mv_player_ll2.setVisibility(View.GONE);
@@ -484,6 +485,8 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
                 mv_player_ll2.setVisibility(View.VISIBLE);
                 mMvPlayer1.setVisibility(View.VISIBLE);
             }
+
+            currentURL = URL2;
         } else if (mMvPlayer == mMvPlayer3) {
             if (mv_player_ll1.getVisibility() == View.VISIBLE) {
                 mv_player_ll1.setVisibility(View.GONE);
@@ -492,6 +495,8 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
                 mv_player_ll1.setVisibility(View.VISIBLE);
                 mMvPlayer4.setVisibility(View.VISIBLE);
             }
+
+            currentURL = URL3;
         } else {
             if (mv_player_ll1.getVisibility() == View.VISIBLE) {
                 mv_player_ll1.setVisibility(View.GONE);
@@ -500,6 +505,8 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
                 mv_player_ll1.setVisibility(View.VISIBLE);
                 mMvPlayer3.setVisibility(View.VISIBLE);
             }
+
+            currentURL = URL4;
         }
 
         mCurrPlayer.setSelect(false);
