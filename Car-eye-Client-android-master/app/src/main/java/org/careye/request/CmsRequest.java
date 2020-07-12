@@ -91,6 +91,15 @@ public class CmsRequest {
     }
 
     /**
+     * 根据设备号获取设备信息
+     */
+    public interface GetTerminalInfo {
+        @Headers({"Content-Type:application/json;charset=utf-8", "Accept:application/json;"})
+        @POST("getTerminalInfo")
+        Call<JsonObject> getTerminalInfo(@Body JsonObject body);
+    }
+
+    /**
      * 远程录像回放。
      */
     public interface PlaybackAppoint {

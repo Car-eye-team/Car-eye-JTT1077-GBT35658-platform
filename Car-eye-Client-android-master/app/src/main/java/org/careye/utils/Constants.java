@@ -48,6 +48,7 @@ public class Constants {
     public static final String PREF_USER_ID = "pref_user_id"; 	// 用户id
     /**carid 默认登陆 取第一个carID 为当前carid*/
     public static final String PREF_THIS_CURREN_CARID = "pref_this_curren_carid"; 	// 默认登陆 取第一个carID 为当前carid
+    public static final String PREF_THIS_CURREN_CHANNEL = "pref_this_curren_channel";
     public static final String PREF_THIS_CURREN_CARNUM = "pref_this_curren_carnum"; 	//
     public static final String PREF_MAP_REFRESH = "pref_map_refresh"; 	//
     public static final String PREF_AUTO_UPDATE = "pref_auto_update"; 	//

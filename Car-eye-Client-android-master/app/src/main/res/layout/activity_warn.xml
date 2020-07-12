@@ -45,6 +45,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:background="@color/white">
@@ -113,12 +114,12 @@
                     android:layout_gravity="center|left"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="2dp"
-                    android:text="报警编号："
+                    android:text="报警内容："
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/warn_alarm_number_tv"
+                    android:id="@+id/warn_alarm_desc_tv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:ellipsize="end"
@@ -142,12 +143,72 @@
                     android:layout_gravity="center|left"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="2dp"
-                    android:text="报警内容："
+                    android:text="是否处理："
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/warn_alarm_desc_tv"
+                    android:id="@+id/warn_handle_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:maxEms="11"
+                    android:singleLine="true"
+                    android:text="--"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/main_texthui"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/warn_handle_by_ll"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="@color/white"
+                android:layout_marginTop="1dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="2dp"
+                    android:text="处理人："
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/warn_handle_by_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:maxEms="11"
+                    android:singleLine="true"
+                    android:text="--"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/main_texthui"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/warn_handle_time_ll"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="@color/white"
+                android:layout_marginTop="1dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="2dp"
+                    android:text="处理时间："
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/warn_handle_time_tv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:ellipsize="end"

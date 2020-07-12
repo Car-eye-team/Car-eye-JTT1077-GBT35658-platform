@@ -2,8 +2,8 @@ package org.careye.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -29,13 +29,11 @@ import org.careye.utils.Constants;
 import org.careye.utils.DateUtil;
 import org.careye.utils.GsonUtil;
 import org.careye.utils.MD5Util;
-import org.careye.utils.Tools;
 import org.careye.utils.TreeUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -55,8 +53,11 @@ public class CarTreeActivity extends AppCompatActivity implements OnClickListene
     private EditText et_filter;
     private TextView et_filter_tv;
 
-    private List<DepartmentCar> deptList = new ArrayList<>();
+    private String keyword;
     private TreeAdapter adapter;
+
+    private List<DepartmentCar> allCars = new ArrayList<>();
+    private List<DepartmentCar> cars = new ArrayList<>();
 
     private PrefBiz prefBiz;
     private boolean isAll = true;
@@ -73,12 +74,7 @@ public class CarTreeActivity extends AppCompatActivity implements OnClickListene
         if (size == 0) {
             getDeptAndCar();
         } else {
-            new Handler().postDelayed(new Runnable(){
-                public void run() {
-                    showAllList();
-                }
-
-            }, 500);
+            initData();
         }
     }
 
@@ -91,9 +87,6 @@ public class CarTreeActivity extends AppCompatActivity implements OnClickListene
         et_filter_tv = findViewById(R.id.et_filter_tv);
 
         btn_all.setSelected(true);
-
-        adapter = new TreeAdapter(this, deptList, CarApplication.deptMap);
-        listView.setAdapter(adapter);
 
         prefBiz = new PrefBiz(this);
     }
@@ -113,12 +106,11 @@ public class CarTreeActivity extends AppCompatActivity implements OnClickListene
                     data.putExtra("device", deptCar);
                     setResult(RESULT_OK, data);
                     CarTreeActivity.this.finish();
-                } else {  // 如果点击的是父类
-                    if (deptCar.isExpand()) {
-                        deptCar.setExpand(false);
-                    } else {
-                        deptCar.setExpand(true);
-                    }
+                } else {
+                    // 如果点击的是父类
+                    deptCar.setExpand(!deptCar.isExpand());
+
+                    expandCategoryData();
                 }
 
                 adapter.notifyDataSetChanged();
@@ -140,70 +132,6 @@ public class CarTreeActivity extends AppCompatActivity implements OnClickListene
                 return true;
             }
         });
-    }
-
-    private void search() {
-        if (isAll) {
-            showAllList();
-        } else {
-            showOnlineList();
-        }
-
-        String keyword = et_filter.getText().toString();
-        adapter.setKeyword(keyword);
-    }
-
-    private void initData(List<DepartmentCar> list) {
-        deptList.clear();
-
-        if (list != null) {
-            deptList.addAll(list);
-
-            try {
-                updateData();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void updateData() {
-//        Collections.sort(deptList, new Comparator<DepartmentCar>() {
-//            @Override
-//            public int compare(DepartmentCar lhs, DepartmentCar rhs) {
-//                int leftLevel = TreeUtils.getLevel(lhs, CarApplication.deptMap);
-//                int rightLevel = TreeUtils.getLevel(rhs, CarApplication.deptMap);
-//
-//                if (leftLevel == rightLevel) {
-//                    if (lhs.getParentId().equals(rhs.getParentId())) {  //左边小
-//                        return lhs.getDISPLAY_ORDER() > rhs.getDISPLAY_ORDER() ? 1 : -1;
-//                    } else {  // 如果父辈id不相等
-//                        // 同一级别，不同父辈
-//                        DepartmentCar ltreePoint = TreeUtils.getDeptCar(lhs.getParentId(), CarApplication.deptMap);
-//                        DepartmentCar rtreePoint = TreeUtils.getDeptCar(rhs.getParentId(), CarApplication.deptMap);
-//                        return compare(ltreePoint, rtreePoint);  //父辈
-//                    }
-//                } else {  // 不同级别
-//                    if (leftLevel > rightLevel) {   // 左边级别大, 左边小
-//                        if (lhs.getParentId().equals(rhs.getNodeId())) {
-//                            return 1;
-//                        } else {
-//                            DepartmentCar lreasonTreePoint = TreeUtils.getDeptCar(lhs.getParentId(), CarApplication.deptMap);
-//                            return compare(lreasonTreePoint, rhs);
-//                        }
-//                    } else {   // 右边级别大, 右边小
-//                        if (rhs.getParentId().equals(lhs.getNodeId())) {
-//                            return -1;
-//                        }
-//
-//                        DepartmentCar reasonTreePoint = TreeUtils.getDeptCar(rhs.getParentId(), CarApplication.deptMap);
-//                        return compare(lhs, reasonTreePoint);
-//                    }
-//                }
-//            }
-//        });
-
-        adapter.notifyDataSetChanged();
     }
 
     private void getDeptAndCar() {
@@ -255,7 +183,7 @@ public class CarTreeActivity extends AppCompatActivity implements OnClickListene
                     CarApplication.allList.addAll(allList);
                     CarApplication.onlineList.addAll(onlineList);
 
-                    initData(CarApplication.allList);
+                    initData();
                 }
             }
 
@@ -279,7 +207,8 @@ public class CarTreeActivity extends AppCompatActivity implements OnClickListene
                     btn_all.setSelected(true);
                     btn_online.setSelected(false);
 
-                    showAllList();
+                    isAll = true;
+                    initData();
                 }
 
                 break;
@@ -288,30 +217,133 @@ public class CarTreeActivity extends AppCompatActivity implements OnClickListene
                     btn_all.setSelected(false);
                     btn_online.setSelected(true);
 
-                    showOnlineList();
+                    isAll = false;
+                    initData();
                 }
 
                 break;
         }
     }
 
-    private void showAllList() {
-        for (DepartmentCar departmentCar : CarApplication.allList) {
-            departmentCar.setExpand(false);
-            CarApplication.deptMap.put(departmentCar.getNodeId(), departmentCar);
+    private void search() {
+        keyword = et_filter.getText().toString();
+        if (!TextUtils.isEmpty(keyword)) {
+            setKeyword();
         }
-
-        isAll = true;
-        initData(CarApplication.allList);
     }
 
-    private void showOnlineList() {
-        for (DepartmentCar departmentCar : CarApplication.onlineList) {
-            departmentCar.setExpand(false);
-            CarApplication.deptMap.put(departmentCar.getNodeId(), departmentCar);
+    private void initData() {
+        allCars.clear();
+        cars.clear();
+
+        List<DepartmentCar> temp;
+        if (isAll) {
+            temp = CarApplication.allList;
+        } else {
+            temp = CarApplication.onlineList;
         }
 
-        isAll = false;
-        initData(CarApplication.onlineList);
+        for (DepartmentCar category : temp) {
+            CarApplication.deptMap.put(category.getNodeId(), category);
+
+            category.setExpand(false);
+            category.setShow(false);
+            allCars.add(category);
+
+            if (cars.size() == 0) {
+                category.setShow(true);
+                cars.add(category);
+            }
+        }
+
+        adapter = new TreeAdapter(this, cars);
+        listView.setAdapter(adapter);
+    }
+
+    /**
+     * 展开数据
+     */
+    private void expandCategoryData() {
+        cars.clear();
+
+        for (int i = 0; i < allCars.size(); i++) {
+            DepartmentCar category = allCars.get(i);
+
+            DepartmentCar parent = TreeUtils.getDeptCar(category.getParentId(), CarApplication.deptMap);
+            if (parent != null) {
+                category.setShow(parent.isExpand());
+                if (!category.isShow() && category.getNodetype() == 1) {
+                    category.setExpand(false);
+                }
+            }
+
+            if (category.isShow()) {
+                cars.add(category);
+            }
+        }
+
+        adapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 搜索的时候，先关闭所有的条目，然后，按照条件，找到含有关键字的数据
+     * 如果是叶子节点，
+     */
+    public void setKeyword() {
+        allCars.clear();
+        cars.clear();
+
+        List<DepartmentCar> temp;
+        if (isAll) {
+            temp = CarApplication.allList;
+        } else {
+            temp = CarApplication.onlineList;
+        }
+
+        for (DepartmentCar category : temp) {
+            category.setExpand(false);
+            category.setShow(false);
+            allCars.add(category);
+        }
+
+        Iterator it = allCars.iterator();
+        while (it.hasNext()) {
+            DepartmentCar category = (DepartmentCar) it.next();
+
+            if (category.getNodetype() == 2 && category.getNodeName().contains(keyword)) {
+                category.setShow(true);
+                // 展开从最顶层到该点的所有节点
+                openExpand(category);
+            }
+        }
+
+        for (DepartmentCar category : allCars) {
+            if (category.isShow()) {
+                cars.add(category);
+            }
+        }
+
+        adapter.setKeyword(keyword);
+    }
+
+    /**
+     * 从DepartmentCar开始一直展开到顶部
+     *
+     * @param cate
+     */
+    private void openExpand(DepartmentCar cate) {
+        if (cate.getParentId().isEmpty()) {
+            cate.setExpand(true);
+            cate.setShow(true);
+        } else {
+            DepartmentCar item = CarApplication.deptMap.get(cate.getParentId());
+            if (item != null) {
+                item.setExpand(true);
+                item.setShow(true);
+                openExpand(item);
+            } else {
+                Log.i("", "");
+            }
+        }
     }
 }

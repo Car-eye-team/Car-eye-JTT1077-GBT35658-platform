@@ -69,14 +69,18 @@ public class LoginActivity extends Activity implements OnClickListener {
 		login_et_port = (EditText) findViewById(R.id.login_et_port);
 
 		// TODO
+<<<<<<< HEAD
 		et_user.setText("admin");
-		et_pwd.setText("car-eye2019");
+		et_pwd.setText("careyeadmin");
+=======
+>>>>>>> parent of d1a9b28... fix bug
 
-		login_et_ip.setText("www.liveoss.com");
+//		login_et_ip.setText("www.liveoss.com");
 //		login_et_ip.setText("120.79.67.102");
-		login_et_port.setText("8088");
-//		login_et_ip.setText("39.108.229.40");
-//		login_et_port.setText("8902");
+//		login_et_port.setText("8088");
+
+		login_et_ip.setText("39.108.229.40");
+		login_et_port.setText("8902");
 
 		String userName = prefBiz.getStringInfo(Constants.PREF_LOGIN_NAME, "");
 		String pw = prefBiz.getStringInfo(Constants.PREF_LOGIN_PW, "");

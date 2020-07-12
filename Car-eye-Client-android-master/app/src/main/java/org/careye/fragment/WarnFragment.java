@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.careye.CarEyeClient.R;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -138,6 +137,7 @@ public class WarnFragment extends Fragment implements View.OnClickListener {
             break;
             case R.id.iv_search:
                 Intent intent = new Intent(getActivity(), TrackSettingActivity.class);
+                intent.putExtra("name", "报警查询");
                 startActivityForResult(intent, REQUEST_SELECT_DEVICE_CODE);
                 break;
             default:

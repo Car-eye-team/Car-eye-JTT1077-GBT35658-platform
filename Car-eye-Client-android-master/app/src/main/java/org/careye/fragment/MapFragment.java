@@ -16,6 +16,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -211,7 +212,11 @@ public class MapFragment extends Fragment implements View.OnClickListener, OnGet
         }
 
         prefBiz = new PrefBiz(getActivity());
-        terminalCurr = prefBiz.getStringInfo(Constants.PREF_THIS_CURREN_CARID, "");
+
+        String terminal = prefBiz.getStringInfo(Constants.PREF_THIS_CURREN_CARID, "");
+        if (TextUtils.isEmpty(terminal)) {
+            Toast.makeText(getActivity(), "当前没有选定车", Toast.LENGTH_SHORT).show();
+        }
 
         return view;
     }
@@ -226,9 +231,13 @@ public class MapFragment extends Fragment implements View.OnClickListener, OnGet
         isFirstSecond = true;
         isFirstLoc = true;
 
-        if ("".equals(terminalCurr)) {
-            Toast.makeText(getActivity(), "当前没有选定车", Toast.LENGTH_SHORT).show();
-        } else {
+        tv_terminal.setText("");
+        tv_timeregps.setText("");
+
+        String terminal = prefBiz.getStringInfo(Constants.PREF_THIS_CURREN_CARID, "");
+        if (TextUtils.isEmpty(terminalCurr) || !terminalCurr.equals(terminal)) {
+            terminalCurr = terminal;
+
             int refresh = prefBiz.getIntInfo(Constants.PREF_MAP_REFRESH, 0);
             mTimeCount = new TimeCount(getTimeCount(refresh), 1000);
             mTimeCount.start();
@@ -595,6 +604,7 @@ public class MapFragment extends Fragment implements View.OnClickListener, OnGet
                 if (resultCode == Activity.RESULT_OK) {
                     DepartmentCar departmentCar = data.getParcelableExtra("device");
                     terminalCurr = departmentCar.getTerminal();
+                    prefBiz.putIntInfo(Constants.PREF_THIS_CURREN_CHANNEL, departmentCar.getChanneltotals());
                     getHttpCarInfoState(terminalCurr);
                 }
 

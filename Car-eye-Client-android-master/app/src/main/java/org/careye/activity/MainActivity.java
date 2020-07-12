@@ -181,9 +181,9 @@ public class MainActivity extends AppCompatActivity
 //                switchFragment(mLiveFragment);
                 index_vp_fragment_list_top.setCurrentItem(1);
 
-                if (mLiveFragment != null) {
-                    mLiveFragment.firstPlay();
-                }
+//                if (mLiveFragment != null) {
+//                    mLiveFragment.firstPlay();
+//                }
                 break;
             case R.id.tab_track:
 //                switchFragment(mTrackFragment);
@@ -298,38 +298,13 @@ public class MainActivity extends AppCompatActivity
         Call<JsonObject> call = request.deptTree(body);
         call.enqueue(new Callback<JsonObject>() {
             @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                JsonObject resultObj = response.body();
-
-                if (resultObj != null && resultObj.has("errCode") && resultObj.get("errCode").getAsInt() == 0) {
-                    JsonArray array = resultObj.getAsJsonArray("resultData");
-
-                    List<DepartmentCar> allList = new ArrayList<>();
-                    List<DepartmentCar> onlineList = new ArrayList<>();
-                    HashMap<String, DepartmentCar> deptMap = new HashMap<>();
-
-                    for (int i = 0; i < array.size(); i++) {
-                        DepartmentCar departmentCar = GsonUtil.jsonToBean(array.get(i).toString(), DepartmentCar.class);
-
-                        deptMap.put(departmentCar.getNodeId(), departmentCar);
-                        allList.add(departmentCar);
-
-                        if (departmentCar.getNodetype() == 1 ||
-                                (departmentCar.getCarstatus() != 1
-                                        && departmentCar.getCarstatus() != 2
-                                        && departmentCar.getCarstatus() != 3)) {
-                            onlineList.add(departmentCar);
-                        }
+            public void onResponse(Call<JsonObject> call, final Response<JsonObject> response) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dealData(response);
                     }
-
-                    CarApplication.deptMap.clear();
-                    CarApplication.allList.clear();
-                    CarApplication.onlineList.clear();
-
-                    CarApplication.deptMap.putAll(deptMap);
-                    CarApplication.allList.addAll(allList);
-                    CarApplication.onlineList.addAll(onlineList);
-                }
+                }).start();
             }
 
             @Override
@@ -337,6 +312,40 @@ public class MainActivity extends AppCompatActivity
                 Log.e(TAG, t.getMessage());
             }
         });
+    }
+
+    private void dealData(Response<JsonObject> response) {
+        JsonObject resultObj = response.body();
+
+        if (resultObj != null && resultObj.has("errCode") && resultObj.get("errCode").getAsInt() == 0) {
+            JsonArray array = resultObj.getAsJsonArray("resultData");
+
+            List<DepartmentCar> allList = new ArrayList<>();
+            List<DepartmentCar> onlineList = new ArrayList<>();
+            HashMap<String, DepartmentCar> deptMap = new HashMap<>();
+
+            for (int i = 0; i < array.size(); i++) {
+                DepartmentCar departmentCar = GsonUtil.jsonToBean(array.get(i).toString(), DepartmentCar.class);
+
+                deptMap.put(departmentCar.getNodeId(), departmentCar);
+                allList.add(departmentCar);
+
+                if (departmentCar.getNodetype() == 1 ||
+                        (departmentCar.getCarstatus() != 1
+                                && departmentCar.getCarstatus() != 2
+                                && departmentCar.getCarstatus() != 3)) {
+                    onlineList.add(departmentCar);
+                }
+            }
+
+            CarApplication.deptMap.clear();
+            CarApplication.allList.clear();
+            CarApplication.onlineList.clear();
+
+            CarApplication.deptMap.putAll(deptMap);
+            CarApplication.allList.addAll(allList);
+            CarApplication.onlineList.addAll(onlineList);
+        }
     }
 }
 

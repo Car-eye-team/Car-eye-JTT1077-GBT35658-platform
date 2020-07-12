@@ -38,56 +38,15 @@
 
     </android.support.v7.widget.Toolbar>
     
-    <LinearLayout
-        android:id="@+id/mv_player_ll"
+    <RelativeLayout
+        android:id="@+id/mv_player_rl"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:background="@color/gray4"
         android:layout_height="0dp">
 
-        <LinearLayout
-            android:id="@+id/mv_player_ll1"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <org.careye.widgets.MediaView
-                android:id="@+id/mv_player_1"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent" />
-
-            <org.careye.widgets.MediaView
-                android:id="@+id/mv_player_2"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/mv_player_ll2"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <org.careye.widgets.MediaView
-                android:id="@+id/mv_player_3"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent" />
-
-            <org.careye.widgets.MediaView
-                android:id="@+id/mv_player_4"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <!--<EditText-->
         <!--android:id="@+id/et_live_url"-->
@@ -131,7 +90,6 @@
             android:padding="8dp"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:visibility="gone"
             android:layout_height="match_parent" />
 
         <ImageView

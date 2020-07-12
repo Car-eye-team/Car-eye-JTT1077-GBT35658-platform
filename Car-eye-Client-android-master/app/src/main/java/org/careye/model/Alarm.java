@@ -103,6 +103,7 @@ public class Alarm implements Serializable {
     private String startTime;
     private String startTimestamp;
     private String terminalId;
+    private String terminal;
     private String stime;
     private String etime;
     private String count;
@@ -266,6 +267,10 @@ public class Alarm implements Serializable {
     }
 
     public String getHandleBy() {
+        if (TextUtils.isEmpty(handleBy)) {
+            return "";
+        }
+
         return handleBy;
     }
 
@@ -282,6 +287,9 @@ public class Alarm implements Serializable {
     }
 
     public String getHandleTime() {
+        if (TextUtils.isEmpty(handleTime)) {
+            return "";
+        }
         return handleTime;
     }
 
@@ -461,5 +469,13 @@ public class Alarm implements Serializable {
 
     public void setCarNumber(String carNumber) {
         this.carNumber = carNumber;
+    }
+
+    public String getTerminal() {
+        return terminal;
+    }
+
+    public void setTerminal(String terminal) {
+        this.terminal = terminal;
     }
 }

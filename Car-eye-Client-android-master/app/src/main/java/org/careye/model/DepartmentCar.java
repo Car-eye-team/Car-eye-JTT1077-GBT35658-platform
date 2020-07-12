@@ -59,6 +59,7 @@ public class DepartmentCar implements Parcelable {
      * 是否展开了 true代表展开，false代表未展开
      */
     private boolean isExpand;
+    private boolean isShow;
     /**
      *  1       //同一个级别的显示顺序
      */
@@ -170,6 +171,14 @@ public class DepartmentCar implements Parcelable {
 
     public void setExpand(boolean expand) {
         isExpand = expand;
+    }
+
+    public void setShow(boolean show) {
+        isShow = show;
+    }
+
+    public boolean isShow() {
+        return isShow;
     }
 
     public void setDISPLAY_ORDER(int DISPLAY_ORDER) {

@@ -71,6 +71,16 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/channel_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_text33"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/lyPlaybackItem_play"
+                android:layout_marginRight="20dp"
+                android:textSize="14sp" />
+
             <ImageButton
                 android:id="@id/lyPlaybackItem_play"
                 android:layout_width="30.0dip"

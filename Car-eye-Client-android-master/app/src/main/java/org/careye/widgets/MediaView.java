@@ -25,6 +25,7 @@ public class MediaView extends RelativeLayout implements View.OnClickListener {
 
     private RelativeLayout mRlMediaEdge;
     private EyeVideoView mEvvMedia;
+    private boolean isExpand;
 
     public MediaView(Context context) {
         super(context);
@@ -132,4 +133,11 @@ public class MediaView extends RelativeLayout implements View.OnClickListener {
         mEvvMedia.start();
     }
 
+    public void setExpand(boolean expand) {
+        isExpand = expand;
+    }
+
+    public boolean isExpand() {
+        return isExpand;
+    }
 }

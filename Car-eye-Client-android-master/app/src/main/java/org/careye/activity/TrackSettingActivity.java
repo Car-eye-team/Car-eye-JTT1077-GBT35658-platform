@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.DatePicker;
@@ -71,7 +72,13 @@ public class TrackSettingActivity extends AppCompatActivity implements OnClickLi
         tv_title = findViewById(R.id.tv_title);
 
         mLayoutDevice = findViewById(R.id.playback_layout_device);
-        tv_title.setText("轨迹搜索");
+
+        String name = getIntent().getStringExtra("name");
+        if (TextUtils.isEmpty(name)) {
+            tv_title.setText("轨迹搜索");
+        } else {
+            tv_title.setText(name);
+        }
 
         mLayoutDate = findViewById(R.id.playback_layout_date);
         mLayoutBegTime = findViewById(R.id.playback_layout_begin_time);

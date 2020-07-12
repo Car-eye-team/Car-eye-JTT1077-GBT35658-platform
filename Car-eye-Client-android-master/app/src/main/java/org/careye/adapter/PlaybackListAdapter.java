@@ -53,16 +53,18 @@ public class PlaybackListAdapter extends BaseAdapter {
         TerminalFile terminalFile = terminalFileList.get(position);
         holder.tvStartTime.setText(terminalFile.getStartTime());
         holder.tvEndTime.setText(terminalFile.getEndTime());
+        holder.channel_tv.setText("通道" + terminalFile.getLogicChannel());
 
         return convertView;
     }
 
     class ViewHolder {
-        TextView tvStartTime, tvEndTime;
+        TextView tvStartTime, tvEndTime, channel_tv;
 
         public ViewHolder(View view) {
             tvStartTime = view.findViewById(R.id.lyPlaybackItem_tvTime);
             tvEndTime = view.findViewById(R.id.lyPlaybackItem_tvType);
+            channel_tv = view.findViewById(R.id.channel_tv);
         }
     }
 }

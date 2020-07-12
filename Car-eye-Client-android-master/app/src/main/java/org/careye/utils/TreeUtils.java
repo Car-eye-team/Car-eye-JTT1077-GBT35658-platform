@@ -14,7 +14,11 @@ public class TreeUtils {
     // 第一级别为0
     public static int getLevel(DepartmentCar departmentCar, HashMap<String, DepartmentCar> map) {
         if (!map.containsKey(departmentCar.getParentId())) {
-            return 0;
+            if (departmentCar.getNodetype() == 1) {
+                return 0;
+            } else {
+                return 1;
+            }
         } else {
             return 1 + getLevel(getDeptCar(departmentCar.getParentId(),map),map);
         }

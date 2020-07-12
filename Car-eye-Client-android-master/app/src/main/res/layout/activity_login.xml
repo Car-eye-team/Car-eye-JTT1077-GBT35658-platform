@@ -235,6 +235,7 @@
                     android:textSize="@dimen/login_btn_text_size" />
 
                 <FrameLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="45dp"

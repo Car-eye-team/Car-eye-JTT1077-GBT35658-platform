@@ -10,15 +10,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +40,9 @@ import org.careye.utils.MD5Util;
 import org.careye.utils.PicUtils;
 import org.careye.widgets.MediaView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,7 +52,7 @@ import static android.widget.Toast.LENGTH_LONG;
 
 /**
  * 视频tab
- * */
+ */
 public class LiveFragment extends Fragment implements View.OnClickListener {
     private final String TAG = LiveFragment.class.getSimpleName();
 
@@ -57,14 +63,11 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private ImageView iv_setting;
     private View mRoot;
 
+    private RelativeLayout mv_player_rl;
     private MediaView mCurrPlayer;
-    private MediaView mMvPlayer1;
-    private MediaView mMvPlayer2;
-    private MediaView mMvPlayer3;
-    private MediaView mMvPlayer4;
-    private LinearLayout mv_player_ll;
-    private LinearLayout mv_player_ll1;
-    private LinearLayout mv_player_ll2;
+    private List<MediaView> mMvPlayers = new ArrayList<>();
+    private String[] urls = {"", "", "", "", "", "", "", ""};
+
     private Toolbar toolbar;
 
     private ImageView mIvPlay;
@@ -73,14 +76,19 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     private ImageView mIvRec;
     private ImageView iv_full_screen;
 
+<<<<<<< HEAD
+    private String currentURL;// = "rtmp://202.69.69.180:443/webcast/bshdlive-pc";
+=======
     private String URL1;
     private String URL2;
     private String URL3;
     private String URL4;
-    private String currentURL;// = "rtmp://202.69.69.180:443/webcast/bshdlive-pc";
+    private String URL = "rtmp://202.69.69.180:443/webcast/bshdlive-pc";
+>>>>>>> parent of d1a9b28... fix bug
 
     private DepartmentCar departmentCar;
     private String terminalCurr;
+    private int totalChannels;
 
     private PrefBiz prefBiz;
 
@@ -101,25 +109,46 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         super.onCreate(savedInstanceState);
     }
 
-    public void firstPlay() {
-        if (terminalCurr == null) {
-            terminalCurr = prefBiz.getStringInfo(Constants.PREF_THIS_CURREN_CARID, "");
-            playOrStopSend(terminalCurr, "0", "1");
-            playOrStopSend(terminalCurr, "0", "2");
-            playOrStopSend(terminalCurr, "0", "3");
-            playOrStopSend(terminalCurr, "0", "4");
+    @Override
+    public void onResume() {
+        super.onResume();
 
-//        play(mMvPlayer1, currentURL);
+        firstPlay();
+    }
+
+    public void firstPlay() {
+        String terminal = prefBiz.getStringInfo(Constants.PREF_THIS_CURREN_CARID, "");
+        if (TextUtils.isEmpty(terminalCurr) || !terminalCurr.equals(terminal)) {
+            terminalCurr = terminal;
+            totalChannels = prefBiz.getIntInfo(Constants.PREF_THIS_CURREN_CHANNEL, 0);
+            if (totalChannels == 0) {
+                totalChannels = 4;
+            }
+            if (totalChannels > 8) {
+                totalChannels = 8;
+            }
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    initMvPlayer();
+
+                    for (int i = 1; i < totalChannels; i++) {
+                        playOrStopSend(terminalCurr, "0", String.valueOf(i));
+                    }
+                }
+            }, 400);
+
+//        play(mMvPlayer1, URL);
         }
     }
 
     public void closeVolume() {
-        if (mMvPlayer1 != null) {
-            mMvPlayer1.enableVolume(true);
-            mMvPlayer2.enableVolume(true);
-            mMvPlayer3.enableVolume(true);
-            mMvPlayer4.enableVolume(true);
+        for (MediaView mediaView : mMvPlayers) {
+            mediaView.enableVolume(true);
+        }
 
+        if (mCurrPlayer != null) {
             updateMuteView(mCurrPlayer.getMuteState());
         }
     }
@@ -139,20 +168,12 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         mIvRec = mRoot.findViewById(R.id.iv_rec);
         iv_full_screen = mRoot.findViewById(R.id.iv_full_screen);
 
-        mMvPlayer1 = mRoot.findViewById(R.id.mv_player_1);
-        mMvPlayer2 = mRoot.findViewById(R.id.mv_player_2);
-        mMvPlayer3 = mRoot.findViewById(R.id.mv_player_3);
-        mMvPlayer4 = mRoot.findViewById(R.id.mv_player_4);
-        mv_player_ll = mRoot.findViewById(R.id.mv_player_ll);
-        mv_player_ll1 = mRoot.findViewById(R.id.mv_player_ll1);
-        mv_player_ll2 = mRoot.findViewById(R.id.mv_player_ll2);
+        mv_player_rl = mRoot.findViewById(R.id.mv_player_rl);
+
         toolbar = mRoot.findViewById(R.id.live_toolbar);
 
-        mMvPlayer1.setSelect(true);
-        mCurrPlayer = mMvPlayer1;
-
         prefBiz = new PrefBiz(getActivity());
-        mTvTitle.setText(prefBiz.getStringInfo(Constants.PREF_THIS_CURREN_CARNUM, getResources().getString(R.string.video_preview)));
+//        mTvTitle.setText(prefBiz.getStringInfo(Constants.PREF_THIS_CURREN_CARNUM, getResources().getString(R.string.video_preview)));
     }
 
     @Override
@@ -179,11 +200,6 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         mIvVideo.setOnClickListener(this);
         mIvRec.setOnClickListener(this);
         iv_full_screen.setOnClickListener(this);
-
-        mMvPlayer1.setOnClickListener(this);
-        mMvPlayer2.setOnClickListener(this);
-        mMvPlayer3.setOnClickListener(this);
-        mMvPlayer4.setOnClickListener(this);
     }
 
     @Override
@@ -212,21 +228,9 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
                 Intent intent = new Intent(getActivity(), CarTreeActivity.class);
                 startActivityForResult(intent, REQUEST_SELECT_DEVICE_CODE);
             }
-                break;
-            case R.id.mv_player_1:
-                switchSelect(mMvPlayer1);
-                break;
-            case R.id.mv_player_2:
-                switchSelect(mMvPlayer2);
-                break;
-            case R.id.mv_player_3:
-                switchSelect(mMvPlayer3);
-                break;
-            case R.id.mv_player_4:
-                switchSelect(mMvPlayer4);
-                break;
+            break;
             case R.id.iv_play:
-                play(mCurrPlayer, currentURL);
+                play(mCurrPlayer, URL1);
                 break;
             case R.id.iv_voice:
                 setMuteEnable(mCurrPlayer);
@@ -246,8 +250,19 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
                 }
 
                 this.mListener.onFullscreen();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mMvPlayers.size() > 0) {
+                            // 布局
+                            mv_player_rl.removeAllViews();
+                            layoutMediaView(null, true);
+                        }
+                    }
+                }, 300);
             }
-                break;
+            break;
             case R.id.iv_setting: {
                 Intent intent = new Intent(getActivity(), SettingActivity.class);
                 startActivity(intent);
@@ -276,27 +291,27 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         switch (requestCode) {
             case REQUEST_SELECT_DEVICE_CODE:
                 if (resultCode == Activity.RESULT_OK) {
-                    mMvPlayer1.play("");
-                    mMvPlayer2.play("");
-                    mMvPlayer3.play("");
-                    mMvPlayer4.play("");
-
-                    mMvPlayer1.stop();
-                    mMvPlayer2.stop();
-                    mMvPlayer3.stop();
-                    mMvPlayer4.stop();
+                    for (MediaView mediaView : mMvPlayers) {
+                        mediaView.play("");
+                        mediaView.stop();
+                    }
 
                     departmentCar = data.getParcelableExtra("device");
                     terminalCurr = departmentCar.getTerminal();
-                    prefBiz.putStringInfo(Constants.PREF_THIS_CURREN_CARID, terminalCurr);
-                    prefBiz.putStringInfo(Constants.PREF_THIS_CURREN_CARNUM, departmentCar.getNodeName());
 
-                    mTvTitle.setText(departmentCar.getNodeName());
+                    prefBiz.putStringInfo(Constants.PREF_THIS_CURREN_CARID, terminalCurr);
+                    prefBiz.putIntInfo(Constants.PREF_THIS_CURREN_CHANNEL, departmentCar.getChanneltotals());
+                    prefBiz.putStringInfo(Constants.PREF_THIS_CURREN_CARNUM, departmentCar.getNodeName());
+//                    mTvTitle.setText(departmentCar.getNodeName());
 
                     if (departmentCar.getCarstatus() == 1 || departmentCar.getCarstatus() == 2) {
                         Toast.makeText(getActivity(), "当前车辆不在线", Toast.LENGTH_SHORT).show();
                     } else {
-                        for (int i = 1; i < (departmentCar.getChanneltotals() > 4 ? 4 : departmentCar.getChanneltotals()) + 1; i++) {
+                        totalChannels = departmentCar.getChanneltotals();
+                        totalChannels = (totalChannels > 8 ? 8 : totalChannels);
+                        initMvPlayer();
+
+                        for (int i = 1; i < totalChannels; i++) {
                             playOrStopSend(terminalCurr, "0", String.valueOf(i));
                         }
                     }
@@ -332,27 +347,49 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 JsonObject resultObj = response.body();
+                Log.e(TAG, ">>>> " + resultObj.toString());
 
                 if (resultObj != null && resultObj.has("errCode") && resultObj.get("errCode").getAsInt() == 0) {
                     JsonObject dataObj = resultObj.getAsJsonObject("resultData");
                     if (type.equals("0")) {
                         switch (id) {
                             case "1":
+<<<<<<< HEAD
+                                urls[0] = dataObj.get("url").getAsString();
+                                play(mMvPlayers.get(0), urls[0]);
+                                currentURL = urls[0];
+=======
                                 URL1 = dataObj.get("url").getAsString();
                                 play(mMvPlayer1, URL1);
-                                currentURL = URL1;
+>>>>>>> parent of d1a9b28... fix bug
                                 break;
                             case "2":
-                                URL2 = dataObj.get("url").getAsString();
-                                play(mMvPlayer2, URL2);
+                                urls[1] = dataObj.get("url").getAsString();
+                                play(mMvPlayers.get(1), urls[1]);
                                 break;
                             case "3":
-                                URL3 = dataObj.get("url").getAsString();
-                                play(mMvPlayer3, URL3);
+                                urls[2] = dataObj.get("url").getAsString();
+                                play(mMvPlayers.get(2), urls[2]);
                                 break;
                             case "4":
-                                URL4 = dataObj.get("url").getAsString();
-                                play(mMvPlayer4, URL4);
+                                urls[3] = dataObj.get("url").getAsString();
+                                play(mMvPlayers.get(3), urls[3]);
+                                break;
+                            case "5":
+                                urls[4] = dataObj.get("url").getAsString();
+                                play(mMvPlayers.get(4), urls[4]);
+                                break;
+                            case "6":
+                                urls[5] = dataObj.get("url").getAsString();
+                                play(mMvPlayers.get(5), urls[5]);
+                                break;
+                            case "7":
+                                urls[6] = dataObj.get("url").getAsString();
+                                play(mMvPlayers.get(6), urls[6]);
+                                break;
+                            case "8":
+                                urls[7] = dataObj.get("url").getAsString();
+                                play(mMvPlayers.get(7), urls[7]);
                                 break;
                             default:
                                 break;
@@ -370,6 +407,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
 
     /**
      * 设置Rec使能
+     *
      * @param mCurrPlayer 当前活动窗口
      */
     private void setRecEnable(MediaView mCurrPlayer) {
@@ -379,7 +417,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
             mCurrPlayer.enableRec(false, "", "");
             Toast.makeText(getActivity(), "录制停止！", LENGTH_LONG).show();
         } else {
-            String fileName =  SystemClock.uptimeMillis() + ".mp4";
+            String fileName = SystemClock.uptimeMillis() + ".mp4";
             mCurrPlayer.enableRec(true, PicUtils.getVideoPath(terminalCurr), fileName);
             Toast.makeText(getActivity(), "录制开始！", LENGTH_LONG).show();
         }
@@ -389,7 +427,8 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
 
     /**
      * 设置视频使能
-     * @param mCurrPlayer   当前活动窗口
+     *
+     * @param mCurrPlayer 当前活动窗口
      */
     private void setVideoEnable(MediaView mCurrPlayer) {
         boolean isShow = mCurrPlayer.getShowVideoState();
@@ -399,7 +438,8 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
 
     /**
      * 设置静音使能
-     * @param mCurrPlayer   当前活动窗口
+     *
+     * @param mCurrPlayer 当前活动窗口
      */
     private void setMuteEnable(MediaView mCurrPlayer) {
         boolean isMute = mCurrPlayer.getMuteState();
@@ -408,33 +448,14 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
     }
 
     private void release() {
-        mMvPlayer1.play("");
-        mMvPlayer2.play("");
-        mMvPlayer3.play("");
-        mMvPlayer4.play("");
-
-        mMvPlayer1.stop();
-        mMvPlayer2.stop();
-        mMvPlayer3.stop();
-        mMvPlayer4.stop();
-
-        if (mMvPlayer1.getRecState()) {
-            mMvPlayer1.enableRec(false, "", "");
-        }
-        if (mMvPlayer2.getRecState()) {
-            mMvPlayer2.enableRec(false, "", "");
-        }
-        if (mMvPlayer3.getRecState()) {
-            mMvPlayer3.enableRec(false, "", "");
-        }
-        if (mMvPlayer4.getRecState()) {
-            mMvPlayer4.enableRec(false, "", "");
+        for (MediaView mediaView : mMvPlayers) {
+            mediaView.play("");
+            mediaView.stop();
+            mediaView.enableRec(false, "", "");
         }
 
-        if (departmentCar != null) {
-            for (int i = 1; i < (departmentCar.getChanneltotals() > 4 ? 4 : departmentCar.getChanneltotals()) + 1; i++) {
-                playOrStopSend(terminalCurr, "1", String.valueOf(i));
-            }
+        for (int i = 1; i < totalChannels; i++) {
+            playOrStopSend(terminalCurr, "1", String.valueOf(i));
         }
     }
 
@@ -445,7 +466,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
             player.stop();
         } else {
 //            // TODO
-//            url = currentURL;
+//            url = URL;
 
             player.stop();
             player.play(url);
@@ -464,6 +485,46 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
         updateRecView(player.getRecState());
     }
 
+<<<<<<< HEAD
+    private void initMvPlayer() {
+        mMvPlayers.clear();
+
+        for (int i = 0; i < totalChannels; i++) {
+            final MediaView mediaView = new MediaView(getActivity());
+            mMvPlayers.add(mediaView);
+
+            final int index = i;
+            mediaView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switchSelect(mediaView, index);
+                }
+            });
+
+            if (i == 0) {
+                mediaView.setSelect(true);
+                mCurrPlayer = mediaView;
+            }
+        }
+
+        if (mMvPlayers.size() > 0) {
+            // 布局
+            mv_player_rl.removeAllViews();
+            layoutMediaView(null, true);
+        }
+    }
+
+    private void layoutMediaView(MediaView mMvPlayer, boolean first) {
+        if (mMvPlayer != null) {
+            for (int i = 0; i < mMvPlayers.size(); i++) {
+                MediaView mediaView = mMvPlayers.get(i);
+                mediaView.setVisibility(View.GONE);
+            }
+
+            mMvPlayer.setVisibility(View.VISIBLE);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            mMvPlayer.setLayoutParams(params);
+=======
     /*
     * 切换播放窗口对应的功能区状态
     * */
@@ -476,7 +537,6 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
                 mv_player_ll2.setVisibility(View.VISIBLE);
                 mMvPlayer2.setVisibility(View.VISIBLE);
             }
-            currentURL = URL1;
         } else if (mMvPlayer == mMvPlayer2) {
             if (mv_player_ll2.getVisibility() == View.VISIBLE) {
                 mv_player_ll2.setVisibility(View.GONE);
@@ -485,8 +545,6 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
                 mv_player_ll2.setVisibility(View.VISIBLE);
                 mMvPlayer1.setVisibility(View.VISIBLE);
             }
-
-            currentURL = URL2;
         } else if (mMvPlayer == mMvPlayer3) {
             if (mv_player_ll1.getVisibility() == View.VISIBLE) {
                 mv_player_ll1.setVisibility(View.GONE);
@@ -495,18 +553,50 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
                 mv_player_ll1.setVisibility(View.VISIBLE);
                 mMvPlayer4.setVisibility(View.VISIBLE);
             }
-
-            currentURL = URL3;
+>>>>>>> parent of d1a9b28... fix bug
         } else {
-            if (mv_player_ll1.getVisibility() == View.VISIBLE) {
-                mv_player_ll1.setVisibility(View.GONE);
-                mMvPlayer3.setVisibility(View.GONE);
-            } else {
-                mv_player_ll1.setVisibility(View.VISIBLE);
-                mMvPlayer3.setVisibility(View.VISIBLE);
-            }
+            int size = 10;
+            int row = mMvPlayers.size() / 2 + mMvPlayers.size() % 2;
 
-            currentURL = URL4;
+            int w = (mv_player_rl.getMeasuredWidth() - size) / 2;
+            int h = (mv_player_rl.getMeasuredHeight() - size * (row - 1)) / row;
+
+            for (int i = 0; i < mMvPlayers.size(); i++) {
+                MediaView mediaView = mMvPlayers.get(i);
+                mediaView.setVisibility(View.VISIBLE);
+                mediaView.setId((i + 10) * 10000);
+
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(w, h);
+                params.topMargin = (h + size) * (i / 2);
+
+                if (i % 2 == 1) {
+                    params.addRule(RelativeLayout.RIGHT_OF, (i + 9) * 10000);
+                }
+
+                if (first) {
+                    mv_player_rl.addView(mediaView, params);
+                } else {
+                    mediaView.setLayoutParams(params);
+                }
+            }
+<<<<<<< HEAD
+        }
+    }
+
+    /*
+     * 切换播放窗口对应的功能区状态
+     * */
+    private void switchSelect(MediaView mMvPlayer, int i) {
+        currentURL = urls[i];
+
+        if (mMvPlayer.isExpand()) {
+            mMvPlayer.setExpand(false);
+            layoutMediaView(null, false);
+        } else {
+            mMvPlayer.setExpand(true);
+            layoutMediaView(mMvPlayer, false);
+=======
+>>>>>>> parent of d1a9b28... fix bug
         }
 
         mCurrPlayer.setSelect(false);
@@ -559,6 +649,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+
         void onFullscreen();
     }
 
