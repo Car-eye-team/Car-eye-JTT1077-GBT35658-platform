@@ -17,17 +17,14 @@ Car-eye-Client android 版本是car-eye开源开源团队基于car-eye open API 
 ![](https://github.com/Car-eye-team/Car-eye-Client-android/blob/master/Car-eye-client.png)
 
 
-# 联系我们   eye-Client
+# 联系我们
 
-car-eye 开源官方网址：www.car-eye.cn     
-
-car-eye 流媒体平台网址：www.liveoss.com     
-
-car-eye 技术官方邮箱: support@car-eye.cn   
-
-car-eye技术交流QQ群: 590411159      
-
-![](https://github.com/Car-eye-team/Car-eye-server/blob/master/car-server/doc/QQ.jpg)    
-
-CopyRight©  car-eye 开源团队 2018 
+car-eye 开源官方网址：www.car-eye.cn    
+car-eye 车辆管理平台网址：www.liveoss.com  
+car-eye GB28181管理平台网址 ：www.streaming-vip.com:10088     
+car-eye 技术官方邮箱: support@car-eye.cn  
+car-eye 车辆管理平台技术交流QQ群:590411159   
+car-eye 视频服务和管理平台QQ群：713522732     
+![](https://gitee.com/careye_open_source_platform_group/car-eye-jtt1078-media-server/raw/master/QQ/QQ.jpg)   
+CopyRight©  car-eye 开源团队 2018-2020
 
