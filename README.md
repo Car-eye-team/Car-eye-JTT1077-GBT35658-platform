@@ -22,7 +22,7 @@ Car-eye-JTT1077-796-platform 开发的基于JTT808/1078 JTT1077，JT/T796协议�
 # 平台客户端运行展示
 
 
-![](https://github.com/Car-eye-team/Car-eye-JTT808-1078-platform/blob/master/Car-eye.png)
+![](https://gitee.com/careye_open_source_platform_group/Car-eye-JTT1077-JT796-platform/raw/master/Car-eye.png)
 
 
 # 体验平台登录方式
