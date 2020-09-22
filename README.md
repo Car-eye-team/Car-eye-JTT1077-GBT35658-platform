@@ -41,6 +41,7 @@ web登录地址：www.liveoss.com:8088
 端口：9999
 登陆平台后选一个不在线的车，把设备上的终端号设置成一样，就可以连接上平台。
 
+<<<<<<< HEAD
 =======
 ﻿
 
@@ -60,6 +61,8 @@ Car-eye-Client android 版本是car-eye开源开源团队基于car-eye open API 
 # 扫描二维码下载       
 ![](https://gitee.com/careye_open_source_platform_group/Car-eye-Client-android/raw/master/Car-eye-client.png)
 >>>>>>> 94985c63d2a1dd14db0898d564ffeda03121f0f6
+=======
+>>>>>>> 23c130025f7fef13199eb8997b8983a51b01aade
 
 
 # 联系我们
@@ -72,8 +75,12 @@ car-eye 车辆管理平台技术交流QQ群:590411159
 car-eye 视频服务和管理平台QQ群：713522732     
 ![](https://gitee.com/careye_open_source_platform_group/car-eye-jtt1078-media-server/raw/master/QQ/QQ.jpg)   
 <<<<<<< HEAD
+<<<<<<< HEAD
 CopyRight©  car-eye 开源团队 2018-2019
 =======
 CopyRight©  car-eye 开源团队 2018-2020
 
 >>>>>>> 94985c63d2a1dd14db0898d564ffeda03121f0f6
+=======
+CopyRight©  car-eye 开源团队 2018-2019
+>>>>>>> 23c130025f7fef13199eb8997b8983a51b01aade
