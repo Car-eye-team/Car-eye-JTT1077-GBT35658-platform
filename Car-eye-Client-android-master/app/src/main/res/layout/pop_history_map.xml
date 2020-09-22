@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/balloon_overlay_unfocused"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:padding="10.0dip" >
+
+    <TextView
+        android:id="@+id/tv_car_num_map"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="车牌号" />
+
+    <TextView
+        android:id="@+id/tv_distance_map"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10.0dip"
+        android:text="里程" />
+
+    <TextView
+        android:id="@+id/tv_car_state_map"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10.0dip"
+        android:text="状态" />
+
+    <TextView
+        android:id="@+id/tv_sys_time_map"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10.0dip"
+        android:text="时间" />
+
+    <TextView
+        android:id="@+id/tv_location_time"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15.0dip"
+        android:paddingTop="10.0dip"
+        android:text="定位" />
+
+</LinearLayout>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1675BD</color>
+    <!--  0dbb92  1675BD-->
+    <color name="colorPrimaryDark">#1675BD</color>
+    <color name="colorAccent">#D9533D</color><!--D9533D    ff4081 -->
+
+    <color name="black_overlay">#66000000</color>
+
+    <color name="color_no_select">#88000000</color>
+
+    <color name="text">#ff388ce4</color>
+    <color name="normalcolor">#ff333333</color>
+    <color name="line_color">#dadada</color>
+
+    <color name="blue">#FF07F707</color>
+
+    <drawable name="setting_btn_press">#58cc42</drawable>
+
+    <color name="main_bg_old">#17B4EB</color>
+    <color name="color_red">#d82f3f</color>
+    <!-- title yellow -->
+    <color name="main_bg">#fbc902</color>
+    <color name="servive_textred">#f75e5c</color>
+    <color name="servive_texthei">#333232</color>
+    <color name="servive_textqin">#41bef1</color>
+    <color name="servive_textblue">#5e97f7</color>
+    <color name="servive_textyellow">#f89100</color>
+    <color name="servive_textzi">#bd83cd</color>
+    <color name="servive_textlv">#35c29f</color>
+    <color name="servive_texthui">#939393</color>
+    <color name="main_bg_s">#F79100</color>
+    <color name="main_texthui">#888888</color>
+    <color name="color_text33">#333333</color>
+    <color name="color_text8a">#8a8a8a</color>
+    <color name="color_textfengge">#c8c7cd</color>
+    <!-- <color name="main_bg">#0068B7</color> -->
+    <color name="main_bg_line">#d5d5d5</color>
+    <color name="color666">#666666</color>
+    <color name="main_bg_top">#0068B7</color>
+    <color name="color9c9c9c">#9c9c9c</color>
+    <color name="colore3e3e3">#e3e3e3</color>
+    <color name="result_view">#b0000000</color>
+    <color name="colorsearchjuhuang">#ff790b</color>
+    <color name="colorblumenutext">#036eb7</color>
+    <color name="colorredtext">#ff7951</color>
+    <color name="no_back">#00000000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="possible_result_points">#c0ffff00</color>
+    <color name="colorcity_huibg">#f0eff5</color>
+    <color name="colorcity_f5">#f5f5f5</color>
+    <color name="colorcity_yellow">#f5ae24</color>
+    <color name="activity_bg">#f1f1f1</color>
+    <color name="activity_bgnew">#fafafa</color>
+    <color name="color_mylovecar_topn">#fbc902</color>
+    <color name="color_mylovecar_topp">#ffd737</color>
+    <color name="color_mylovecar_bottoman">#ff6f54</color>
+    <color name="color_mylovecar_bottomap">#ff8973</color>
+    <color name="color_mylovecar_bottombn">#70cf2d</color>
+    <color name="color_mylovecar_bottombp">#89d355</color>
+    <color name="color_mylovecar_bottomcn">#38adff</color>
+    <color name="color_mylovecar_bottomcp">#62bdff</color>
+    <color name="color_mylovecar_bottomdn">#ff943d</color>
+    <color name="color_mylovecar_bottomdp">#ffa862</color>
+    <color name="color_mylovecar_a">#ff6f54</color>
+    <color name="color_mylovecar_ap">#ff6f54</color>
+    <color name="color_mylovecar_b">#70cf2d</color>
+    <color name="color_mylovecar_bp">#70cf2d</color>
+    <color name="color_mylovecar_c">#38acff</color>
+    <color name="color_mylovecar_cp">#70cf2d</color>
+    <color name="color_mylovecar_d">#ff943c</color>
+    <color name="color_mylovecar_dp">#70cf2d</color>
+    <color name="activity_bgstatus">#fac902</color>
+    <color name="activity_ss">#46000000</color>
+    <color name="coloreaf">#afafaf</color>
+    <color name="colorjured">#ff9900</color>
+    <color name="colorhui81">#818181</color>
+    <color name="body_bg">#ffffff</color>
+    <color name="color_2e0">#b4000000</color>
+    <color name="color_f0">#f0f0f0</color>
+    <color name="foot_text_color">#989898</color>
+    <color name="title_text_color">#f1f1f1</color>
+    <color name="colorwite">#FFFFFF</color>
+    <!-- f1f1f1 -->
+    <color name="colorlinehui">#C0C0C0</color>
+    <color name="colorlinehui90">#909090</color>
+    <color name="coloryellow">#fe9900</color>
+    <color name="colorlv">#70cf2d</color>
+    <color name="colorlinehuicc">#cccccc</color>
+    <color name="colorlinehuie1">#e1e1e1</color>
+    <color name="colorlinehuif2">#f2f2f2</color>
+    <color name="main_bg_top_line">#dedede</color>
+    <color name="colorlineqin">#16b5eb</color>
+    <color name="colorlinehui95">#959595</color>
+    <color name="color_line_huidan">#f0eff4</color>
+    <color name="color_line_hui">#C0C0C0</color>
+    <color name="color_bg_hui">#DCDCDC</color>
+    <color name="color_bg_huic3">#c3c3c3</color>
+    <color name="color_ac">#acacac</color>
+    <color name="color_bg_shenhui">#f0eff4</color>
+    <color name="color_bg_94">#949494</color>
+    <color name="colorhuid8">#888888</color>
+    <color name="coloralf">#00FFFFFF</color>
+    <color name="colorblueqian"> #336b94</color>
+    <color name="coloralfhalf">#BE17B4EB</color>
+    <color name="colorb">#000000</color>
+    <color name="colorq">#17B4EB</color>
+    <color name="colorsmagr">#1b6092</color>
+    <color name="color33b">#33b5e5</color>
+    <color name="colortextlv">#5FBF1B</color>
+    <color name="colorcfcfcf">#cfcfcf</color>
+    <color name="white">#FFFFFF</color>
+    <color name="whitefa">#fafafa</color>
+    <color name="color_hd4">#edebed</color>
+    <color name="colorfcfcfc">#fcfcfc</color>
+    <color name="colord5d5d5">#d5d5d5</color>
+    <color name="black">#000000</color>
+    <color name="color_text_blue">#38acff</color>
+    <color name="gray">#eeeeee</color>
+    <color name="light_black">#333333</color>
+    <color name="color_dark_hui">#696969</color>
+    <color name="color_zi_red">#e15024</color>
+    <!-- 背景颜色：#fcfcfc -->
+    <!-- 线条颜色：#d5d5d5 -->
+    <!-- city -->
+    <color name="color_letter_text_normal">#9da0a4</color>
+    <color name="base_bg">#f4f6f6</color>
+    <color name="base_actionbar_bg">#f5f5f5</color>
+    <color name="transparent">#00000000</color>
+    <color name="color_halfblack">#64000000</color>
+    <color name="color_weisearbg">#0068B7</color>
+    <color name="color_weisearfenge">#357eb5</color>
+    <color name="color_weilv">#45c01a</color>
+
+    <!--
+      carlife
+      f4f4f4   bg
+	  c4c4c4  zi
+	  565656  xiche
+	  dcdcdc   fenge
+    -->
+    <color name="colordf4">#f4f4f4</color>
+    <color name="colordc4">#c4c4c4</color>
+    <color name="colordxiche">#565656</color>
+    <color name="colordfenge">#dcdcdc</color>
+
+    <color name="abs__background_holo_dark">#ff000000</color>
+    <color name="abs__background_holo_light">#fff3f3f3</color>
+    <item type="color" name="abs__bright_foreground_holo_dark">@color/abs__background_holo_light</item>
+    <item type="color" name="abs__bright_foreground_holo_light">@color/abs__background_holo_dark</item>
+    <color name="abs__bright_foreground_disabled_holo_dark">#ff4c4c4c</color>
+    <color name="abs__bright_foreground_disabled_holo_light">#ffb2b2b2</color>
+    <color name="red">#ffff0000</color>
+    <color name="yellow">#fff4982f</color>
+    <color name="green">#ff95af46</color>
+    <color name="gray1">#ffaaaaaa</color>
+    <color name="gray2">#ff999999</color>
+    <color name="gray3">#ffbbbbbb</color>
+    <color name="gray4">#ff666666</color>
+    <color name="gray5">#ff333333</color>
+    <color name="gray6">#fff2f2f2</color>
+    <color name="gray7">#ffdedede</color>
+    <color name="background_color">#ffeaf1f9</color>
+    <color name="title">#ff4c5366</color>
+    <color name="setting_section_title_color">#ff388ce4</color>
+    <color name="setting_section_split_color">#ff388ce4</color>
+    <color name="title_btn_select_color">#ff77c5e1</color>
+    <color name="list_text_color">#ff388ce4</color>
+    <color name="list_bg">#fff2f2f2</color>
+    <color name="transparent_gray">#88000000</color>
+    <color name="color_divider">#ffdddddd</color>
+    <color name="color_login_input">#ff4db7c6</color>
+    <color name="color_login_split">#ff0098ae</color>
+</resources>

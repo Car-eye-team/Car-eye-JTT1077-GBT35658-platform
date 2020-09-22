@@ -1,0 +1,22 @@
+<tabs>
+    <tab
+        id="@+id/tab_map"
+        icon="@drawable/ic_local"
+        title="地图" />
+    <tab
+        id="@+id/tab_live"
+        icon="@drawable/ic_live"
+        title="视频" />
+    <tab
+        id="@+id/tab_track"
+        icon="@drawable/ic_track"
+        title="轨迹" />
+    <tab
+        id="@+id/tab_replay"
+        icon="@drawable/ic_replay"
+        title="回放" />
+    <tab
+        id="@+id/tab_warn"
+        icon="@drawable/ic_warn"
+        title="报警" />
+</tabs>
