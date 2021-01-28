@@ -64,9 +64,9 @@ http://www.liveoss.com:8088/doc.html
 只需要将目标服务器和用户密码填写好，就可以将平台快速部署到远程服务器，相关操作请参考部署文档:Car-eye 车辆管理平台部署手册(V1.0).docx。
 
 
-# 微信小程序客户端
+# 微信小程序客户端   
 
-平台提供微信小程序客户端用来实现对平台车辆的快速管理，欢迎扫码关注我们：
+平台提供微信小程序客户端用来实现对平台车辆的快速管理，欢迎扫码关注我们：    
 ![](https://gitee.com/careye_open_source_platform_group/Car-eye-JTT1077-JT796-platform/raw/master/weixin.jpg)
 
 
