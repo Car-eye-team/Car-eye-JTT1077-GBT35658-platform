@@ -66,7 +66,9 @@ http://www.liveoss.com:8088/doc.html
 
 # 微信小程序客户端
 
-平台
+平台提供微信小程序客户端用来实现对平台车辆的快速管理，欢迎扫码关注我们：
+![](https://gitee.com/careye_open_source_platform_group/Car-eye-JTT1077-JT796-platform/raw/master/weixin.jpg)
+
 
 # 联系我们
 
