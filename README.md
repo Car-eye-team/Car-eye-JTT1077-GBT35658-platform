@@ -5,15 +5,14 @@ Car-eye-1077-GBT35658-platform  开发的基于JTT808/1078 JTT1077，GBT35658协
 包括了基于Java和mysql的数据管理系统，也包含了通信平台，视频服务器，客户端程序。是一个功能完善的车辆管理平台
 
 # 平台具有哪些优势
-1. 采用最新的layUI+mysql数据库构建web服务器，前后端分离。
-2. 采用最稳定的socket底层构建JT1078视频服务器，视频转发到RTMP服务器，支持http-flv，RTMP,WS-flv各种输出。
+1. 采用最新的VUE+spring-boot构建web服务器，前后端分离，数据库最为最常用的mysql。
+2. 采用最稳定的socket底层构建JT1078视频服务器，视频转发到RTMP服务器，支持http-flv，RTMP,WS-flv等各种输出。
 3. 基于http，MQ等多种通信方式。
 4. web运行于最常见的centos操作系统，视频服务器支持linux和windows双操作系统。
-5. 客户端SDK支持linux，android，windows等各种应用。
-6. 设备SDK支持多通道推流，支持推送文件，高版本的android系统支持Epoll数据传送方式。
-7. 分布式架构web和视频服务器可以运行在不同硬件上。
-8. 后端采用最新的spring-boot，kafaka，MQ，netty等架构。
-9. 支持语音双向对讲，平台录像。
+5. 分布式架构web和视频服务器可以运行在不同硬件上。
+6. 后端采用最新的spring-boot，kafaka，MQ，netty等架构。
+7. 支持语音双向对讲，平台录像。
+8. 支持主动安全报警分析，数据分析大屏。支持对外二次开发接口。
 
 # 我们为什么要开发这个平台
 
@@ -47,7 +46,7 @@ web登录地址：https://liveoss.com
 密码：123456   
 服务器：www.liveoss.com     
 
-通信平台的IP:39.108.246.45
+通信平台的IP:124.71.107.142
 端口：9999
 登陆平台后选一个不在线的车，把设备上的终端号设置成一样，就可以连接上平台。
 
