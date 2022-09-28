@@ -37,7 +37,7 @@ Car-eye-1077-GBT35658-platform  开发的基于JTT808/1078 JTT1077，GBT35658协
 
 #平台使用课件
 
-![车辆管理平台视频直播](https://www.bilibili.com/video/BV1cT411M7cx/?vd_source=699fa21f0a1d117e56d092453824d588)
+[车辆管理平台视频直播](https://www.bilibili.com/video/BV1cT411M7cx/?vd_source=699fa21f0a1d117e56d092453824d588)
 
 # 体验平台登录方式
 
