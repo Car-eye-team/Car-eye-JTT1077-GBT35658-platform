@@ -1,4 +1,4 @@
-﻿
+
 # Car-eye-1077-GBT35658-platform 
 
 Car-eye-1077-GBT35658-platform  开发的基于JTT808/1078 JTT1077，GBT35658协议的平台架构，兼容JT/T905设备，GB28181设备，GB32960设备接入。
@@ -34,6 +34,10 @@ Car-eye-1077-GBT35658-platform  开发的基于JTT808/1078 JTT1077，GBT35658协
 
 ![](https://gitee.com/careye_open_source_platform_group/Car-eye-JTT1077-JT796-platform/raw/master/web.png)
 
+
+#平台使用课件
+
+![车辆管理平台视频直播](https://www.bilibili.com/video/BV1cT411M7cx/?vd_source=699fa21f0a1d117e56d092453824d588)
 
 # 体验平台登录方式
 
