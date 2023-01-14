@@ -35,15 +35,10 @@ Car-eye-1077-GBT35658-platform  开发的基于JTT808/1078 JTT1077，GBT35658协
 ![](https://gitee.com/careye_open_source_platform_group/Car-eye-JTT1077-JT796-platform/raw/master/web.png)
 
 
-# 平台使用视频教程
+# 平台帮助系统
 
-[车辆管理平台视频使用教程--实时监控](https://www.bilibili.com/video/BV1cT411M7cx/?vd_source=699fa21f0a1d117e56d092453824d588)   
-[车辆管理平台视频使用教程--车辆信息输入](https://www.bilibili.com/video/BV1ie4y1b73v/?vd_source=699fa21f0a1d117e56d092453824d588)   
-[车辆管理平台视频使用教程--视频监控](https://www.bilibili.com/video/BV1XR4y1R7Bc/?vd_source=699fa21f0a1d117e56d092453824d588)   
-[车辆管理平台视频使用教程--主动安全管理](https://www.bilibili.com/video/BV1BW4y1Y7aE/?vd_source=699fa21f0a1d117e56d092453824d588)   
-[车辆管理平台视频使用教程--区域管理](https://www.bilibili.com/video/BV15G4y1x7zF/?vd_source=699fa21f0a1d117e56d092453824d588)    
-[车辆管理平台视频使用教程--系统参数](https://www.bilibili.com/video/BV14V4y1N7JR/?vd_source=699fa21f0a1d117e56d092453824d588)    
-
+http://www.liveoss.com/#/helpCenter
+ 
 
 # 体验平台登录方式
 
