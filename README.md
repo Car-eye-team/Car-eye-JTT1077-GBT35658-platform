@@ -7,10 +7,10 @@ Car-eye-1077-GBT35658-platform  开发的基于JTT808/1078 JTT1077，GBT35658协
 # 平台具有哪些优势
 1. 采用最新的VUE+spring-boot构建web服务器，前后端分离，数据库最为最常用的mysql。
 2. 采用最稳定的socket底层构建JT1078视频服务器，视频转发到RTMP服务器，支持http-flv，RTMP,WS-flv等各种输出。
-3. 基于http，MQ等多种通信方式。
+3. 基于http，kafka等多种通信方式。
 4. web运行于最常见的centos操作系统，视频服务器支持linux和windows双操作系统。
 5. 分布式架构web和视频服务器可以运行在不同硬件上。
-6. 后端采用最新的spring-boot，kafaka，MQ，netty等架构。
+6. 后端采用最新的spring-boot，kafaka，netty等架构。
 7. 支持语音双向对讲，平台录像，视频轮播。
 8. 支持主动安全报警分析，数据分析大屏。支持对外二次开发接口。
 9. 精确的油耗，载重算法，解决行业内的管理的痛点。
