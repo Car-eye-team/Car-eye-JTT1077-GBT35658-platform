@@ -14,6 +14,7 @@ Car-eye-1077-GBT35658-platform  开发的基于JTT808/1078 JTT1077，GBT35658协
 7. 支持语音双向对讲，平台录像，视频轮播。
 8. 支持主动安全报警分析，数据分析大屏。支持对外二次开发接口。
 9. 精确的油耗，载重算法，解决行业内的管理的痛点。
+10. 人脸授权，工时计算，满足叉车行业需求。
 
 
 # 我们为什么要开发这个平台
@@ -34,7 +35,7 @@ Car-eye-1077-GBT35658-platform  开发的基于JTT808/1078 JTT1077，GBT35658协
 
 # 平台web端展示
 
-![](https://gitee.com/careye_open_source_platform_group/Car-eye-JTT1077-JT796-platform/raw/master/web.png)
+![](https://gitee.com/careye_open_source_platform_group/Car-eye-JTT1077-JT796-platform/raw/master/web.jpg)
 
 
 # 平台帮助系统
@@ -80,7 +81,7 @@ web登录地址：https://liveoss.com
 
 car-eye 开源官方网址：www.car-eye.cn    
 car-eye 车辆管理平台网址：www.liveoss.com  
-car-eye GB28181管理平台网址 ：www.streaming-vip.com:10088     
+car-eye GB28181管理平台网址 ：www.liveoss.com:10088     
 car-eye 技术官方邮箱: support@car-eye.cn  
 car-eye 车辆管理平台技术交流QQ群:590411159   
 car-eye 视频服务和管理平台QQ群：713522732     
@@ -89,6 +90,7 @@ car-eye 视频服务和管理平台QQ群：713522732
 
 欢迎加入微信群交流沟通
 
+![](https://gitee.com/careye_open_source_platform_group/Car-eye-JTT1077-JT796-platform/raw/master/weixin1.jpg)
 
 
 CopyRight©  CarEye车辆智能云平台团队 2018-2024
