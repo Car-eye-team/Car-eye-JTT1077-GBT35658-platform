@@ -44,12 +44,12 @@ http://www.liveoss.com/#/helpCenter
 # 体验平台登录方式
 
 web登录地址：https://liveoss.com  
-账号：test      
-密码：123456     
+账号：admin     
+密码：careyeadmin
 
 客户端的登录账号     
-账号：test    
-密码：123456   
+账号：admin    
+密码：careyeadmin 
 服务器：www.liveoss.com     
 
 通信平台的域名:liveoss.com 
