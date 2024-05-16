@@ -1,19 +1,20 @@
 
 # Car-eye-1077-GBT35658-platform 
 
-Car-eye-1077-GBT35658-platform  开发的基于JTT808/1078 JTT1077，GBT35658协议的平台架构，兼容JT/T905设备，GB28181设备，GB32960设备，苏标等地方标准的接入。
+Car-eye-1077-GBT35658-platform  开发的基于JTT808/1078 JTT1077，GBT35658协议的平台架构，兼容JT/T905设备，GB28181设备，JH1239，GB32960设备，苏标等地方标准的接入。
 包括了基于Java和mysql的数据管理系统，也包含了通信平台，视频服务器，客户端程序。是一个功能完善的车辆管理平台
 
 # 平台具有哪些优势
 1. 采用最新的VUE+spring-boot构建web服务器，前后端分离，数据库最为最常用的mysql。
-2. 采用最稳定的socket底层构建JT1078视频服务器，视频转发到RTMP服务器，支持http-flv，RTMP,WS-flv等各种输出。
+2. 采用最稳定的socket底层构建JT1078视频服务器，视频转发到RTMP服务器，支持http-flv，RTMP,WS-flv,RTSP等各种输出。
 3. 基于http，kafka等多种通信方式。
-4. web运行于最常见的centos操作系统，视频服务器支持linux和windows双操作系统。
+4. web运行于最常见的centos,UBUNTU 操作系统，视频服务器支持linux和windows双操作系统。
 5. 分布式架构web和视频服务器可以运行在不同硬件上。
 6. 后端采用最新的spring-boot，kafaka，netty等架构。
 7. 支持语音双向对讲，平台录像，视频轮播。
 8. 支持主动安全报警分析，数据分析大屏。支持对外二次开发接口。
 9. 精确的油耗，载重算法，解决行业内的管理的痛点。
+
 
 # 我们为什么要开发这个平台
 
@@ -60,15 +61,14 @@ web登录地址：https://liveoss.com
 # 接口文档
 
 车辆管理平台提供了丰富的接口方便客户进行二次开发，其中包含了两部分：
-1. web前后端的API接口文档，方便用户进行二次开发，相关接口说明请参考swagger文档输出
-
+1. web前后端的API接口文档，方便用户进行二次开发，相关接口说明请参考帮助系统的API接口说明
 2. PC和移动端API接口
-提供HTTP访问平台资源,远程接口基本满足客户的一般需求。相关文档请参考：CMS客户端API接口文档V1.0.5.doc，android, IOS客户端和微信小程序可以从平台的
+提供HTTP访问平台资源,远程接口基本满足客户的一般需求。相关文档请参考：CMS客户端API接口文档V2.0.doc，android, IOS客户端和微信小程序可以从平台的
 体验的网址下载进行体验。
 
 # 快速部署
 
-平台提供了docker快速部署功能，支持centos，ubuntu多个版本linux一键部署，相关操作请参考部署文档:Car-eye 车辆管理平台部署手册(V2.0).docx。
+平台提供了docker快速部署功能，支持centos，ubuntu多个版本linux一键部署，相关操作请参考部署文档:Car-eye 车辆管理平台部署手册(V3.0).docx。
 
 # 微信小程序客户端   
 
@@ -86,6 +86,11 @@ car-eye 车辆管理平台技术交流QQ群:590411159
 car-eye 视频服务和管理平台QQ群：713522732     
 ![](https://gitee.com/careye_open_source_platform_group/car-eye-jtt1078-media-server/raw/master/QQ/QQ.jpg)   
 
-CopyRight©  car-eye 车辆智能云平台团队 2018-2023
+
+欢迎加入微信群交流沟通
+
+
+
+CopyRight©  CarEye车辆智能云平台团队 2018-2024
 
 
