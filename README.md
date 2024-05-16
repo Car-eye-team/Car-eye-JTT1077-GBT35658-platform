@@ -87,6 +87,8 @@ car-eye 视频服务和管理平台QQ群：713522732
 ![](https://gitee.com/careye_open_source_platform_group/car-eye-jtt1078-media-server/raw/master/QQ/QQ.jpg)   
 
 
+欢迎加入微信群交流沟通
+
 
 
 CopyRight©  CarEye车辆智能云平台团队 2018-2024
