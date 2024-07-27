@@ -73,7 +73,8 @@ web登录地址：https://liveoss.com
 
 相关部署部署视频请参考：http://www.liveoss.com/#/helpCenter/videos?lang=zh
 安装部署包下载地址：
-
+链接：https://pan.baidu.com/s/1xblbays8MPuJRRrweldY2Q 
+提取码：4kd7
 
 # 微信小程序客户端   
 
