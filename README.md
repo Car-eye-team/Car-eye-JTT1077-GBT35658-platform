@@ -71,10 +71,17 @@ web登录地址：https://liveoss.com
 
 平台提供了docker快速部署功能，支持centos，ubuntu多个版本linux一键部署，相关操作请参考部署文档:Car-eye 车辆管理平台部署手册(V3.0).docx。
 
+相关部署部署视频请参考：http://www.liveoss.com/#/helpCenter/videos?lang=zh
+安装部署包下载地址：
+链接：https://pan.baidu.com/s/1xblbays8MPuJRRrweldY2Q 
+提取码：4kd7
+
 # 微信小程序客户端   
 
 平台提供微信小程序客户端用来实现对平台车辆的快速管理，欢迎扫码关注我们：    
 ![](https://gitee.com/careye_open_source_platform_group/Car-eye-JTT1077-JT796-platform/raw/master/weixin.jpg)
+
+
 
 
 # 联系我们
