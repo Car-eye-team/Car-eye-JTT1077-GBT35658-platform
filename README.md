@@ -76,6 +76,10 @@ web登录地址：https://liveoss.com
 链接：https://pan.baidu.com/s/1xblbays8MPuJRRrweldY2Q 
 提取码：4kd7
 
+同时，平台提供了最新的ansible安装方式，相关的软件可以从网盘下载
+链接：https://pan.baidu.com/s/1uEfeEibHgwsO7zkTsrXyOQ 
+提取码：6exj
+
 # 微信小程序客户端   
 
 平台提供微信小程序客户端用来实现对平台车辆的快速管理，欢迎扫码关注我们：    
