@@ -76,7 +76,7 @@ web登录地址：https://liveoss.com
 链接：https://pan.baidu.com/s/1xblbays8MPuJRRrweldY2Q 
 提取码：4kd7
 
-同时，平台提供了最新的ansible安装方式，相关的软件可以从网盘下载
+同时，平台提供了最新的ansible安装方式，相关的软件可以从网盘下载，相关操作手册可以参考CarEye Ansible 安装指南.docx
 链接：https://pan.baidu.com/s/1uEfeEibHgwsO7zkTsrXyOQ 
 提取码：6exj
 
