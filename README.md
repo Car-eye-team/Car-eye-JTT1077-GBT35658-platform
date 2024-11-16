@@ -69,16 +69,18 @@ web登录地址：https://liveoss.com
 
 # 快速部署
 
-平台提供了docker快速部署功能，支持centos，ubuntu多个版本linux一键部署，相关操作请参考部署文档:Car-eye 车辆管理平台部署手册(V3.0).docx。
+平台提供了docker快速部署功能，支持rocky linux，ubuntu多个版本linux一键部署，相关操作请参考部署文档:Car-eye 车辆管理平台部署手册(V3.0).docx。
 
 相关部署部署视频请参考：http://www.liveoss.com/#/helpCenter/videos?lang=zh
 安装部署包下载地址：
-链接：https://pan.baidu.com/s/1xblbays8MPuJRRrweldY2Q 
-提取码：4kd7
+
+通过网盘分享的文件：Docker_install_V3.5.tar.gz
+链接: https://pan.baidu.com/s/1YeNpgL3yxBl5vaiEAE75RA 提取码: 8nx2
+
 
 同时，平台提供了最新的ansible安装方式，相关的软件可以从网盘下载，相关操作手册可以参考CarEye Ansible 安装指南.docx
-链接：https://pan.baidu.com/s/1l9MlNw4Xfu1EVYLBcxW6sQ 
-提取码：3393
+通过网盘分享的文件：car-eye_install_V3.5.tar.gz
+链接: https://pan.baidu.com/s/1cHL6mcuGys9r3EKR5k6muQ 提取码: 5ier
 
 # 微信小程序客户端   
 
