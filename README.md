@@ -74,13 +74,14 @@ web登录地址：https://liveoss.com
 相关部署部署视频请参考：http://www.liveoss.com/#/helpCenter/videos?lang=zh
 安装部署包下载地址：
 
-通过网盘分享的文件：Docker_install_V3.5.tar.gz
-链接: https://pan.baidu.com/s/1YeNpgL3yxBl5vaiEAE75RA 提取码: 8nx2
+通过网盘分享的文件：Docker_install_V3.6.tar.gz
+链接: 通过网盘分享的文件：Docker_install_V3.6.tar.gz
+链接: https://pan.baidu.com/s/1mCO5mPAXi7yTC4ZRMpTEaA 提取码: rn23
 
 
 同时，平台提供了最新的ansible安装方式，相关的软件可以从网盘下载，相关操作手册可以参考CarEye Ansible 安装指南.docx
-通过网盘分享的文件：car-eye_install_V3.5.tar.gz
-链接: https://pan.baidu.com/s/1cHL6mcuGys9r3EKR5k6muQ 提取码: 5ier
+通过网盘分享的文件：car-eye_install_V3.6.tar.gz
+链接: https://pan.baidu.com/s/1twATFtbqzu2Qh4HwBAc6qw 提取码: yzvx
 
 # 微信小程序客户端   
 
