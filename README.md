@@ -40,21 +40,21 @@ Car-eye-1077-GBT35658-platform  开发的基于JTT808/1078 JTT1077，GBT35658协
 
 # 平台帮助系统
 
-http://www.liveoss.com/#/helpCenter
+
  
 
 # 体验平台登录方式
 
-web登录地址：https://liveoss.com  
+web登录地址：
 账号：admin     
 密码：careyeadmin
 
 客户端的登录账号     
 账号：admin    
 密码：careyeadmin 
-服务器：www.liveoss.com     
+服务器：   
 
-通信平台的域名:liveoss.com 
+通信平台的域名:
 端口：9999
 登陆平台后选一个不在线的车，把设备上的终端号设置成一样，就可以连接上平台。
 
@@ -71,7 +71,7 @@ web登录地址：https://liveoss.com
 
 平台提供了docker快速部署功能，支持rocky linux，ubuntu多个版本linux一键部署，相关操作请参考部署文档:Car-eye 车辆管理平台部署手册(V3.0).docx。
 
-相关部署部署视频请参考：http://www.liveoss.com/#/helpCenter/videos?lang=zh
+相关部署部署视频请参考：http:///#/helpCenter/videos?lang=zh
 安装部署包下载地址：
 
 通过网盘分享的文件：Docker_install_V3.6.tar.gz
@@ -92,9 +92,9 @@ web登录地址：https://liveoss.com
 
 # 联系我们
 
-car-eye 开源官方网址：www.car-eye.cn    
-car-eye 车辆管理平台网址：www.liveoss.com  
-car-eye GB28181管理平台网址 ：www.liveoss.com:10088     
+car-eye 开源官方网址：http://car-eye.cn    
+car-eye 车辆管理平台网址： 
+car-eye GB28181管理平台网址 ：:10088     
 car-eye 技术官方邮箱: support@car-eye.cn  
 car-eye 车辆管理平台技术交流QQ群:590411159   
 car-eye 视频服务和管理平台QQ群：713522732     
